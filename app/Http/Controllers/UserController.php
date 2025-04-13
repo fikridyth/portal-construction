@@ -18,11 +18,12 @@ class UserController extends Controller
      */
     public function index(UsersDataTable $dataTable)
     {
-        $pageTitle = trans('global-message.list_form_title', ['form' => trans('users.title')]);
+        $pageHeader = 'User';
+        $pageTitle = 'List User';
         $auth_user = AuthHelper::authSession();
         $assets = ['data-table'];
-        $headerAction = '<a href="' . route('users.create') . '" class="btn btn-sm btn-primary" role="button">Add User</a>';
-        return $dataTable->render('global.datatable', compact('pageTitle', 'auth_user', 'assets', 'headerAction'));
+        $headerAction = '<a href="' . route('users.create') . '" class="btn btn-sm btn-primary" role="button">Tambah User</a>';
+        return $dataTable->render('global.datatable', compact('pageHeader', 'pageTitle', 'auth_user', 'assets', 'headerAction'));
     }
 
     /**

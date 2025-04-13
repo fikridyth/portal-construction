@@ -6,13 +6,14 @@ use Illuminate\View\Component;
 
 class AppLayout extends Component
 {
-    public $layout, $dir, $assets;
+    public $layout, $dir, $assets, $pageHeader;
 
-    public function __construct($layout = '', $dir=false, $assets = [])
+    public function __construct($layout = '', $dir = false, $assets = [], $pageHeader = '')
     {
         $this->layout = $layout;
         $this->dir = $dir;
         $this->assets = $assets;
+        $this->pageHeader = $pageHeader;
     }
 
     /**
@@ -22,28 +23,28 @@ class AppLayout extends Component
      */
     public function render()
     {
-        switch($this->layout){
+        switch ($this->layout) {
             case 'horizontal':
                 return view('layouts.dashboard.horizontal');
-            break;
+                break;
             case 'dualhorizontal':
                 return view('layouts.dashboard.dual-horizontal');
-            break;
+                break;
             case 'dualcompact':
                 return view('layouts.dashboard.dual-compact');
-            break;
+                break;
             case 'boxed':
                 return view('layouts.dashboard.boxed');
-            break;
+                break;
             case 'boxedfancy':
                 return view('layouts.dashboard.boxed-fancy');
-            break;
+                break;
             case 'simple':
                 return view('layouts.dashboard.simple');
-            break;
+                break;
             default:
                 return view('layouts.dashboard.dashboard');
-            break;
+                break;
         }
     }
 }

@@ -12,8 +12,9 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $pageHeader = 'Dashboard';
         $assets = ['chart', 'animation'];
-        return view('dashboards.dashboard', compact('assets'));
+        return view('dashboards.dashboard', compact('pageHeader', 'assets'));
     }
 
     /*
