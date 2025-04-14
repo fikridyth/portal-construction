@@ -102,6 +102,12 @@ class UsersDataTable extends DataTable
     {
         return [
             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->searchable(false)
+                ->width(60)
+                ->addClass('text-center hide-search'),
             ['data' => 'full_name', 'name' => 'full_name', 'title' => 'FULL NAME', 'orderable' => false],
             ['data' => 'phone_number', 'name' => 'phone_number', 'title' => 'Phone Number'],
             ['data' => 'email', 'name' => 'email', 'title' => 'Email'],
@@ -109,12 +115,6 @@ class UsersDataTable extends DataTable
             ['data' => 'status', 'name' => 'status', 'title' => 'Status'],
             ['data' => 'userProfile.company_name', 'name' => 'userProfile.company_name', 'title' => 'Company'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Join Date'],
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->searchable(false)
-                ->width(60)
-                ->addClass('text-center hide-search'),
         ];
     }
 

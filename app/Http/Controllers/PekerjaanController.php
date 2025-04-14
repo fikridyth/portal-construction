@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\PekerjaanDataTable;
 use App\Helpers\AuthHelper;
+use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
 
 class PekerjaanController extends Controller
@@ -19,7 +20,7 @@ class PekerjaanController extends Controller
         $pageTitle = 'List Pekerjaan';
         $auth_user = AuthHelper::authSession();
         $assets = ['data-table'];
-        $headerAction = '<a href="' . route('users.create') . '" class="btn btn-sm btn-primary" role="button">Tambah Pekerjaan</a>';
+        $headerAction = '<a href="' . route('pekerjaan.create') . '" class="btn btn-sm btn-primary" role="button">Tambah Pekerjaan</a>';
         return $dataTable->render('app.master.pekerjaan.index', compact('pageHeader', 'pageTitle', 'auth_user', 'assets', 'headerAction'));
     }
 
@@ -30,7 +31,8 @@ class PekerjaanController extends Controller
      */
     public function create()
     {
-        //
+        $pageHeader = 'Create Pekerjaan';
+        return view('app.master.pekerjaan.form', compact('pageHeader'));
     }
 
     /**
@@ -41,7 +43,14 @@ class PekerjaanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'nama' => $request->nama,
+            'created_by' => auth()->user()->id,
+            'updated_by' => auth()->user()->id,
+        ];
+        Pekerjaan::create($data);
+
+        return redirect()->route('pekerjaan.index')->withSuccess(__('Tambah Pekerjaan Berhasil', ['name' => __('pekerjaan.store')]));
     }
 
     /**
@@ -63,7 +72,10 @@ class PekerjaanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pageHeader = 'Lihat Pekerjaan';
+        $data = Pekerjaan::findOrFail($id);
+        
+        return view('app.master.pekerjaan.form', compact('pageHeader', 'data', 'id'));
     }
 
     /**
@@ -75,7 +87,14 @@ class PekerjaanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dataPekerjaan = Pekerjaan::findOrFail($id);
+        $data = [
+            'nama' => $request->nama,
+            'updated_by' => auth()->user()->id,
+        ];
+        $dataPekerjaan->update($data);
+
+        return redirect()->route('pekerjaan.index')->withSuccess(__('Ubah Data Pekerjaan Berhasil', ['name' => __('pekerjaan.update')]));
     }
 
     /**

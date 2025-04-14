@@ -16,11 +16,11 @@ class CreateBahansTable extends Migration
         Schema::create('bahans', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->unique();
-            $table->decimal('volume', 5, 2)->default(0);
+            $table->decimal('volume', 16, 2)->nullable();
             $table->string('satuan')->nullable();
-            $table->bigInteger('harga_modal_material')->default(0);
-            $table->bigInteger('harga_modal_upah')->default(0);
-            $table->bigInteger('harga_jual')->default(0);
+            $table->decimal('harga_modal_material', 16, 2)->nullable();
+            $table->decimal('harga_modal_upah', 16, 2)->nullable();
+            $table->decimal('harga_jual', 16, 2)->nullable();
             $table->foreignId('created_by')->references('id')->on('users');
             $table->foreignId('updated_by')->references('id')->on('users');
             $table->timestamps();

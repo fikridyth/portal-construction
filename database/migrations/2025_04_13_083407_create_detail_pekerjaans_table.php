@@ -15,21 +15,21 @@ class CreateDetailPekerjaansTable extends Migration
     {
         Schema::create('detail_pekerjaans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_proyek')->references('id')->on('users');
-            $table->foreignId('id_pekerjaan')->references('id')->on('users');
-            $table->string('nama')->unique();
-            $table->decimal('volume', 5, 2)->default(0);
+            $table->foreignId('id_proyek')->references('id')->on('proyeks');
+            $table->foreignId('id_pekerjaan')->references('id')->on('pekerjaans');
+            $table->string('nama');
+            $table->decimal('volume', 16, 2)->nullable();
             $table->string('satuan')->nullable();
-            $table->bigInteger('harga_modal_material')->default(0);
-            $table->bigInteger('harga_modal_upah')->default(0);
-            $table->bigInteger('harga_jual_satuan')->default(0);
-            $table->bigInteger('harga_jual_total')->default(0);
+            $table->decimal('harga_modal_material', 16, 2)->nullable();
+            $table->decimal('harga_modal_upah', 16, 2)->nullable();
+            $table->decimal('harga_jual_satuan', 16, 2)->nullable();
+            $table->decimal('harga_jual_total', 16, 2)->nullable();
             $table->boolean('is_bahan');
             $table->json('list_bahan')->nullable();
-            $table->decimal('vol_pemakaian', 5, 2)->default(0);
-            $table->bigInteger('harga_pemakaian')->default(0);
-            $table->decimal('vol_sisa', 5, 2)->default(0);
-            $table->bigInteger('harga_sisa')->default(0);
+            $table->decimal('vol_pemakaian', 16, 2)->nullable();
+            $table->decimal('harga_pemakaian', 16, 2)->nullable();
+            $table->decimal('vol_sisa', 16, 2)->nullable();
+            $table->decimal('harga_sisa', 16, 2)->nullable();
             $table->foreignId('created_by')->references('id')->on('users');
             $table->foreignId('updated_by')->references('id')->on('users');
             $table->timestamps();

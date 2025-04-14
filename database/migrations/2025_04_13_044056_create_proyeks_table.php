@@ -17,6 +17,7 @@ class CreateProyeksTable extends Migration
             $table->id();
             $table->string('nama')->unique();
             $table->string('lokasi');
+            $table->string('tahun_anggaran');
             $table->string('kontrak');
             $table->string('pelaksana');
             $table->string('direktur');

@@ -3,6 +3,7 @@
 // Controllers
 
 use App\Http\Controllers\BahanController;
+use App\Http\Controllers\DetailPekerjaanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\ProyekController;
@@ -43,16 +44,21 @@ Route::group(['middleware' => 'auth'], function () {
     // Dashboard Routes
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
-    // Master Bahan Module
+    // Master Bahan
     Route::resource('bahan', BahanController::class);
 
-    // Master Pekerjaan Module
+    // Master Pekerjaan
     Route::resource('pekerjaan', PekerjaanController::class);
 
-    // Proyek Module
+    // Proyek
     Route::resource('proyek', ProyekController::class);
 
-    // Users Module
+    // Detail Pekerjaan
+    Route::resource('detail-pekerjaan', DetailPekerjaanController::class);
+    Route::get('proyek/{id}/index-detail-pekerjaan', [DetailPekerjaanController::class, 'indexDetailPekerjaan'])->name('proyek.detail-pekerjaan.index');
+    Route::get('proyek/{id}/create-detail-pekerjaan', [DetailPekerjaanController::class, 'createDetailPekerjaan'])->name('proyek.detail-pekerjaan.create');
+
+    // Users
     Route::resource('users', UserController::class);
 });
 

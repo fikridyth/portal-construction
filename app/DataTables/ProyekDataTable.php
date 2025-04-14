@@ -5,8 +5,6 @@ namespace App\DataTables;
 use App\Models\Proyek;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class ProyekDataTable extends DataTable
@@ -22,8 +20,8 @@ class ProyekDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-            ->addColumn('action', 'proyeks.action')
-            ->rawColumns(['action', 'status']);
+            ->addColumn('action', 'app.proses.proyek.action')
+            ->rawColumns(['action']);
     }
 
     /**
@@ -71,6 +69,14 @@ class ProyekDataTable extends DataTable
                 ->searchable(false)
                 ->width(60)
                 ->addClass('text-center hide-search'),
+            ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false],
+            ['data' => 'lokasi', 'name' => 'lokasi', 'title' => 'Lokasi', 'orderable' => false],
+            ['data' => 'tahun_anggaran', 'name' => 'tahun_anggaran', 'title' => 'Tahun Anggaran'],
+            ['data' => 'kontrak', 'name' => 'kontrak', 'title' => 'kontrak'],
+            ['data' => 'pelaksana', 'name' => 'pelaksana', 'title' => 'pelaksana'],
+            ['data' => 'direktur', 'name' => 'direktur', 'title' => 'direktur'],
+            ['data' => 'dari', 'name' => 'dari', 'title' => 'dari'],
+            ['data' => 'sampai', 'name' => 'sampai', 'title' => 'sampai'],
         ];
     }
 

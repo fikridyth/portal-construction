@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\DataTables\ProyekDataTable;
 use App\Helpers\AuthHelper;
+use App\Models\DetailPekerjaan;
+use App\Models\Proyek;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ProyekController extends Controller
 {
@@ -15,11 +18,11 @@ class ProyekController extends Controller
      */
     public function index(ProyekDataTable $dataTable)
     {
-        $pageHeader = 'Proyek';
+        $pageHeader = 'Index Proyek';
         $pageTitle = 'List Proyek';
         $auth_user = AuthHelper::authSession();
         $assets = ['data-table'];
-        $headerAction = '<a href="' . route('users.create') . '" class="btn btn-sm btn-primary" role="button">Tambah Proyek</a>';
+        $headerAction = '<a href="' . route('proyek.create') . '" class="btn btn-sm btn-primary" role="button">Tambah Proyek</a>';
         return $dataTable->render('app.proses.proyek.index', compact('pageHeader', 'pageTitle', 'auth_user', 'assets', 'headerAction'));
     }
 
@@ -30,7 +33,8 @@ class ProyekController extends Controller
      */
     public function create()
     {
-        //
+        $pageHeader = 'Create Proyek';
+        return view('app.proses.proyek.form', compact('pageHeader'));
     }
 
     /**
@@ -41,7 +45,29 @@ class ProyekController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dari = Carbon::parse($request->dari);
+        $sampai = Carbon::parse($request->sampai);
+
+        if ($dari->gt($sampai)) {
+            return redirect()->back()->withInput()->withErrors(['Peringatan' => 'Tanggal mulai tidak boleh lebih besar dari tanggal akhir.']);
+        }
+
+        $data = [
+            'nama' => $request->nama,
+            'lokasi' => $request->lokasi,
+            'tahun_anggaran' => $request->tahun_anggaran,
+            'kontrak' => $request->kontrak,
+            'pelaksana' => $request->pelaksana,
+            'direktur' => $request->direktur,
+            'dari' => $request->dari,
+            'sampai' => $request->sampai,
+            'waktu_pelaksanaan' => $dari->diffInDays($sampai),
+            'created_by' => auth()->user()->id,
+            'updated_by' => auth()->user()->id,
+        ];
+        Proyek::create($data);
+
+        return redirect()->route('proyek.index')->withSuccess(__('Tambah Proyek Berhasil', ['name' => __('proyek.store')]));
     }
 
     /**
@@ -52,7 +78,10 @@ class ProyekController extends Controller
      */
     public function show($id)
     {
-        //
+        $pageHeader = 'Lihat Proyek';
+        $data = Proyek::findOrFail($id);
+        
+        return view('app.proses.proyek.show', compact('pageHeader', 'data'));
     }
 
     /**
@@ -63,7 +92,10 @@ class ProyekController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pageHeader = 'Ubah Proyek';
+        $data = Proyek::findOrFail($id);
+
+        return view('app.proses.proyek.form', compact('pageHeader', 'data', 'id'));
     }
 
     /**
@@ -75,7 +107,29 @@ class ProyekController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dataProyek = Proyek::findOrFail($id);
+        $dari = Carbon::parse($request->dari);
+        $sampai = Carbon::parse($request->sampai);
+
+        if ($dari->gt($sampai)) {
+            return redirect()->back()->withInput()->withErrors(['Peringatan' => 'Tanggal mulai tidak boleh lebih besar dari tanggal akhir.']);
+        }
+
+        $data = [
+            'nama' => $request->nama,
+            'lokasi' => $request->lokasi,
+            'tahun_anggaran' => $request->tahun_anggaran,
+            'kontrak' => $request->kontrak,
+            'pelaksana' => $request->pelaksana,
+            'direktur' => $request->direktur,
+            'dari' => $request->dari,
+            'sampai' => $request->sampai,
+            'waktu_pelaksanaan' => $dari->diffInDays($sampai),
+            'updated_by' => auth()->user()->id,
+        ];
+        $dataProyek->update($data);
+
+        return redirect()->route('proyek.index')->withSuccess(__('Ubah Data Proyek Berhasil', ['name' => __('proyek.update')]));
     }
 
     /**

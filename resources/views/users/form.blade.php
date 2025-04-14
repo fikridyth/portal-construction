@@ -1,4 +1,4 @@
-<x-app-layout :assets="$assets ?? []">
+<x-app-layout :pageHeader="$pageHeader" :assets="$assets ?? []" :dir="false">
    <div>
       <?php
          $id = $id ?? null;
@@ -13,7 +13,7 @@
             <div class="card">
                <div class="card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="card-title">{{$id !== null ? 'Update' : 'Add' }} User</h4>
+                     <h4 class="card-title">{{$id !== null ? 'Ubah' : 'Tambah' }} User</h4>
                   </div>
                </div>
                <div class="card-body">
@@ -93,10 +93,10 @@
             <div class="card">
                <div class="card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="card-title">{{$id !== null ? 'Update' : 'New' }} User Information</h4>
+                     <h4 class="card-title">{{$id !== null ? 'Ubah' : 'Tambah' }} Informasi User</h4>
                   </div>
                   <div class="card-action">
-                        <a href="{{route('users.index')}}" class="btn btn-sm btn-primary" role="button">Back</a>
+                        <a href="{{route('users.index')}}" class="btn btn-sm btn-primary" role="button">Kembali</a>
                   </div>
                </div>
                <div class="card-body">

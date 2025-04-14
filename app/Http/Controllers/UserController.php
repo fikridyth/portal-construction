@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index(UsersDataTable $dataTable)
     {
-        $pageHeader = 'User';
+        $pageHeader = 'Index User';
         $pageTitle = 'List User';
         $auth_user = AuthHelper::authSession();
         $assets = ['data-table'];
@@ -33,9 +33,10 @@ class UserController extends Controller
      */
     public function create()
     {
+        $pageHeader = 'Tambah User';
         $roles = Role::where('status', 1)->get()->pluck('title', 'id');
 
-        return view('users.form', compact('roles'));
+        return view('users.form', compact('pageHeader', 'roles'));
     }
 
     /**
@@ -59,7 +60,7 @@ class UserController extends Controller
         // Save user Profile data...
         $user->userProfile()->create($request->userProfile);
 
-        return redirect()->route('users.index')->withSuccess(__('message.msg_added', ['name' => __('users.store')]));
+        return redirect()->route('users.index')->withSuccess(__('Tambah User Berhasil', ['name' => __('users.store')]));
     }
 
     /**
@@ -70,11 +71,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $pageHeader = 'Data User';
         $data = User::with('userProfile', 'roles')->findOrFail($id);
 
         $profileImage = getSingleMedia($data, 'profile_image');
 
-        return view('users.profile', compact('data', 'profileImage'));
+        return view('users.profile', compact('pageHeader', 'data', 'profileImage'));
     }
 
     /**
@@ -85,6 +87,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $pageHeader = 'Ubah User';
         $data = User::with('userProfile', 'roles')->findOrFail($id);
 
         $data['user_type'] = $data->roles->pluck('id')[0] ?? null;
@@ -93,7 +96,7 @@ class UserController extends Controller
 
         $profileImage = getSingleMedia($data, 'profile_image');
 
-        return view('users.form', compact('data', 'id', 'roles', 'profileImage'));
+        return view('users.form', compact('pageHeader', 'data', 'id', 'roles', 'profileImage'));
     }
 
     /**
@@ -131,9 +134,9 @@ class UserController extends Controller
         $user->userProfile->fill($request->userProfile)->update();
 
         if (auth()->check()) {
-            return redirect()->route('users.index')->withSuccess(__('message.msg_updated', ['name' => __('message.user')]));
+            return redirect()->route('users.index')->withSuccess(__('Update User Berhasil', ['name' => __('message.user')]));
         }
-        return redirect()->back()->withSuccess(__('message.msg_updated', ['name' => 'My Profile']));
+        return redirect()->back()->withSuccess(__('Update User Berhasil', ['name' => 'My Profile']));
     }
 
     /**
