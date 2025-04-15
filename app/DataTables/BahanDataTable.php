@@ -22,7 +22,13 @@ class BahanDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-            ->addColumn('action', 'bahans.action')
+            ->editColumn('harga_modal_material', function ($query) {
+                return $query->harga_modal_material == null ? '-' : number_format($query->harga_modal_material);
+            })
+            ->editColumn('harga_modal_upah', function ($query) {
+                return $query->harga_modal_upah == null ? '-' : number_format($query->harga_modal_upah);
+            })
+            ->addColumn('action', 'app.master.bahan.action')
             ->rawColumns(['action', 'status']);
     }
 
@@ -71,6 +77,12 @@ class BahanDataTable extends DataTable
                 ->searchable(false)
                 ->width(60)
                 ->addClass('text-center hide-search'),
+            ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false, 'className' => 'text-center', 'width' => 600],
+            // ['data' => 'volume', 'name' => 'volume', 'title' => 'Volume', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'satuan', 'name' => 'satuan', 'title' => 'Satuan', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'harga_modal_material', 'name' => 'harga_modal_material', 'title' => 'Harga Modal Material', 'orderable' => false, 'className' => 'text-end'],
+            ['data' => 'harga_modal_upah', 'name' => 'harga_modal_upah', 'title' => 'Harga Modal Upah', 'orderable' => false, 'className' => 'text-end'],
+            // ['data' => 'harga_jual', 'name' => 'harga_jual', 'title' => 'Harga Jual', 'orderable' => false],
         ];
     }
 

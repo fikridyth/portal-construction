@@ -69,14 +69,14 @@ class ProyekDataTable extends DataTable
                 ->searchable(false)
                 ->width(60)
                 ->addClass('text-center hide-search'),
-            ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false],
-            ['data' => 'lokasi', 'name' => 'lokasi', 'title' => 'Lokasi', 'orderable' => false],
-            ['data' => 'tahun_anggaran', 'name' => 'tahun_anggaran', 'title' => 'Tahun Anggaran'],
-            ['data' => 'kontrak', 'name' => 'kontrak', 'title' => 'kontrak'],
-            ['data' => 'pelaksana', 'name' => 'pelaksana', 'title' => 'pelaksana'],
-            ['data' => 'direktur', 'name' => 'direktur', 'title' => 'direktur'],
-            ['data' => 'dari', 'name' => 'dari', 'title' => 'dari'],
-            ['data' => 'sampai', 'name' => 'sampai', 'title' => 'sampai'],
+            ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'lokasi', 'name' => 'lokasi', 'title' => 'Lokasi', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'tahun_anggaran', 'name' => 'tahun_anggaran', 'title' => 'Tahun Anggaran', 'className' => 'text-center'],
+            ['data' => 'kontrak', 'name' => 'kontrak', 'title' => 'kontrak', 'className' => 'text-center'],
+            ['data' => 'pelaksana', 'name' => 'pelaksana', 'title' => 'pelaksana', 'className' => 'text-center'],
+            ['data' => 'direktur', 'name' => 'direktur', 'title' => 'direktur', 'className' => 'text-center'],
+            ['data' => 'dari', 'name' => 'dari', 'title' => 'dari', 'className' => 'text-center'],
+            ['data' => 'sampai', 'name' => 'sampai', 'title' => 'sampai', 'className' => 'text-center'],
         ];
     }
 

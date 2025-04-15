@@ -6,7 +6,7 @@
                     <h4 class="card-title">Lihat Data Proyek</h4>
                 </div>
                 <div class="card-action">
-                    <a href="{{route('proyek.index')}}" class="btn btn-sm btn-primary" role="button">Kembali</a>
+                    <a href="{{ route('proyek.index') }}" class="btn btn-sm btn-primary" role="button">Kembali</a>
                 </div>
             </div>
             <div class="card-body">
@@ -18,7 +18,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label" for="lokasi">Lokasi Proyek:</label>
-                            {{ Form::text('lokasi', $data->lokasi ?? old('lokasi'), ['class' => 'form-control', 'placeholder' => 'Isi Data Lokasi Proyek' ,'disabled']) }}
+                            {{ Form::text('lokasi', $data->lokasi ?? old('lokasi'), ['class' => 'form-control', 'placeholder' => 'Isi Data Lokasi Proyek', 'disabled']) }}
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label" for="tahun_anggaran">Tahun Anggaran:</label>
@@ -55,7 +55,8 @@
                             <h4 class="card-title">Data Pekerjaan</h4>
                         </div>
                         <div class="card-action">
-                            <a href="{{route('proyek.detail-pekerjaan.create', $data->id)}}" class="btn btn-sm btn-success" role="button">Tambah Detail Pekerjaan</a>
+                            <a href="{{ route('proyek.detail-pekerjaan.create', $data->id) }}"
+                                class="btn btn-sm btn-success" role="button">Tambah Detail Pekerjaan</a>
                         </div>
                     </div>
                     <div class="table-responsive mt-4">
@@ -63,7 +64,13 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Pekerjaan</th>
                                     <th>Nama</th>
+                                    <th>Volume</th>
+                                    <th>RAB Modal Material</th>
+                                    <th>RAB Modal Upah</th>
+                                    <th>RAB Jual Satuan</th>
+                                    <th>RAB Jual Total</th>
                                 </tr>
                             </thead>
                         </table>
@@ -72,20 +79,47 @@
             </div>
         </div>
     </div>
- </x-app-layout>
- 
- @push('scripts')
-    <script type="text/javascript">
-    $(function () {
+</x-app-layout>
+
+<script type="text/javascript">
+    $(function() {
         $('#progressTable').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('proyek.detail-pekerjaan.index', $data->id) }}",
-            columns: [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 'nama', name: 'nama' },
+            columns: [{
+                    data: 'no',
+                    name: 'no'
+                },
+                {
+                    data: 'nama_pekerjaan',
+                    name: 'nama_pekerjaan'
+                },
+                {
+                    data: 'nama',
+                    name: 'nama'
+                },
+                {
+                    data: 'volume',
+                    name: 'volume'
+                },
+                {
+                    data: 'harga_modal_material',
+                    name: 'harga_modal_material'
+                },
+                {
+                    data: 'harga_modal_upah',
+                    name: 'harga_modal_upah'
+                },
+                {
+                    data: 'harga_jual_satuan',
+                    name: 'harga_jual_satuan'
+                },
+                {
+                    data: 'harga_jual_total',
+                    name: 'harga_jual_total'
+                },
             ]
         });
     });
-    </script>
-@endpush
+</script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\BahanDataTable;
 use App\Helpers\AuthHelper;
+use App\Models\Bahan;
 use Illuminate\Http\Request;
 
 class BahanController extends Controller
@@ -19,7 +20,7 @@ class BahanController extends Controller
         $pageTitle = 'List Bahan';
         $auth_user = AuthHelper::authSession();
         $assets = ['data-table'];
-        $headerAction = '<a href="' . route('users.create') . '" class="btn btn-sm btn-primary" role="button">Tambah Bahan</a>';
+        $headerAction = '<a href="' . route('bahan.create') . '" class="btn btn-sm btn-primary" role="button">Tambah Bahan</a>';
         return $dataTable->render('app.master.bahan.index', compact('pageHeader', 'pageTitle', 'auth_user', 'assets', 'headerAction'));
     }
 
@@ -30,7 +31,9 @@ class BahanController extends Controller
      */
     public function create()
     {
-        //
+        
+        $pageHeader = 'Tambah Bahan';
+        return view('app.master.bahan.form', compact('pageHeader'));
     }
 
     /**
@@ -41,7 +44,19 @@ class BahanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'nama' => $request->nama,
+            // 'volume' => $request->volume,
+            'satuan' => $request->satuan,
+            'harga_modal_material' => $request->harga_modal_material,
+            'harga_modal_upah' => $request->harga_modal_upah,
+            // 'harga_jual' => $request->harga_jual,
+            'created_by' => auth()->user()->id,
+            'updated_by' => auth()->user()->id,
+        ];
+        Bahan::create($data);
+
+        return redirect()->route('bahan.index')->withSuccess(__('Tambah Bahan Berhasil', ['name' => __('bahan.store')]));
     }
 
     /**
@@ -63,7 +78,10 @@ class BahanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pageHeader = 'Lihat Bahan';
+        $data = Bahan::findOrFail($id);
+        
+        return view('app.master.bahan.form', compact('pageHeader', 'data', 'id'));
     }
 
     /**
@@ -75,7 +93,19 @@ class BahanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dataBahan = Bahan::findOrFail($id);
+        $data = [
+            'nama' => $request->nama,
+            // 'volume' => $request->volume,
+            'satuan' => $request->satuan,
+            'harga_modal_material' => $request->harga_modal_material,
+            'harga_modal_upah' => $request->harga_modal_upah,
+            // 'harga_jual' => $request->harga_jual,
+            'updated_by' => auth()->user()->id,
+        ];
+        $dataBahan->update($data);
+
+        return redirect()->route('bahan.index')->withSuccess(__('Ubah Data Bahan Berhasil', ['name' => __('bahan.update')]));
     }
 
     /**

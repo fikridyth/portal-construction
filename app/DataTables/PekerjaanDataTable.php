@@ -71,7 +71,7 @@ class PekerjaanDataTable extends DataTable
                 ->searchable(false)
                 ->width(60)
                 ->addClass('text-center hide-search'),
-            ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false],
+            ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false, 'className' => 'text-center'],
         ];
     }
 

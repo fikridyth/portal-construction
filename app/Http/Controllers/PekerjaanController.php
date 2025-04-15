@@ -31,7 +31,7 @@ class PekerjaanController extends Controller
      */
     public function create()
     {
-        $pageHeader = 'Create Pekerjaan';
+        $pageHeader = 'Tambah Pekerjaan';
         return view('app.master.pekerjaan.form', compact('pageHeader'));
     }
 
