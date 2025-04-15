@@ -12,6 +12,16 @@ class DetailPekerjaan extends Model
     protected $table = 'detail_pekerjaans';
     protected $guarded = ['id'];
 
+    public function pekerjaan()
+    {
+        return $this->belongsTo(Pekerjaan::class, 'id_pekerjaan');
+    }
+
+    public function proyek()
+    {
+        return $this->belongsTo(Proyek::class, 'id_proyek');
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');

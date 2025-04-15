@@ -78,10 +78,11 @@ class ProyekController extends Controller
      */
     public function show($id)
     {
+        $assets = ['data-table'];
         $pageHeader = 'Lihat Proyek';
         $data = Proyek::findOrFail($id);
-        
-        return view('app.proses.proyek.show', compact('pageHeader', 'data'));
+
+        return view('app.proses.proyek.show', compact('pageHeader', 'data', 'assets'));
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Models\DetailPekerjaan;
 use App\Models\Pekerjaan;
 use App\Models\Proyek;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class DetailPekerjaanController extends Controller
 {
@@ -16,11 +17,36 @@ class DetailPekerjaanController extends Controller
      */
     public function indexDetailPekerjaan($id)
     {
-        $query = DetailPekerjaan::all();
+        $data = DetailPekerjaan::where('id_proyek', $id)->get();
+        $nomor = 1;
 
         return datatables()
-            ->eloquent($query)
-            ->addIndexColumn()
+            ->of($data)
+            ->addColumn('no', function () use (&$nomor) {
+                return $nomor++;
+            })
+            ->addColumn('nama_pekerjaan', function ($row) {
+                return $row->pekerjaan->nama;
+            })
+            ->addColumn('nama', function ($row) {
+                return $row->nama;
+            })
+            ->addColumn('volume', function ($row) {
+                return $row->volume . ' ' . $row->satuan;
+            })
+            ->addColumn('harga_modal_material', function ($row) {
+                return '<div class="text-end">' . ($row->harga_modal_material == null ? '-' : number_format($row->harga_modal_material)) . '</div>';
+            })
+            ->addColumn('harga_modal_upah', function ($row) {
+                return '<div class="text-end">' . ($row->harga_modal_upah == null ? '-' : number_format($row->harga_modal_upah)) . '</div>';
+            })
+            ->addColumn('harga_jual_satuan', function ($row) {
+                return '<div class="text-end">' . ($row->harga_jual_satuan == null ? '-' : number_format($row->harga_jual_satuan)) . '</div>';
+            })
+            ->addColumn('harga_jual_total', function ($row) {
+                return '<div class="text-end">' . ($row->harga_jual_total == null ? '-' : number_format($row->harga_jual_total)) . '</div>';
+            })
+            ->rawColumns(['no', 'nama', 'harga_modal_material', 'harga_modal_upah', 'harga_jual_satuan', 'harga_jual_total'])
             ->make(true);
     }
 
