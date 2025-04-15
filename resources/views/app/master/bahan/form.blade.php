@@ -23,27 +23,27 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="nama">Nama Bahan: <span class="text-danger">*</span></label>
-                                {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control', 'placeholder' => 'Isi Nama Bahan', 'required']) }}
+                                {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama Bahan', 'required']) }}
                             </div>
                             {{-- <div class="form-group col-md-6">
                                 <label class="form-label" for="volume">Volume: <span class="text-danger">*</span></label>
-                                {{ Form::text('volume', $data->volume ?? old('volume'), ['class' => 'form-control', 'placeholder' => 'Isi Volume', 'required']) }}
+                                {{ Form::text('volume', $data->volume ?? old('volume'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Volume', 'required']) }}
                             </div> --}}
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="satuan">Satuan: <span class="text-danger">*</span></label>
-                                {{ Form::text('satuan', $data->satuan ?? old('satuan'), ['class' => 'form-control', 'placeholder' => 'Isi Satuan', 'required']) }}
+                                {{ Form::text('satuan', $data->satuan ?? old('satuan'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Satuan', 'required']) }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="harga_modal_material">Harga Modal Material:</label>
-                                {{ Form::text('harga_modal_material', $data->harga_modal_material ?? old('harga_modal_material'), ['class' => 'form-control', 'placeholder' => 'Isi Harga Modal Material']) }}
+                                {{ Form::text('harga_modal_material', $data->harga_modal_material ?? old('harga_modal_material'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Harga Modal Material']) }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="harga_modal_upah">Harga Modal Upah:</label>
-                                {{ Form::text('harga_modal_upah', $data->harga_modal_upah ?? old('harga_modal_upah'), ['class' => 'form-control', 'placeholder' => 'Isi Harga Modal Upah']) }}
+                                {{ Form::text('harga_modal_upah', $data->harga_modal_upah ?? old('harga_modal_upah'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Harga Modal Upah']) }}
                             </div>
                             {{-- <div class="form-group col-md-6">
                                 <label class="form-label" for="harga_jual">Harga Jual: <span class="text-danger">*</span></label>
-                                {{ Form::text('harga_jual', $data->harga_jual ?? old('harga_jual'), ['class' => 'form-control', 'placeholder' => 'Isi Harga Jual', 'required']) }}
+                                {{ Form::text('harga_jual', $data->harga_jual ?? old('harga_jual'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Harga Jual', 'required']) }}
                             </div> --}}
                         </div>
                         <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Bahan</button>

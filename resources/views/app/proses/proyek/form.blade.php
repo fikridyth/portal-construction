@@ -23,39 +23,39 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="nama">Nama Proyek: <span class="text-danger">*</span></label>
-                                {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control', 'placeholder' => 'Isi Data Nama Proyek', 'required']) }}
+                                {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Data Nama Proyek', 'required']) }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="lokasi">Lokasi Proyek: <span class="text-danger">*</span></label>
-                                {{ Form::text('lokasi', $data->lokasi ?? old('lokasi'), ['class' => 'form-control', 'placeholder' => 'Isi Data Lokasi Proyek' ,'required']) }}
+                                {{ Form::text('lokasi', $data->lokasi ?? old('lokasi'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Data Lokasi Proyek' ,'required']) }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="tahun_anggaran">Tahun Anggaran: <span class="text-danger">*</span></label>
-                                {{ Form::text('tahun_anggaran', $data->tahun_anggaran ?? old('tahun_anggaran'), ['class' => 'form-control', 'id' => 'tahun_anggaran', 'placeholder' => 'Isi Data Tahun Anggaran', 'required']) }}
+                                {{ Form::text('tahun_anggaran', $data->tahun_anggaran ?? old('tahun_anggaran'), ['class' => 'form-control placeholder-grey', 'id' => 'tahun_anggaran', 'placeholder' => 'Isi Data Tahun Anggaran', 'required']) }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="kontrak">Kontrak: <span class="text-danger">*</span></label>
-                                {{ Form::text('kontrak', $data->kontrak ?? old('kontrak'), ['class' => 'form-control', 'id' => 'kontrak', 'placeholder' => 'Isi Data Kontrak', 'required']) }}
+                                {{ Form::text('kontrak', $data->kontrak ?? old('kontrak'), ['class' => 'form-control placeholder-grey', 'id' => 'kontrak', 'placeholder' => 'Isi Data Kontrak', 'required']) }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="pelaksana">Pelaksana: <span class="text-danger">*</span></label>
-                                {{ Form::text('pelaksana', $data->pelaksana ?? old('pelaksana'), ['class' => 'form-control', 'id' => 'pelaksana', 'placeholder' => 'Isi Data Pelaksana', 'required']) }}
+                                {{ Form::text('pelaksana', $data->pelaksana ?? old('pelaksana'), ['class' => 'form-control placeholder-grey', 'id' => 'pelaksana', 'placeholder' => 'Isi Data Pelaksana', 'required']) }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="direktur">Direktur: <span class="text-danger">*</span></label>
-                                {{ Form::text('direktur', $data->direktur ?? old('direktur'), ['class' => 'form-control', 'id' => 'direktur', 'placeholder' => 'Isi Data Direktur', 'required']) }}
+                                {{ Form::text('direktur', $data->direktur ?? old('direktur'), ['class' => 'form-control placeholder-grey', 'id' => 'direktur', 'placeholder' => 'Isi Data Direktur', 'required']) }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="dari">Tanggal Mulai: <span class="text-danger">*</span></label>
-                                {{ Form::date('dari', $data->dari ?? old('dari'), ['class' => 'form-control', 'id' => 'dari', 'placeholder' => 'Isi Data Tanggal Mulai', 'required']) }}
+                                {{ Form::date('dari', $data->dari ?? old('dari'), ['class' => 'form-control placeholder-grey', 'id' => 'dari', 'placeholder' => 'Isi Data Tanggal Mulai', 'required']) }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="sampai">Tanggal Selesai: <span class="text-danger">*</span></label>
-                                {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control', 'id' => 'sampai', 'placeholder' => 'Isi Data Tanggal Selesai', 'required']) }}
+                                {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control placeholder-grey', 'id' => 'sampai', 'placeholder' => 'Isi Data Tanggal Selesai', 'required']) }}
                             </div>
                             {{-- <div class="form-group col-md-12">
                                 <label class="form-label" for="cname">Company Name: <span class="text-danger">*</span></label>
-                                {{ Form::text('userProfile[company_name]', old('userProfile[company_name]'), ['class' => 'form-control', 'required', 'placeholder' => 'Company Name']) }}
+                                {{ Form::text('userProfile[company_name]', old('userProfile[company_name]'), ['class' => 'form-control placeholder-grey', 'required', 'placeholder' => 'Company Name']) }}
                             </div> --}}
                         </div>
                         <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Proyek</button>

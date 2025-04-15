@@ -21,38 +21,38 @@
                 <div class="card-body">
                     <div class="new-user-info">
                         <div class="row">
-                            {{ Form::text('id_proyek', $dataProyek->id, ['class' => 'form-control', 'placeholder' => 'Id Proyek', 'hidden']) }}
+                            {{ Form::text('id_proyek', $dataProyek->id, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Id Proyek', 'hidden']) }}
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="nama_proyek">Nama Proyek: <span class="text-danger">*</span></label>
-                                {{ Form::text('nama_proyek', $dataProyek->nama, ['class' => 'form-control', 'placeholder' => 'Isi Data Nama Proyek', 'readonly']) }}
+                                {{ Form::text('nama_proyek', $dataProyek->nama, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Data Nama Proyek', 'readonly']) }}
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="id_pekerjaan">Pilih Pekerjaan: <span class="text-danger">*</span></label>
-                                {{ Form::select('id_pekerjaan', $dataPekerjaan->pluck('nama', 'id'), old('id_pekerjaan'), ['class' => 'form-control', 'placeholder' => 'Pilih Pekerjaan', 'required']) }}
+                                {{ Form::select('id_pekerjaan', $dataPekerjaan->pluck('nama', 'id'), old('id_pekerjaan'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Pilih Pekerjaan', 'required']) }}
                             </div>
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label class="form-label" for="nama">Nama: <span class="text-danger">*</span></label>
-                                {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control', 'id' => 'nama', 'placeholder' => 'Isi Data Nama', 'required']) }}
+                                {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control placeholder-grey', 'id' => 'nama', 'placeholder' => 'Isi Data Nama', 'required']) }}
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-3">
                                 <label class="form-label" for="volume">Volume: <span class="text-danger">*</span></label>
-                                {{ Form::text('volume', $data->volume ?? old('volume'), ['class' => 'form-control', 'id' => 'volume', 'placeholder' => 'Isi Data Volume', 'required']) }}
+                                {{ Form::text('volume', $data->volume ?? old('volume'), ['class' => 'form-control placeholder-grey', 'id' => 'volume', 'placeholder' => 'Isi Data Volume', 'required']) }}
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-3">
                                 <label class="form-label" for="satuan">Satuan: <span class="text-danger">*</span></label>
-                                {{ Form::text('satuan', $data->satuan ?? old('satuan'), ['class' => 'form-control', 'id' => 'satuan', 'placeholder' => 'Isi Data Satuan', 'required']) }}
+                                {{ Form::text('satuan', $data->satuan ?? old('satuan'), ['class' => 'form-control placeholder-grey', 'id' => 'satuan', 'placeholder' => 'Isi Data Satuan', 'required']) }}
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label class="form-label" for="harga_modal_material">RAB Modal Material:</label>
-                                {{ Form::text('harga_modal_material', $data->harga_modal_material ?? old('harga_modal_material'), ['class' => 'form-control', 'id' => 'harga_modal_material', 'placeholder' => 'Isi Data RAB Modal Material']) }}
+                                {{ Form::text('harga_modal_material', $data->harga_modal_material ?? old('harga_modal_material'), ['class' => 'form-control placeholder-grey', 'id' => 'harga_modal_material', 'placeholder' => 'Isi Data RAB Modal Material']) }}
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label class="form-label" for="harga_modal_upah">RAB Modal Upah:</label>
-                                {{ Form::text('harga_modal_upah', $data->harga_modal_upah ?? old('harga_modal_upah'), ['class' => 'form-control', 'id' => 'harga_modal_upah', 'placeholder' => 'Isi Data RAB Modal Upah']) }}
+                                {{ Form::text('harga_modal_upah', $data->harga_modal_upah ?? old('harga_modal_upah'), ['class' => 'form-control placeholder-grey', 'id' => 'harga_modal_upah', 'placeholder' => 'Isi Data RAB Modal Upah']) }}
                             </div>
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-4">
                                 <label class="form-label" for="harga_jual_satuan">RAB Jual Satuan:</label>
-                                {{ Form::text('harga_jual_satuan', $data->harga_jual_satuan ?? old('harga_jual_satuan'), ['class' => 'form-control', 'id' => 'harga_jual_satuan', 'placeholder' => 'Isi Data RAB Jual Satuan']) }}
+                                {{ Form::text('harga_jual_satuan', $data->harga_jual_satuan ?? old('harga_jual_satuan'), ['class' => 'form-control placeholder-grey', 'id' => 'harga_jual_satuan', 'placeholder' => 'Isi Data RAB Jual Satuan']) }}
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Detail Pekerjaan</button>

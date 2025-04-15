@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label class="form-label" for="nama">Nama Pekerjaan: <span class="text-danger">*</span></label>
-                                {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control', 'placeholder' => 'Isi Nama Pekerjaan', 'required']) }}
+                                {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama Pekerjaan', 'required']) }}
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Pekerjaan</button>

@@ -25,4 +25,9 @@
     th.hide-search input {
         display: none;
     }
+
+    .placeholder-grey::placeholder {
+        color: #c4ced9;
+        opacity: 1;
+    }
 </style>

@@ -68,23 +68,23 @@
                      </div>
                      <div class="form-group">
                         <label class="form-label">User Role: <span class="text-danger">*</span></label>
-                        {{Form::select('user_role', $roles , old('user_role') ? old('user_role') : $data->user_type ?? 'user', ['class' => 'form-control', 'placeholder' => 'Select User Role'])}}
+                        {{Form::select('user_role', $roles , old('user_role') ? old('user_role') : $data->user_type ?? 'user', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Select User Role'])}}
                      </div>
                      <div class="form-group">
                         <label class="form-label" for="furl">Facebook Url:</label>
-                        {{ Form::text('userProfile[facebook_url]', old('userProfile[facebook_url]'), ['class' => 'form-control', 'id' => 'furl', 'placeholder' => 'Facebook Url']) }}
+                        {{ Form::text('userProfile[facebook_url]', old('userProfile[facebook_url]'), ['class' => 'form-control placeholder-grey', 'id' => 'furl', 'placeholder' => 'Facebook Url']) }}
                      </div>
                      <div class="form-group">
                         <label class="form-label" for="turl">Twitter Url:</label>
-                        {{ Form::text('userProfile[twitter_url]', old('userProfile[twitter_url]'), ['class' => 'form-control', 'id' => 'turl', 'placeholder' => 'Twitter Url']) }}
+                        {{ Form::text('userProfile[twitter_url]', old('userProfile[twitter_url]'), ['class' => 'form-control placeholder-grey', 'id' => 'turl', 'placeholder' => 'Twitter Url']) }}
                      </div>
                      <div class="form-group">
                         <label class="form-label" for="instaurl">Instagram Url:</label>
-                        {{ Form::text('userProfile[instagram_url]', old('userProfile[instagram_url]'), ['class' => 'form-control', 'id' => 'instaurl', 'placeholder' => 'Instagram Url']) }}
+                        {{ Form::text('userProfile[instagram_url]', old('userProfile[instagram_url]'), ['class' => 'form-control placeholder-grey', 'id' => 'instaurl', 'placeholder' => 'Instagram Url']) }}
                      </div>
                      <div class="form-group mb-0">
                         <label class="form-label" for="lurl">Linkedin Url:</label>
-                        {{ Form::text('userProfile[linkdin_url]', old('userProfile[linkdin_url]'), ['class' => 'form-control', 'id' => 'lurl', 'placeholder' => 'Linkedin Url']) }}
+                        {{ Form::text('userProfile[linkdin_url]', old('userProfile[linkdin_url]'), ['class' => 'form-control placeholder-grey', 'id' => 'lurl', 'placeholder' => 'Linkedin Url']) }}
                      </div>
                </div>
             </div>
@@ -104,48 +104,48 @@
                         <div class="row">
                            <div class="form-group col-md-6">
                               <label class="form-label" for="fname">First Name: <span class="text-danger">*</span></label>
-                              {{ Form::text('first_name', old('first_name'), ['class' => 'form-control', 'placeholder' => 'First Name', 'required']) }}
+                              {{ Form::text('first_name', old('first_name'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'First Name', 'required']) }}
                            </div>
                            <div class="form-group col-md-6">
                               <label class="form-label" for="lname">Last Name: <span class="text-danger">*</span></label>
-                              {{ Form::text('last_name', old('last_name'), ['class' => 'form-control', 'placeholder' => 'Last Name' ,'required']) }}
+                              {{ Form::text('last_name', old('last_name'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Last Name' ,'required']) }}
                            </div>
                            <div class="form-group col-md-6">
                               <label class="form-label" for="add1">Street Address 1:</label>
-                              {{ Form::text('userProfile[street_addr_1]', old('userProfile[street_addr_1]'), ['class' => 'form-control', 'id' => 'add1', 'placeholder' => 'Enter Street Address 1']) }}
+                              {{ Form::text('userProfile[street_addr_1]', old('userProfile[street_addr_1]'), ['class' => 'form-control placeholder-grey', 'id' => 'add1', 'placeholder' => 'Enter Street Address 1']) }}
                            </div>
                            <div class="form-group col-md-6">
                               <label class="form-label" for="add2">Street Address 2:</label>
-                              {{ Form::text('userProfile[street_addr_2]', old('userProfile[street_addr_2]'), ['class' => 'form-control', 'id' => 'add2', 'placeholder' => 'Enter Street Address 2']) }}
+                              {{ Form::text('userProfile[street_addr_2]', old('userProfile[street_addr_2]'), ['class' => 'form-control placeholder-grey', 'id' => 'add2', 'placeholder' => 'Enter Street Address 2']) }}
                            </div>
                            <div class="form-group col-md-12">
                               <label class="form-label" for="cname">Company Name: <span class="text-danger">*</span></label>
-                              {{ Form::text('userProfile[company_name]', old('userProfile[company_name]'), ['class' => 'form-control', 'required', 'placeholder' => 'Company Name']) }}
+                              {{ Form::text('userProfile[company_name]', old('userProfile[company_name]'), ['class' => 'form-control placeholder-grey', 'required', 'placeholder' => 'Company Name']) }}
                            </div>
                            <div class="form-group col-sm-12">
                               <label class="form-label" id="country">Country:</label>
-                              {{ Form::text('userProfile[country]', old('userProfile[country]'), ['class' => 'form-control', 'id' => 'country']) }}
+                              {{ Form::text('userProfile[country]', old('userProfile[country]'), ['class' => 'form-control placeholder-grey', 'id' => 'country']) }}
 
                            </div>
                            <div class="form-group col-md-6">
                               <label class="form-label" for="mobno">Mobile Number:</label>
-                              {{ Form::text('userProfile[phone_number]', old('userProfile[phone_number]'), ['class' => 'form-control', 'id' => 'mobno', 'placeholder' => 'Mobile Number']) }}
+                              {{ Form::text('userProfile[phone_number]', old('userProfile[phone_number]'), ['class' => 'form-control placeholder-grey', 'id' => 'mobno', 'placeholder' => 'Mobile Number']) }}
                            </div>
                            <div class="form-group col-md-6">
                               <label class="form-label" for="altconno">Alternate Contact:</label>
-                              {{ Form::text('userProfile[alt_phone_number]', old('userProfile[alt_phone_number]'), ['class' => 'form-control', 'id' => 'altconno', 'placeholder' => 'Alternate Contact']) }}
+                              {{ Form::text('userProfile[alt_phone_number]', old('userProfile[alt_phone_number]'), ['class' => 'form-control placeholder-grey', 'id' => 'altconno', 'placeholder' => 'Alternate Contact']) }}
                            </div>
                            <div class="form-group col-md-6">
                               <label class="form-label" for="email">Email: <span class="text-danger">*</span></label>
-                              {{ Form::email('email', old('email'), ['class' => 'form-control', 'placeholder' => 'Enter e-mail', 'required']) }}
+                              {{ Form::email('email', old('email'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Enter e-mail', 'required']) }}
                            </div>
                            <div class="form-group col-md-6">
                               <label class="form-label" for="pno">Pin Code:</label>
-                              {{ Form::number('userProfile[pin_code]', old('userProfile[pin_code]'), ['class' => 'form-control', 'id' => 'pin_code','step' => 'any']) }}
+                              {{ Form::number('userProfile[pin_code]', old('userProfile[pin_code]'), ['class' => 'form-control placeholder-grey', 'id' => 'pin_code','step' => 'any']) }}
                            </div>
                            <div class="form-group col-md-12">
                               <label class="form-label" for="city">Town/City:</label>
-                              {{ Form::text('userProfile[city]', old('city'), ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'Enter City Name' ]) }}
+                              {{ Form::text('userProfile[city]', old('city'), ['class' => 'form-control placeholder-grey', 'id' => 'city', 'placeholder' => 'Enter City Name' ]) }}
                            </div>
                         </div>
                         <hr>
@@ -153,15 +153,15 @@
                         <div class="row">
                            <div class="form-group col-md-12">
                               <label class="form-label" for="uname">User Name: <span class="text-danger">*</span></label>
-                              {{ Form::text('username', old('username'), ['class' => 'form-control', 'required', 'placeholder' => 'Enter Username']) }}
+                              {{ Form::text('username', old('username'), ['class' => 'form-control placeholder-grey', 'required', 'placeholder' => 'Enter Username']) }}
                            </div>
                            <div class="form-group col-md-6">
                               <label class="form-label" for="pass">Password:</label>
-                              {{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
+                              {{ Form::password('password', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Password']) }}
                            </div>
                            <div class="form-group col-md-6">
                               <label class="form-label" for="rpass">Repeat Password:</label>
-                              {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Repeat Password']) }}
+                              {{ Form::password('password_confirmation', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Repeat Password']) }}
                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">{{$id !== null ? 'Update' : 'Add' }} User</button>
