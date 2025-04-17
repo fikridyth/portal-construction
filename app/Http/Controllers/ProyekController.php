@@ -143,4 +143,15 @@ class ProyekController extends Controller
     {
         //
     }
+    
+    public function printProyek($id)
+    {
+        $pageHeader = 'Print Proyek';
+        $dataProyek = Proyek::findOrFail($id);
+        $dataPekerjaan = DetailPekerjaan::where('id_proyek', $dataProyek->id)->orderBy('id_pekerjaan', 'asc')->get();
+        $dataPekerjaanById = $dataPekerjaan->groupBy('id_pekerjaan');
+        // dd($dataPekerjaanById);
+
+        return view('app.proses.proyek.print', compact('pageHeader', 'dataProyek', 'dataPekerjaan', 'dataPekerjaanById'));
+    }
 }

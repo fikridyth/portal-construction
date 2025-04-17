@@ -1,5 +1,5 @@
 <div class="flex align-items-center list-proyek-action">
-    <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Ubah Data Proyek" href="{{ route('proyek.show',$id) }}">
+    <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Proyek" href="{{ route('proyek.show',$id) }}">
         <span class="btn-inner">
             <i class="fas fa-eye mt-1"></i>
         </span>
@@ -7,6 +7,11 @@
     <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Proyek" href="{{ route('proyek.edit',$id) }}">
         <span class="btn-inner">
             <i class="fas fa-edit mt-1"></i>
+        </span>
+    </a>
+    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Proyek" href="{{ route('proyek.print',$id) }}">
+        <span class="btn-inner">
+            <i class="fas fa-print mt-1"></i>
         </span>
     </a>
     {{-- @if(auth()->user()->hasRole('admin') && auth()->id() !== $id)

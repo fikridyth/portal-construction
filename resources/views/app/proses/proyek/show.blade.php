@@ -6,7 +6,8 @@
                     <h4 class="card-title">Lihat Data Proyek</h4>
                 </div>
                 <div class="card-action">
-                    <a href="{{ route('proyek.index') }}" class="btn btn-sm btn-primary" role="button">Kembali</a>
+                    <a href="{{ route('proyek.print', $data->id) }}" class="btn btn-sm btn-success mx-2" style="min-width: 100px;" role="button">Print</a>
+                    <a href="{{ route('proyek.index') }}" class="btn btn-sm btn-primary" style="min-width: 100px;" role="button">Kembali</a>
                 </div>
             </div>
             <div class="card-body">
@@ -64,9 +65,11 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Action</th>
                                     <th>Pekerjaan</th>
                                     <th>Nama</th>
                                     <th>Volume</th>
+                                    <th>Bahan</th>
                                     <th>RAB Modal Material</th>
                                     <th>RAB Modal Upah</th>
                                     <th>RAB Jual Satuan</th>
@@ -77,6 +80,20 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalTitle">Detail</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Konten akan diisi lewat JS -->
+            </div>
+          </div>
         </div>
     </div>
 </x-app-layout>
@@ -92,6 +109,10 @@
                     name: 'no'
                 },
                 {
+                    data: 'action',
+                    name: 'action'
+                },
+                {
                     data: 'nama_pekerjaan',
                     name: 'nama_pekerjaan'
                 },
@@ -102,6 +123,10 @@
                 {
                     data: 'volume',
                     name: 'volume'
+                },
+                {
+                    data: 'is_bahan',
+                    name: 'is_bahan'
                 },
                 {
                     data: 'harga_modal_material',
@@ -121,5 +146,28 @@
                 },
             ]
         });
+    });
+
+    $(document).on('click', '.btn-show-modal', function () {
+        const id = $(this).data('id');
+        const nama = $(this).data('nama');
+        const detail = $(this).data('detail');
+        let html = '';
+
+        detail.forEach((item, index) => {
+        html += `
+            <div class="mb-3 border-bottom pb-2">
+                <p><strong>${index + 1}. ${item.nama_bahan}</strong></p>
+                <p>Volume: ${item.volume} ${item.satuan}</p>
+                <p>Harga Satuan: Rp ${parseInt(item.harga_modal_upah).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                <p>Total: Rp ${parseInt(item.total).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            </div>
+        `;
+        });
+
+        $('#modalTitle').text(`Detail bahan dari pekerjaan ${nama}:`);
+        $('#modalBody').html(html);
+
+        $('#myModal').modal('show');
     });
 </script>
