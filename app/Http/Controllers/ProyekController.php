@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\ProyekDataTable;
 use App\Helpers\AuthHelper;
 use App\Models\DetailPekerjaan;
+use App\Models\LaporanMingguan;
 use App\Models\Proyek;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -81,8 +82,9 @@ class ProyekController extends Controller
         $assets = ['data-table'];
         $pageHeader = 'Lihat Proyek';
         $data = Proyek::findOrFail($id);
+        $dataLaporan = LaporanMingguan::where('id_proyek', $data->id)->exists();
 
-        return view('app.proses.proyek.show', compact('pageHeader', 'data', 'assets'));
+        return view('app.proses.proyek.show', compact('pageHeader', 'data', 'assets', 'dataLaporan'));
     }
 
     /**

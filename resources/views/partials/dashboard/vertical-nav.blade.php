@@ -58,6 +58,12 @@
             <span class="item-name">Proyek</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ activeRoute(route('laporan-mingguan.index')) }}" href="{{ route('laporan-mingguan.index') }}">
+            <i class="fas fa-calendar mt-1"></i>
+            <span class="item-name">Laporan Mingguan</span>
+        </a>
+    </li>
     <li>
         <hr class="hr-horizontal">
     </li>

@@ -30,7 +30,7 @@
                                 <label class="form-label" for="id_pekerjaan">Pilih Pekerjaan: <span class="text-danger">*</span></label>
                                 {{ Form::select('id_pekerjaan', $dataPekerjaan->pluck('nama', 'id'), $data->id_pekerjaan ?? old('id_pekerjaan'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Pilih Pekerjaan', 'required']) }}
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-3">
                                 <label class="form-label" for="nama">Nama: <span class="text-danger">*</span></label>
                                 {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control placeholder-grey', 'id' => 'nama', 'placeholder' => 'Isi Nama', 'required']) }}
                             </div>
@@ -41,6 +41,10 @@
                             <div class="form-group col-md-3">
                                 <label class="form-label" for="satuan">Satuan: <span class="text-danger">*</span></label>
                                 {{ Form::text('satuan', $data->satuan ?? old('satuan'), ['class' => 'form-control placeholder-grey', 'id' => 'satuan', 'placeholder' => 'Isi Satuan', 'required']) }}
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="form-label" for="bobot">Bobot (%): <span class="text-danger">*</span></label>
+                                {{ Form::text('bobot', $data->bobot ?? old('bobot'), ['class' => 'form-control placeholder-grey', 'id' => 'bobot', 'placeholder' => 'Isi Bobot', 'required', isset($data) ? 'readonly' : null]) }}
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="form-label" for="harga_modal_material">RAB Modal Material:</label>
@@ -122,6 +126,22 @@
         const listBahan = JSON.parse(@json($data->list_bahan ?? '[]'));
         const isBahanChecked = {{ $data->is_bahan ?? 0 }};
 
+        function toggleRequired() {
+            const isHidden = formBahan.hidden;
+            const requiredFields = formBahan.querySelectorAll("[required]");
+
+            requiredFields.forEach(function (field) {
+                if (isHidden) {
+                    field.setAttribute("data-was-required", "true");
+                    field.removeAttribute("required");
+                } else {
+                    if (field.getAttribute("data-was-required") === "true") {
+                        field.setAttribute("required", "required");
+                    }
+                }
+            });
+        }
+        
         if (isBahanChecked) {
             checkbox.checked = true;
             formSection.removeAttribute('hidden');
@@ -139,6 +159,7 @@
             });
 
             updateLabelBahan();
+            toggleRequired();
         }
 
         checkbox.addEventListener('change', function () {
@@ -173,6 +194,7 @@
         });
 
         updateLabelBahan();
+        toggleRequired();
     });
 
  </script>

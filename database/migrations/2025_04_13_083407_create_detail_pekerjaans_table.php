@@ -20,6 +20,7 @@ class CreateDetailPekerjaansTable extends Migration
             $table->string('nama');
             $table->decimal('volume', 16, 2)->nullable();
             $table->string('satuan')->nullable();
+            $table->decimal('bobot', 16, 2)->nullable();
             $table->decimal('harga_modal_material', 16, 2)->nullable();
             $table->decimal('harga_modal_upah', 16, 2)->nullable();
             $table->decimal('harga_jual_satuan', 16, 2)->nullable();

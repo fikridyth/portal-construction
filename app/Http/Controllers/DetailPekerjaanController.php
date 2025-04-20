@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bahan;
 use App\Models\DetailPekerjaan;
+use App\Models\LaporanMingguan;
 use App\Models\Pekerjaan;
 use App\Models\Proyek;
 use Illuminate\Http\Request;
@@ -27,11 +28,21 @@ class DetailPekerjaanController extends Controller
                 return $nomor++;
             })
             ->addColumn('action', function ($row) {
-                return '<div class="text-center">
-                    <a href="' . route('detail-pekerjaan.edit', $row->id) . '" 
-                        class="btn btn-xs btn-warning" role="button"><i class="fas fa-edit"></i>
-                    </a>
-                </div>';
+                $data = LaporanMingguan::where('id_proyek', $row->id_proyek)->get();
+                if ($data->count() > 0) {
+                    return '<div class="text-center">
+                        <button class="btn btn-xs btn-secondary" disabled>
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>';
+                } else {
+                    return '<div class="text-center">
+                        <a href="' . route('detail-pekerjaan.edit', $row->id) . '" 
+                            class="btn btn-xs btn-warning" role="button">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </div>';
+                }
             })
             ->addColumn('nama_pekerjaan', function ($row) {
                 return $row->pekerjaan->nama;
@@ -41,6 +52,9 @@ class DetailPekerjaanController extends Controller
             })
             ->addColumn('volume', function ($row) {
                 return $row->volume . ' ' . $row->satuan;
+            })
+            ->editColumn('bobot', function ($row) {
+                return '<div class="text-end">' . ($row->bobot == null ? '-' : number_format($row->bobot, 2)) . '</div>';
             })
             ->addColumn('harga_modal_material', function ($row) {
                 return '<div class="text-end">' . ($row->harga_modal_material == null ? '-' : number_format($row->harga_modal_material, 2)) . '</div>';
@@ -66,7 +80,7 @@ class DetailPekerjaanController extends Controller
                         </button>'
                         ) . '</div>';
                     })
-            ->rawColumns(['action', 'no', 'nama', 'harga_modal_material', 'harga_modal_upah', 'harga_jual_satuan', 'harga_jual_total', 'is_bahan'])
+            ->rawColumns(['action', 'no', 'nama', 'bobot', 'harga_modal_material', 'harga_modal_upah', 'harga_jual_satuan', 'harga_jual_total', 'is_bahan'])
             ->make(true);
     }
 
@@ -130,6 +144,7 @@ class DetailPekerjaanController extends Controller
             'nama' => $request->nama,
             'volume' => $request->volume,
             'satuan' => $request->satuan,
+            'bobot' => $request->bobot,
             'harga_modal_material' => $request->harga_modal_material ?? null,
             'harga_modal_upah' => $request->harga_modal_upah ?? null,
             'harga_jual_satuan' => $request->harga_jual_satuan ?? null,
@@ -219,6 +234,7 @@ class DetailPekerjaanController extends Controller
             'nama' => $request->nama,
             'volume' => $request->volume,
             'satuan' => $request->satuan,
+            'bobot' => $request->bobot,
             'harga_modal_material' => $request->harga_modal_material ?? null,
             'harga_modal_upah' => $request->harga_modal_upah ?? null,
             'harga_jual_satuan' => $request->harga_jual_satuan ?? null,

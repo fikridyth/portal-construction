@@ -56,8 +56,16 @@
                             <h4 class="card-title">Data Pekerjaan</h4>
                         </div>
                         <div class="card-action">
-                            <a href="{{ route('proyek.detail-pekerjaan.create', $data->id) }}"
-                                class="btn btn-sm btn-success" role="button">Tambah Detail Pekerjaan</a>
+                            @if ($dataLaporan)
+                                <button class="btn btn-sm btn-secondary" disabled title="Tidak bisa tambah detail, sudah ada laporan">
+                                    Tambah Detail Pekerjaan
+                                </button>
+                            @else
+                                <a href="{{ route('proyek.detail-pekerjaan.create', $data->id) }}"
+                                    class="btn btn-sm btn-success" role="button">
+                                    Tambah Detail Pekerjaan
+                                </a>
+                            @endif
                         </div>
                     </div>
                     <div class="table-responsive mt-4">
@@ -69,6 +77,7 @@
                                     <th>Pekerjaan</th>
                                     <th>Nama</th>
                                     <th>Volume</th>
+                                    <th>Bobot (%)</th>
                                     <th>Bahan</th>
                                     <th>RAB Modal Material</th>
                                     <th>RAB Modal Upah</th>
@@ -123,6 +132,10 @@
                 {
                     data: 'volume',
                     name: 'volume'
+                },
+                {
+                    data: 'bobot',
+                    name: 'bobot'
                 },
                 {
                     data: 'is_bahan',

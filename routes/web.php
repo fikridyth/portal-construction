@@ -5,6 +5,7 @@
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\DetailPekerjaanController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LaporanMingguanController;
 use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\Security\RolePermission;
@@ -58,6 +59,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('detail-pekerjaan', DetailPekerjaanController::class);
     Route::get('proyek/{id}/index-detail-pekerjaan', [DetailPekerjaanController::class, 'indexDetailPekerjaan'])->name('proyek.detail-pekerjaan.index');
     Route::get('proyek/{id}/create-detail-pekerjaan', [DetailPekerjaanController::class, 'createDetailPekerjaan'])->name('proyek.detail-pekerjaan.create');
+
+    // Laporan Mingguan
+    Route::resource('laporan-mingguan', LaporanMingguanController::class);
+    Route::get('/get-detail-pekerjaan/{id}', [LaporanMingguanController::class, 'getDetailPekerjaan']);
+    Route::get('laporan-mingguan/{id}/print', [LaporanMingguanController::class, 'printLaporanMingguan'])->name('laporan-mingguan.print');
 
     // Users
     Route::resource('users', UserController::class);

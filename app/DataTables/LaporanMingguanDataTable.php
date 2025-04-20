@@ -2,13 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\DetailPekerjaan;
-use App\Models\Proyek;
+use App\Models\LaporanMingguan;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ProyekDataTable extends DataTable
+class LaporanMingguanDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,22 +22,23 @@ class ProyekDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-            ->addColumn('bobot', function ($query) {
-                $data = DetailPekerjaan::where('id_proyek', $query->id)->get();
-                $totalBobot = $data->sum('bobot');
-                return $totalBobot . '%' ?? '0%';
+            ->editColumn('id_proyek', function ($query) {
+                return $query->proyek->nama ?? '-';
             })
-            ->addColumn('action', 'app.proses.proyek.action')
+            ->editColumn('bobot_minggu_lalu', function ($query) {
+                return $query->bobot_minggu_lalu ?? '-';
+            })
+            ->addColumn('action', 'app.proses.laporan-mingguan.action')
             ->rawColumns(['action']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Proyek $model
+     * @param \App\Models\LaporanMingguan $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Proyek $model)
+    public function query(LaporanMingguan $model)
     {
         return $model->newQuery();
     }
@@ -75,15 +77,12 @@ class ProyekDataTable extends DataTable
                 ->searchable(false)
                 ->width(60)
                 ->addClass('text-center hide-search'),
-            ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false, 'className' => 'text-center'],
-            ['data' => 'bobot', 'name' => 'bobot', 'title' => 'Bobot', 'orderable' => false, 'className' => 'text-center'],
-            ['data' => 'lokasi', 'name' => 'lokasi', 'title' => 'Lokasi', 'orderable' => false, 'className' => 'text-center'],
-            ['data' => 'tahun_anggaran', 'name' => 'tahun_anggaran', 'title' => 'Tahun Anggaran', 'className' => 'text-center'],
-            ['data' => 'kontrak', 'name' => 'kontrak', 'title' => 'kontrak', 'className' => 'text-center'],
-            ['data' => 'pelaksana', 'name' => 'pelaksana', 'title' => 'pelaksana', 'className' => 'text-center'],
-            ['data' => 'direktur', 'name' => 'direktur', 'title' => 'direktur', 'className' => 'text-center'],
-            ['data' => 'dari', 'name' => 'dari', 'title' => 'dari', 'className' => 'text-center'],
-            ['data' => 'sampai', 'name' => 'sampai', 'title' => 'sampai', 'className' => 'text-center'],
+            ['data' => 'id_proyek', 'name' => 'id_proyek', 'title' => 'Proyek', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'minggu_ke', 'name' => 'minggu_ke', 'title' => 'Minggu Ke', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'bobot_rencana', 'name' => 'bobot_rencana', 'title' => 'Bobot Rencana', 'className' => 'text-center'],
+            ['data' => 'bobot_minggu_lalu', 'name' => 'bobot_minggu_lalu', 'title' => 'Bobot Minggu Lalu', 'className' => 'text-center'],
+            ['data' => 'bobot_minggu_ini', 'name' => 'bobot_minggu_ini', 'title' => 'Bobot Minggu Ini', 'className' => 'text-center'],
+            ['data' => 'bobot_total', 'name' => 'bobot_total', 'title' => 'Bobot Total', 'className' => 'text-center'],
         ];
     }
 
@@ -94,6 +93,6 @@ class ProyekDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Proyek_' . date('YmdHis');
+        return 'LaporanMingguan_' . date('YmdHis');
     }
 }
