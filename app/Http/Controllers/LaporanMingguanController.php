@@ -8,6 +8,7 @@ use App\Models\DetailPekerjaan;
 use App\Models\LaporanMingguan;
 use App\Models\Pekerjaan;
 use App\Models\Proyek;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LaporanMingguanController extends Controller
@@ -48,9 +49,13 @@ class LaporanMingguanController extends Controller
 
     public function getMingguKe($id)
     {
-        $data = LaporanMingguan::where('id_proyek', $id)->orderBy('created_at', 'desc')->first();
+        $data = 0;
+        $dataMingguan = LaporanMingguan::where('id_proyek', $id)->orderBy('created_at', 'desc')->first();
+        if ($dataMingguan) {
+            $data = $dataMingguan->minggu_ke;
+        }
     
-        return response()->json(['minggu_ke' => $data->minggu_ke + 1 ?? 1]);
+        return response()->json(['minggu_ke' => $data + 1 ?? 1]);
     }
 
     /**
@@ -144,6 +149,8 @@ class LaporanMingguanController extends Controller
         $data = [
             'id_proyek' => $request->id_proyek,
             'minggu_ke' => $request->minggu_ke,
+            'dari' => $request->dari,
+            'sampai' => $request->sampai,
             'bobot_rencana' => number_format($request->bobot_rencana, 2),
             'bobot_minggu_lalu' => number_format($totalBobotMingguLalu ?? null, 2),
             'bobot_minggu_ini' => number_format($totalBobotMingguIni - $totalBobotMingguLalu ?? null, 2),
@@ -170,7 +177,11 @@ class LaporanMingguanController extends Controller
         $data = LaporanMingguan::findOrFail($id);
         $job = Pekerjaan::all()->keyBy('id');
 
-        return view('app.proses.laporan-mingguan.show', compact('assets', 'pageHeader', 'data', 'job'));
+        $dari = Carbon::parse($data->dari);
+        $sampai = Carbon::parse($data->sampai);
+        $masaPelaksanaan = $dari->format('d') . ' S/D ' . $sampai->format('d F Y');
+
+        return view('app.proses.laporan-mingguan.show', compact('assets', 'pageHeader', 'data', 'job', 'masaPelaksanaan'));
     }
 
     /**
@@ -216,8 +227,11 @@ class LaporanMingguanController extends Controller
         $data = LaporanMingguan::findOrFail($id);
         $dataPekerjaan = DetailPekerjaan::where('id_proyek', $data->id_proyek)->orderBy('id_pekerjaan', 'asc')->get();
         $dataPekerjaanById = $dataPekerjaan->groupBy('id_pekerjaan');
-        // dd($dataPekerjaanById);
 
-        return view('app.proses.laporan-mingguan.print', compact('pageHeader', 'data', 'dataPekerjaan', 'dataPekerjaanById'));
+        $dari = Carbon::parse($data->dari);
+        $sampai = Carbon::parse($data->sampai);
+        $masaPelaksanaan = $dari->format('d') . ' S/D ' . $sampai->format('d F Y');
+
+        return view('app.proses.laporan-mingguan.print', compact('pageHeader', 'data', 'dataPekerjaan', 'dataPekerjaanById', 'masaPelaksanaan'));
     }
 }

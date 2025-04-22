@@ -23,21 +23,21 @@
                             <label class="form-label" for="nama">Minggu Ke:</label>
                             {{ Form::text('nama', $data->minggu_ke, ['class' => 'form-control', 'placeholder' => 'Isi Data Nama Proyek', 'disabled']) }}
                         </div>
-                        <div class="form-group col-md-2">
-                            <label class="form-label" for="nama">Mulai:</label>
-                            {{ Form::text('nama', $data->proyek->dari, ['class' => 'form-control', 'placeholder' => 'Isi Data Nama Proyek', 'disabled']) }}
+                        <div class="form-group col-md-3">
+                            <label class="form-label" for="nama">Masa Pelaksanaan:</label>
+                            {{ Form::text('nama', $masaPelaksanaan, ['class' => 'form-control', 'placeholder' => 'Isi Data Nama Proyek', 'disabled']) }}
                         </div>
-                        <div class="form-group col-md-2">
+                        {{-- <div class="form-group col-md-2">
                             <label class="form-label" for="nama">Selesai:</label>
                             {{ Form::text('nama', $data->proyek->sampai, ['class' => 'form-control', 'placeholder' => 'Isi Data Nama Proyek', 'disabled']) }}
-                        </div>
-                        <div class="form-group col-md-2">
+                        </div> --}}
+                        <div class="form-group col-md-3">
                             <label class="form-label" for="nama">Tahun Anggaran:</label>
                             {{ Form::text('nama', $data->proyek->tahun_anggaran, ['class' => 'form-control', 'placeholder' => 'Isi Data Nama Proyek', 'disabled']) }}
                         </div>
                         <div class="form-group col-md-3">
                             <label class="form-label" for="nama">Lokasi Pekerjaan:</label>
-                            {{ Form::text('nama', $data->proyek->lokasi_pekerjaan, ['class' => 'form-control', 'placeholder' => 'Isi Data Nama Proyek', 'disabled']) }}
+                            {{ Form::text('nama', $data->proyek->lokasi, ['class' => 'form-control', 'placeholder' => 'Isi Data Nama Proyek', 'disabled']) }}
                         </div>
                         <div class="form-group col-md-3">
                             <label class="form-label" for="nama">Kontrak:</label>

@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <div class="new-user-info">
                         <div class="row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-5">
                                 <label class="form-label" for="nama">Proyek: <span class="text-danger">*</span></label>
                                 {{ Form::select('id_proyek', $dataProyek->pluck('nama', 'id'), null, [
                                     'class' => 'form-control placeholder-grey',
@@ -30,11 +30,19 @@
                                     'id' => 'id_proyek'
                                 ]) }}
                             </div>
-                            <div class="form-group col-md-3">
-                                <label class="form-label" for="minggu_ke">Minggu Ke: <span class="text-danger">*</span></label>
+                            <div class="form-group col-md-1">
+                                <label class="form-label" style="font-size: 15px;" for="minggu_ke">Minggu Ke: <span class="text-danger">*</span></label>
                                 {{ Form::text('minggu_ke', $data->minggu_ke ?? old('minggu_ke'), ['class' => 'form-control placeholder-grey', 'id' => 'minggu_ke', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
+                                <label class="form-label" for="dari">Dari: <span class="text-danger">*</span></label>
+                                {{ Form::date('dari', $data->dari ?? old('dari'), ['class' => 'form-control placeholder-grey', 'id' => 'dari', 'placeholder' => 'Isi Tanggal', "required"]) }}
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label class="form-label" for="sampai">Sampai: <span class="text-danger">*</span></label>
+                                {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control placeholder-grey', 'id' => 'sampai', 'placeholder' => 'Isi Tanggal', "required"]) }}
+                            </div>
+                            <div class="form-group col-md-2">
                                 <label class="form-label" for="bobot_rencana">Bobot Rencana (%): <span class="text-danger">*</span></label>
                                 {{ Form::text('bobot_rencana', $data->bobot_rencana ?? old('bobot_rencana'), ['class' => 'form-control placeholder-grey', 'id' => 'bobot_rencana', 'placeholder' => 'Isi Bobot Rencana', 'oninput' => "this.value = this.value.replace(/,/g, '')", "required"]) }}
                             </div>

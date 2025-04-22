@@ -18,6 +18,8 @@ class CreateLaporanMingguansTable extends Migration
             $table->foreignId('id_proyek')->references('id')->on('proyeks');
             $table->json('list_pekerjaan')->nullable();
             $table->bigInteger('minggu_ke');
+            $table->date('dari');
+            $table->date('sampai');
             $table->decimal('bobot_minggu_lalu', 16, 2)->nullable();
             $table->decimal('bobot_minggu_ini', 16, 2)->nullable();
             $table->decimal('bobot_rencana', 16, 2)->nullable();

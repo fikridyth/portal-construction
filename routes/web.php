@@ -3,8 +3,11 @@
 // Controllers
 
 use App\Http\Controllers\BahanController;
+use App\Http\Controllers\CuacaMingguanController;
 use App\Http\Controllers\DetailPekerjaanController;
+use App\Http\Controllers\DokumentasiMingguanController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\LaporanMingguanController;
 use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\ProyekController;
@@ -61,10 +64,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('proyek/{id}/create-detail-pekerjaan', [DetailPekerjaanController::class, 'createDetailPekerjaan'])->name('proyek.detail-pekerjaan.create');
 
     // Laporan Mingguan
-    Route::resource('laporan-mingguan', LaporanMingguanController::class);
-    Route::get('/get-detail-pekerjaan/{id}', [LaporanMingguanController::class, 'getDetailPekerjaan']);
-    Route::get('/get-minggu-ke/{id}', [LaporanMingguanController::class, 'getMingguKe']);
-    Route::get('laporan-mingguan/{id}/print', [LaporanMingguanController::class, 'printLaporanMingguan'])->name('laporan-mingguan.print');
+    Route::resource('laporan-harian', LaporanHarianController::class);
+
+    // Laporan Mingguan
+        // Laporan Progress
+        Route::resource('laporan-mingguan', LaporanMingguanController::class);
+        Route::get('/get-detail-pekerjaan/{id}', [LaporanMingguanController::class, 'getDetailPekerjaan']);
+        Route::get('/get-minggu-ke/{id}', [LaporanMingguanController::class, 'getMingguKe']);
+        Route::get('laporan-mingguan/{id}/print', [LaporanMingguanController::class, 'printLaporanMingguan'])->name('laporan-mingguan.print');
+
+        // Dokumentasi Mingguan
+        Route::resource('dokumentasi-mingguan', DokumentasiMingguanController::class);
+
+        // Laporan Cuaca
+        Route::resource('cuaca-mingguan', CuacaMingguanController::class);
 
     // Users
     Route::resource('users', UserController::class);

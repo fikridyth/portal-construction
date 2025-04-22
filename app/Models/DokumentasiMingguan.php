@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LaporanMingguan extends Model
+class DokumentasiMingguan extends Model
 {
     use HasFactory;
 
-    protected $table = 'laporan_mingguans';
+    protected $table = 'dokumentasi_mingguans';
     protected $guarded = ['id'];
 
-    public function proyek()
+    public function laporanMingguan()
     {
-        return $this->belongsTo(Proyek::class, 'id_proyek');
+        return $this->belongsTo(LaporanMingguan::class, 'id_laporan_mingguans');
     }
 
     public function createdBy()

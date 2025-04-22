@@ -59,10 +59,62 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ activeRoute(route('laporan-mingguan.index')) }}" href="{{ route('laporan-mingguan.index') }}">
-            <i class="fas fa-calendar mt-1"></i>
-            <span class="item-name">Laporan Mingguan</span>
+        <a class="nav-link {{ activeRoute(route('laporan-harian.index')) }}" href="{{ route('laporan-harian.index') }}">
+            <i class="fas fa-calendar-days mt-1"></i>
+            <span class="item-name">Laporan Harian</span>
         </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#laporan-mingguan" role="button" aria-expanded="false" aria-controls="laporan-mingguan">
+            <i class="fas fa-calendar-week mt-1"></i>
+            <span class="item-name">Laporan Mingguan</span>
+            <i class="right-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </i>
+        </a>
+        <ul class="sub-nav collapse" id="laporan-mingguan" data-bs-parent="#sidebar">
+            <li class="nav-item ">
+                <a class="nav-link {{ activeRoute(route('laporan-mingguan.index')) }}" href="{{ route('laporan-mingguan.index') }}">
+                  <i class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                            <g>
+                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                            </g>
+                        </svg>
+                    </i>
+                    <i class="fas fa-bars sidenav-mini-icon mt-1"></i>
+                  <span class="item-name">Laporan Progress</span>
+                </a>
+            </li>
+            <li class=" nav-item ">
+                <a class="nav-link {{ activeRoute(route('dokumentasi-mingguan.index')) }}" href="{{ route('dokumentasi-mingguan.index') }}">
+                    <i class="icon svg-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                            <g>
+                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                            </g>
+                        </svg>
+                    </i>
+                    <i class="fas fa-book sidenav-mini-icon mt-1"></i>
+                    <span class="item-name">Dokumentasi Proyek</span>
+                </a>
+            </li>
+            <li class=" nav-item ">
+                <a class="nav-link {{ activeRoute(route('cuaca-mingguan.index')) }}" href="{{ route('cuaca-mingguan.index') }}">
+                    <i class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                            <g>
+                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                            </g>
+                        </svg>
+                    </i>
+                    <i class="fas fa-cloud sidenav-mini-icon mt-1"></i>
+                    <span class="item-name">Keadaan Cuaca</span>
+                </a>
+            </li>
+        </ul>
     </li>
     <li>
         <hr class="hr-horizontal">

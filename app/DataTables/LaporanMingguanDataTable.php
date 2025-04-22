@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\LaporanMingguan;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -27,6 +28,18 @@ class LaporanMingguanDataTable extends DataTable
             })
             ->editColumn('bobot_minggu_lalu', function ($query) {
                 return $query->bobot_minggu_lalu ?? '-';
+            })
+            ->addColumn('masa_pelaksanaan', function ($query) {
+                $dari = Carbon::parse($query->dari);
+                $sampai = Carbon::parse($query->sampai);
+
+                // Jika bulan sama
+                // if ($dari->format('F') === $sampai->format('F')) {
+                //     return $dari->format('d') . '–' . $sampai->format('d F Y');
+                // }
+
+                // Jika bulan berbeda
+                return $dari->format('d') . ' S/D ' . $sampai->format('d F Y');
             })
             ->addColumn('action', 'app.proses.laporan-mingguan.action')
             ->rawColumns(['action']);
@@ -79,6 +92,7 @@ class LaporanMingguanDataTable extends DataTable
                 ->addClass('text-center hide-search'),
             ['data' => 'id_proyek', 'name' => 'id_proyek', 'title' => 'Proyek', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'minggu_ke', 'name' => 'minggu_ke', 'title' => 'Minggu Ke', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'masa_pelaksanaan', 'name' => 'masa_pelaksanaan', 'title' => 'Masa Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'bobot_rencana', 'name' => 'bobot_rencana', 'title' => 'Bobot Rencana', 'className' => 'text-center'],
             ['data' => 'bobot_minggu_lalu', 'name' => 'bobot_minggu_lalu', 'title' => 'Bobot Minggu Lalu', 'className' => 'text-center'],
             ['data' => 'bobot_minggu_ini', 'name' => 'bobot_minggu_ini', 'title' => 'Bobot Minggu Ini', 'className' => 'text-center'],

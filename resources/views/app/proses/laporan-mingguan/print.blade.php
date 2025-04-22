@@ -44,7 +44,7 @@
                 <div class="col-sm-4"><b>DIREKTUR</b></div>
                 <div class="col-sm-8"><b>:&emsp14;&emsp14;&emsp14; {{ $data->proyek->direktur }}</b></div>
                 <div class="col-sm-4"><b>MASA PELAKSANAAN</b></div>
-                <div class="col-sm-8"><b>:&emsp14;&emsp14;&emsp14; {{ $data->proyek->dari }} - {{ $data->proyek->sampai }}</b></div>
+                <div class="col-sm-8"><b>:&emsp14;&emsp14;&emsp14; {{ $masaPelaksanaan }}</b></div>
             </div>
         </div>
         <div class="text-right mt-1 mr-5">
