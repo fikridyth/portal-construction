@@ -14,7 +14,7 @@ class DokumentasiMingguan extends Model
 
     public function laporanMingguan()
     {
-        return $this->belongsTo(LaporanMingguan::class, 'id_laporan_mingguans');
+        return $this->belongsTo(LaporanMingguan::class, 'id_laporan_mingguan');
     }
 
     public function createdBy()

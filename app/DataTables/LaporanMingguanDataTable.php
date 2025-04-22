@@ -84,12 +84,6 @@ class LaporanMingguanDataTable extends DataTable
     {
         return [
             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->searchable(false)
-                ->width(60)
-                ->addClass('text-center hide-search'),
             ['data' => 'id_proyek', 'name' => 'id_proyek', 'title' => 'Proyek', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'minggu_ke', 'name' => 'minggu_ke', 'title' => 'Minggu Ke', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'masa_pelaksanaan', 'name' => 'masa_pelaksanaan', 'title' => 'Masa Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
@@ -97,6 +91,12 @@ class LaporanMingguanDataTable extends DataTable
             ['data' => 'bobot_minggu_lalu', 'name' => 'bobot_minggu_lalu', 'title' => 'Bobot Minggu Lalu', 'className' => 'text-center'],
             ['data' => 'bobot_minggu_ini', 'name' => 'bobot_minggu_ini', 'title' => 'Bobot Minggu Ini', 'className' => 'text-center'],
             ['data' => 'bobot_total', 'name' => 'bobot_total', 'title' => 'Bobot Total', 'className' => 'text-center'],
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->searchable(false)
+                ->width(60)
+                ->addClass('text-center hide-search'),
         ];
     }
 

@@ -65,13 +65,13 @@ class PekerjaanDataTable extends DataTable
     {
         return [
             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false, 'width' => 60],
+            ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false, 'className' => 'text-center'],
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->searchable(false)
                 ->width(60)
                 ->addClass('text-center hide-search'),
-            ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false, 'className' => 'text-center'],
         ];
     }
 

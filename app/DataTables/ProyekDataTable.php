@@ -69,12 +69,6 @@ class ProyekDataTable extends DataTable
     {
         return [
             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->searchable(false)
-                ->width(60)
-                ->addClass('text-center hide-search'),
             ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'bobot', 'name' => 'bobot', 'title' => 'Bobot', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'lokasi', 'name' => 'lokasi', 'title' => 'Lokasi', 'orderable' => false, 'className' => 'text-center'],
@@ -84,6 +78,12 @@ class ProyekDataTable extends DataTable
             ['data' => 'direktur', 'name' => 'direktur', 'title' => 'direktur', 'className' => 'text-center'],
             ['data' => 'dari', 'name' => 'dari', 'title' => 'dari', 'className' => 'text-center'],
             ['data' => 'sampai', 'name' => 'sampai', 'title' => 'sampai', 'className' => 'text-center'],
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->searchable(false)
+                ->width(60)
+                ->addClass('text-center hide-search'),
         ];
     }
 

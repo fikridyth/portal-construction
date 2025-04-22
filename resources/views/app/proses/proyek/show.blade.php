@@ -78,7 +78,6 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Action</th>
                                     <th>Pekerjaan</th>
                                     <th>Nama</th>
                                     <th>Volume</th>
@@ -88,6 +87,7 @@
                                     <th>RAB Modal Upah</th>
                                     <th>RAB Jual Satuan</th>
                                     <th>RAB Jual Total</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -121,10 +121,6 @@
             columns: [{
                     data: 'no',
                     name: 'no'
-                },
-                {
-                    data: 'action',
-                    name: 'action'
                 },
                 {
                     data: 'nama_pekerjaan',
@@ -161,6 +157,10 @@
                 {
                     data: 'harga_jual_total',
                     name: 'harga_jual_total'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
                 },
             ]
         });

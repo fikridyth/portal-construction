@@ -16,7 +16,10 @@ class CreateDokumentasiMingguansTable extends Migration
         Schema::create('dokumentasi_mingguans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_laporan_mingguan')->references('id')->on('laporan_mingguans');
+            $table->bigInteger('minggu_ke');
             $table->json('list_gambar')->nullable();
+            $table->date('dari');
+            $table->date('sampai');
             $table->foreignId('created_by')->references('id')->on('users');
             $table->foreignId('updated_by')->references('id')->on('users');
             $table->timestamps();

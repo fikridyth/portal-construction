@@ -75,6 +75,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Dokumentasi Mingguan
         Route::resource('dokumentasi-mingguan', DokumentasiMingguanController::class);
+        Route::get('/get-dok-minggu-ke/{id}', [DokumentasiMingguanController::class, 'getMingguKe']);
+        Route::get('dokumentasi-mingguan/{id}/print', [DokumentasiMingguanController::class, 'printDokumentasiMingguan'])->name('dokumentasi-mingguan.print');
 
         // Laporan Cuaca
         Route::resource('cuaca-mingguan', CuacaMingguanController::class);

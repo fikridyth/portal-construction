@@ -71,18 +71,18 @@ class BahanDataTable extends DataTable
     {
         return [
             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->searchable(false)
-                ->width(60)
-                ->addClass('text-center hide-search'),
             ['data' => 'nama', 'name' => 'nama', 'title' => 'Nama', 'orderable' => false, 'className' => 'text-center', 'width' => 600],
             // ['data' => 'volume', 'name' => 'volume', 'title' => 'Volume', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'satuan', 'name' => 'satuan', 'title' => 'Satuan', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'harga_modal_material', 'name' => 'harga_modal_material', 'title' => 'Harga Modal Material', 'orderable' => false, 'className' => 'text-end'],
             ['data' => 'harga_modal_upah', 'name' => 'harga_modal_upah', 'title' => 'Harga Modal Upah', 'orderable' => false, 'className' => 'text-end'],
             // ['data' => 'harga_jual', 'name' => 'harga_jual', 'title' => 'Harga Jual', 'orderable' => false],
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->searchable(false)
+                ->width(60)
+                ->addClass('text-center hide-search'),
         ];
     }
 
