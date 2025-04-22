@@ -6,6 +6,7 @@ use App\DataTables\LaporanMingguanDataTable;
 use App\Helpers\AuthHelper;
 use App\Models\DetailPekerjaan;
 use App\Models\LaporanMingguan;
+use App\Models\Pekerjaan;
 use App\Models\Proyek;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,27 @@ class LaporanMingguanController extends Controller
     public function getDetailPekerjaan($id)
     {
         $data = DetailPekerjaan::with('pekerjaan')->where('id_proyek', $id)->orderBy('id_pekerjaan', 'asc')->get();
-        return response()->json($data);
+        $dataMingguan = LaporanMingguan::where('id_proyek', $id)->orderBy('created_at', 'desc')->first();
+
+        // Decode list_pekerjaan menjadi array keyed by id_detail_pekerjaan
+        $progressData = [];
+        if ($dataMingguan && $dataMingguan->list_pekerjaan) {
+            foreach (json_decode($dataMingguan->list_pekerjaan, true) as $row) {
+                $progressData[$row['id_detail_pekerjaan']] = $row['progress_total'];
+            }
+        }
+
+        return response()->json([
+            'detail' => $data,
+            'progress' => $progressData
+        ]);
+    }
+
+    public function getMingguKe($id)
+    {
+        $data = LaporanMingguan::where('id_proyek', $id)->orderBy('created_at', 'desc')->first();
+    
+        return response()->json(['minggu_ke' => $data->minggu_ke + 1 ?? 1]);
     }
 
     /**
@@ -111,20 +132,22 @@ class LaporanMingguanController extends Controller
                 'bobot' => $dBobot[$i],
                 'progress_minggu_lalu' => $progressMingguLalu,
                 'bobot_minggu_lalu' => number_format($bobotMingguLalu, 2),
-                'progress_minggu_ini' => $dProgress[$i],
-                'bobot_minggu_ini' => number_format($bobotMingguIni, 2),
+                'progress_minggu_ini' => $dProgress[$i] - $progressMingguLalu,
+                'bobot_minggu_ini' => number_format($bobotMingguIni - $bobotMingguLalu, 2),
+                'progress_total' => $dProgress[$i],
+                'bobot_total' => number_format($bobotMingguIni, 2),
             ];
         }
         $totalBobotMingguLalu = number_format(array_sum(array_column($getDataMingguan, 'bobot_minggu_lalu')), 2);
-        $totalBobotMingguIni = number_format(array_sum(array_column($getDataMingguan, 'bobot_minggu_ini')), 2);
+        $totalBobotMingguIni = number_format(array_sum(array_column($getDataMingguan, 'bobot_total')), 2);
 
         $data = [
             'id_proyek' => $request->id_proyek,
             'minggu_ke' => $request->minggu_ke,
             'bobot_rencana' => number_format($request->bobot_rencana, 2),
-            'bobot_minggu_lalu' => $totalBobotMingguLalu ?? null,
-            'bobot_minggu_ini' => $totalBobotMingguIni,
-            'bobot_total' => number_format(($totalBobotMingguLalu ?? null) + $totalBobotMingguIni, 2),
+            'bobot_minggu_lalu' => number_format($totalBobotMingguLalu ?? null, 2),
+            'bobot_minggu_ini' => number_format($totalBobotMingguIni - $totalBobotMingguLalu ?? null, 2),
+            'bobot_total' => number_format($totalBobotMingguIni, 2),
             'list_pekerjaan' => json_encode($getDataMingguan) ?? null,
             'created_by' => auth()->user()->id,
             'updated_by' => auth()->user()->id,
@@ -145,8 +168,9 @@ class LaporanMingguanController extends Controller
         $assets = ['data-table'];
         $pageHeader = 'Lihat Laporan Mingguan';
         $data = LaporanMingguan::findOrFail($id);
+        $job = Pekerjaan::all()->keyBy('id');
 
-        return view('app.proses.laporan-mingguan.show', compact('pageHeader', 'data', 'assets'));
+        return view('app.proses.laporan-mingguan.show', compact('assets', 'pageHeader', 'data', 'job'));
     }
 
     /**

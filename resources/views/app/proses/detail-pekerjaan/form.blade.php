@@ -44,7 +44,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="form-label" for="bobot">Bobot (%): <span class="text-danger">*</span></label>
-                                {{ Form::text('bobot', $data->bobot ?? old('bobot'), ['class' => 'form-control placeholder-grey', 'id' => 'bobot', 'placeholder' => 'Isi Bobot', 'required', isset($data) ? 'readonly' : null]) }}
+                                {{ Form::text('bobot', $data->bobot ?? old('bobot'), ['class' => 'form-control placeholder-grey', 'id' => 'bobot', 'placeholder' => 'Isi Bobot', 'required']) }}
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="form-label" for="harga_modal_material">RAB Modal Material:</label>

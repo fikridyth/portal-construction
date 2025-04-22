@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Laporan Mingguan
     Route::resource('laporan-mingguan', LaporanMingguanController::class);
     Route::get('/get-detail-pekerjaan/{id}', [LaporanMingguanController::class, 'getDetailPekerjaan']);
+    Route::get('/get-minggu-ke/{id}', [LaporanMingguanController::class, 'getMingguKe']);
     Route::get('laporan-mingguan/{id}/print', [LaporanMingguanController::class, 'printLaporanMingguan'])->name('laporan-mingguan.print');
 
     // Users

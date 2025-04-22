@@ -68,6 +68,11 @@
                             @endif
                         </div>
                     </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h6 class="card-title">Total Bobot : {{ number_format($totalBobot, 2) }}%</h6>
+                        </div>
+                    </div>
                     <div class="table-responsive mt-4">
                         <table class="table table-bordered yajra-datatable" id="progressTable">
                             <thead>

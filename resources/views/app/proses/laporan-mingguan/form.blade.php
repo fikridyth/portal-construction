@@ -26,12 +26,13 @@
                                 {{ Form::select('id_proyek', $dataProyek->pluck('nama', 'id'), null, [
                                     'class' => 'form-control placeholder-grey',
                                     'placeholder' => 'Pilih Proyek',
-                                    'required'
+                                    'required',
+                                    'id' => 'id_proyek'
                                 ]) }}
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="form-label" for="minggu_ke">Minggu Ke: <span class="text-danger">*</span></label>
-                                {{ Form::text('minggu_ke', $data->minggu_ke ?? old('minggu_ke'), ['class' => 'form-control placeholder-grey', 'id' => 'minggu_ke', 'placeholder' => 'Isi Minggu Ke', 'oninput' => "this.value = this.value.replace(/,/g, '')", "required"]) }}
+                                {{ Form::text('minggu_ke', $data->minggu_ke ?? old('minggu_ke'), ['class' => 'form-control placeholder-grey', 'id' => 'minggu_ke', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="form-label" for="bobot_rencana">Bobot Rencana (%): <span class="text-danger">*</span></label>
@@ -59,6 +60,24 @@
  </x-app-layout>
  
 <script>
+    document.getElementById('id_proyek').addEventListener('change', function() {
+        const proyekId = this.value;
+
+        if (proyekId) {
+            fetch(`/get-minggu-ke/${proyekId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('minggu_ke').value = data.minggu_ke;
+                })
+                .catch(error => {
+                    console.error('Gagal mengambil data minggu ke:', error);
+                    document.getElementById('minggu_ke').value = '';
+                });
+        } else {
+            document.getElementById('minggu_ke').value = '';
+        }
+    });
+
     $(document).ready(function() {
         $('select[name="id_proyek"]').on('change', function() {
             let idProyek = $(this).val();
@@ -68,8 +87,10 @@
                     url: '/get-detail-pekerjaan/' + idProyek,
                     type: 'GET',
                     dataType: 'json',
-                    success: function(data) {
+                    success: function(response) {
                         let grouped = {};
+                        let data = response.detail;
+                        let progressData = response.progress;
 
                         // Grouping berdasarkan nama pekerjaan
                         data.forEach(item => {
@@ -95,39 +116,48 @@
                             `;
 
                             grouped[groupName].forEach((item, index) => {
+                                let progressSebelumnya = progressData[item.id] ?? 0;
+                                let nilaiProgressSaatIni = (progressSebelumnya == 100) ? 100 : '';
+
                                 html += `
                                     <input type="text" class="form-control" name="detail_id_proyek[${item.id}]" value="${item.id_proyek}" hidden>
                                     <input type="text" class="form-control" name="detail_id_pekerjaan[${item.id}]" value="${item.id_pekerjaan}" hidden>
                                     <input type="text" class="form-control" name="detail_id_detail_pekerjaan[${item.id}]" value="${item.id}" hidden>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-5">
                                         <label class="form-label" for="nama_pekerjaan_${groupIndex}_${index}">
                                             Nama Pekerjaan ${index + 1}
                                         </label>
                                         <input type="text" class="form-control" name="detail_nama_pekerjaan[${item.id}]" value="${item.nama}" readonly>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-1">
                                         <label class="form-label" for="volume_${groupIndex}_${index}">
                                             Volume
                                         </label>
                                         <input type="text" class="form-control" name="detail_volume[${item.id}]" value="${item.volume}" readonly>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-1">
                                         <label class="form-label" for="satuan_${groupIndex}_${index}">
                                             Satuan
                                         </label>
                                         <input type="text" class="form-control" name="detail_satuan[${item.id}]" value="${item.satuan}" readonly>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-1">
                                         <label class="form-label" for="bobot_${groupIndex}_${index}">
                                             Bobot (%)
                                         </label>
                                         <input type="text" class="form-control" name="detail_bobot[${item.id}]" value="${item.bobot}" readonly>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="form-label" for="bobot_${groupIndex}_${index}">
-                                            Progress (%)
+                                        <label class="form-label" for="last_progress_${groupIndex}_${index}">
+                                            Progress Sebelumnya (%)
                                         </label>
-                                        <input type="text" class="form-control" name="detail_progress[${item.id}]" required>
+                                        <input type="text" class="form-control" name="last_progress[${item.id}]" value="${progressSebelumnya}%" readonly>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="form-label" for="detail_progress_${groupIndex}_${index}">
+                                            Progress Saat Ini (%)
+                                        </label>
+                                        <input type="text" class="form-control" name="detail_progress[${item.id}]" value="${nilaiProgressSaatIni}" required>
                                     </div>
                                     <hr>
                                 `;

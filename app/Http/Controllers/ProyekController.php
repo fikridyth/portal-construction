@@ -83,8 +83,10 @@ class ProyekController extends Controller
         $pageHeader = 'Lihat Proyek';
         $data = Proyek::findOrFail($id);
         $dataLaporan = LaporanMingguan::where('id_proyek', $data->id)->exists();
+        $dataPekerjaan = DetailPekerjaan::where('id_proyek', $data->id)->orderBy('id_pekerjaan', 'asc')->get();
+        $totalBobot = $dataPekerjaan->sum('bobot');
 
-        return view('app.proses.proyek.show', compact('pageHeader', 'data', 'assets', 'dataLaporan'));
+        return view('app.proses.proyek.show', compact('pageHeader', 'data', 'assets', 'dataLaporan', 'totalBobot'));
     }
 
     /**

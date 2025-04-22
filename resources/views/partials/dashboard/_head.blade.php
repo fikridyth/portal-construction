@@ -26,6 +26,16 @@
         display: none;
     }
 
+    /* table.table-bordered th,
+    table.table-bordered td,
+    table.table-bordered tr {
+        border: 1px solid black !important;
+    }
+
+    table.table-bordered {
+        border-collapse: collapse !important;
+    } */
+
     .placeholder-grey::placeholder {
         color: #c4ced9;
         opacity: 1;
