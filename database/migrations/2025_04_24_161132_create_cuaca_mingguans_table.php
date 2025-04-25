@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDokumentasiMingguansTable extends Migration
+class CreateCuacaMingguansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateDokumentasiMingguansTable extends Migration
      */
     public function up()
     {
-        Schema::create('dokumentasi_mingguans', function (Blueprint $table) {
+        Schema::create('cuaca_mingguans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_proyek')->references('id')->on('proyeks');
             $table->foreignId('id_laporan_mingguan')->references('id')->on('laporan_mingguans');
             $table->bigInteger('minggu_ke');
-            $table->json('list_gambar')->nullable();
+            $table->json('list_cuaca')->nullable();
             $table->date('dari');
             $table->date('sampai');
             $table->decimal('bobot_total', 16, 2)->nullable();
@@ -35,6 +35,6 @@ class CreateDokumentasiMingguansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dokumentasi_mingguans');
+        Schema::dropIfExists('cuaca_mingguans');
     }
 }

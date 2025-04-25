@@ -1,3 +1,17 @@
+@push('styles')
+    <style>
+        .responsive-width {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .responsive-width {
+                width: 90%;
+            }
+        }
+    </style>
+@endpush
+
 <x-app-layout :pageHeader="$pageHeader" :assets="$assets ?? []" :dir="false">
     <div>
        <?php
@@ -42,6 +56,32 @@
                                 <label class="form-label" for="sampai">Sampai: <span class="text-danger">*</span></label>
                                 {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control placeholder-grey', 'id' => 'sampai', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
                             </div>
+                            <div class="card mx-auto responsive-width">
+                                <div class="card-header text-center">
+                                    <h5 class="mb-0 fw-bold">Upload File Dokumentasi</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="upload-wrapper" class="mb-3">
+                                        <div class="upload-group row justify-content-center align-items-center mb-3">
+                                            <div class="col-md-5">
+                                                <input type="file" name="file[]" class="form-control file-input mb-2" accept="image/*,application/pdf" required>
+                                                <textarea name="keterangan[]" class="form-control" placeholder="Keterangan file" rows="2" required></textarea>
+                                            </div>
+                            
+                                            <div class="col-md-3 d-flex justify-content-center mt-2">
+                                                <div class="preview-wrapper border rounded p-2 text-center" style="height: 120px; width: 100%; overflow: hidden;">
+                                                    <small class="text-muted">Belum ada gambar</small>
+                                                </div>
+                                            </div>
+                            
+                                            <div class="col-md-2 d-flex align-items-end mt-2">
+                                                <button type="button" class="btn btn-success btn-add w-100">Tambah</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                      
                         </div>
                         <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Dokumentasi</button>
                     </div>
@@ -75,5 +115,63 @@
             document.getElementById('dari').value = '';
             document.getElementById('sampai').value = '';
         }
+    });
+
+    function updatePreview(input) {
+        const previewWrapper = input.closest('.upload-group').querySelector('.preview-wrapper');
+        previewWrapper.innerHTML = ''; // Kosongkan isi sebelumnya
+
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const fileType = file.type;
+
+            if (fileType.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('img-fluid', 'rounded');
+                    img.style.maxHeight = '100px';
+                    previewWrapper.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewWrapper.innerHTML = '<small class="text-muted">File bukan gambar</small>';
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const wrapper = document.getElementById('upload-wrapper');
+
+        wrapper.addEventListener('change', function (e) {
+            if (e.target.classList.contains('file-input')) {
+                updatePreview(e.target);
+            }
+        });
+
+        wrapper.addEventListener('click', function (e) {
+            if (e.target.classList.contains('btn-add')) {
+                const group = e.target.closest('.upload-group');
+                const clone = group.cloneNode(true);
+
+                // Kosongkan input
+                clone.querySelectorAll('input').forEach(input => input.value = '');
+                clone.querySelector('textarea').value = '';
+                clone.querySelector('.preview-wrapper').innerHTML = '<small class="text-muted">Belum ada gambar</small>';
+
+                // Tombol + jadi -
+                const btn = clone.querySelector('.btn-add');
+                btn.classList.remove('btn-success', 'btn-add');
+                btn.classList.add('btn-danger', 'btn-remove');
+                btn.innerText = 'Hapus';
+
+                wrapper.appendChild(clone);
+            }
+
+            if (e.target.classList.contains('btn-remove')) {
+                e.target.closest('.upload-group').remove();
+            }
+        });
     });
 </script>

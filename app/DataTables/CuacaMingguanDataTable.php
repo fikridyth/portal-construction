@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\DokumentasiMingguan;
+use App\Models\CuacaMingguan;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -10,7 +10,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class DokumentasiMingguanDataTable extends DataTable
+class CuacaMingguanDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -44,17 +44,17 @@ class DokumentasiMingguanDataTable extends DataTable
             ->addColumn('waktu_pelaksanaan', function ($query) {
                 return $query->laporanMingguan->proyek->waktu_pelaksanaan . ' Hari' ?? '-';
             })
-            ->addColumn('action', 'app.proses.dokumentasi-mingguan.action')
+            ->addColumn('action', 'app.proses.cuaca-mingguan.action')
             ->rawColumns(['action']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\DokumentasiMingguan $model
+     * @param \App\Models\CuacaMingguan $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(DokumentasiMingguan $model)
+    public function query(CuacaMingguan $model)
     {
         return $model->newQuery();
     }
@@ -108,6 +108,6 @@ class DokumentasiMingguanDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'DokumentasiMingguan_' . date('YmdHis');
+        return 'CuacaMingguan_' . date('YmdHis');
     }
 }

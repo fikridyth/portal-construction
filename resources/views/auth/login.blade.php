@@ -16,7 +16,7 @@
                            <h4 class="logo-title ms-3">{{env('APP_NAME')}}</h4>
                         </a>
                         <h2 class="mb-2 text-center">Sign In</h2>
-                        <p class="text-center">Login to stay connected.</p>
+                        {{-- <p class="text-center">Login to stay connected.</p> --}}
                         <x-auth-session-status class="mb-4" :status="session('status')" />
 
                         <!-- Validation Errors -->
@@ -36,7 +36,7 @@
                                     <input class="form-control" type="password" placeholder="********"  name="password" value="{{ env('IS_DEMO') ? 'password' : '' }}" required autocomplete="current-password">
                                  </div>
                               </div>
-                              <div class="col-lg-6">
+                              {{-- <div class="col-lg-6">
                                  <div class="form-check mb-3">
                                     <input type="checkbox" class="form-check-input" id="customCheck1">
                                     <!-- <input type="checkbox" class="custom-control-input" id="customCheck1"> -->
@@ -45,12 +45,12 @@
                               </div>
                               <div class="col-lg-6">
                                  <a href="{{route('auth.recoverpw')}}"  class="float-end">Forgot Password?</a>
-                              </div>
+                              </div> --}}
                            </div>
-                           <div class="d-flex justify-content-center">
+                           <div class="d-flex justify-content-center mt-4">
                               <button type="submit" class="btn btn-primary">{{ __('Sign In') }}</button>
                            </div>
-                           <p class="text-center my-3">or sign in with other accounts?</p>
+                           {{-- <p class="text-center my-3">or sign in with other accounts?</p>
                            <div class="d-flex justify-content-center">
                               <ul class="list-group list-group-horizontal list-group-flush">
                                  <li class="list-group-item border-0 pb-0">
@@ -69,7 +69,7 @@
                            </div>
                            <p class="mt-3 text-center">
                               Don’t have an account? <a href="{{route('auth.signup')}}" class="text-underline">Click here to sign up.</a>
-                           </p>
+                           </p> --}}
                         </form>
                      </div>
                   </div>

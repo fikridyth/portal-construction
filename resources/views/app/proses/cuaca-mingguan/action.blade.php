@@ -1,22 +1,22 @@
-<div class="flex align-items-center list-dokumentasi-mingguan-action">
-    {{-- <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Dokumentasi Mingguan" href="{{ route('dokumentasi-mingguan.show',$id) }}">
+<div class="flex align-items-center list-cuaca-mingguan-action">
+    {{-- <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Cuaca Mingguan" href="{{ route('cuaca-mingguan.show',$id) }}">
         <span class="btn-inner">
             <i class="fas fa-eye mt-1"></i>
         </span>
     </a> --}}
-    {{-- <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data dokumentasi Mingguan" href="{{ route('dokumentasi-mingguan.edit',$id) }}">
+    {{-- <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Cuaca Mingguan" href="{{ route('cuaca-mingguan.edit',$id) }}">
         <span class="btn-inner">
             <i class="fas fa-edit mt-1"></i>
         </span>
     </a> --}}
-    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Dokumentasi Mingguan" href="{{ route('dokumentasi-mingguan.print',$id) }}">
+    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Cuaca Mingguan" href="{{ route('cuaca-mingguan.print',$id) }}">
         <span class="btn-inner">
             <i class="fas fa-print mt-1"></i>
         </span>
     </a>
     {{-- @if(auth()->user()->hasRole('admin') && auth()->id() !== $id)
     <?php 
-    $message = __('global-message.delete_alert', ['form' => __('dokumentasi-mingguan.title')])
+    $message = __('global-message.delete_alert', ['form' => __('cuaca-mingguan.title')])
     ?>
     <a class="btn btn-sm btn-icon btn-danger" onclick="return confirm('{{$message}}') ? document.getElementById('user-delete-{{$id}}').submit() : false" data-bs-toggle="tooltip" title="Delete User" href="#">
         <span class="btn-inner">

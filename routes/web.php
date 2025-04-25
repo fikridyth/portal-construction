@@ -80,6 +80,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Laporan Cuaca
         Route::resource('cuaca-mingguan', CuacaMingguanController::class);
+        Route::get('/get-cuaca-minggu-ke/{id}', [CuacaMingguanController::class, 'getMingguKe']);
+        Route::get('cuaca-mingguan/{id}/print', [CuacaMingguanController::class, 'printCuacaMingguan'])->name('cuaca-mingguan.print');
 
     // Users
     Route::resource('users', UserController::class);

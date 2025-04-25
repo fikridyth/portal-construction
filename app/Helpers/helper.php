@@ -127,3 +127,30 @@ function toRoman($number) {
     }
     return $returnValue;
 }
+
+function numberToText($angka)
+{
+    $angka = abs($angka);
+    $baca = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"];
+    $hasil = "";
+
+    if ($angka < 12) {
+        $hasil = $baca[$angka];
+    } elseif ($angka < 20) {
+        $hasil = numberToText($angka - 10) . " belas";
+    } elseif ($angka < 100) {
+        $hasil = numberToText(intval($angka / 10)) . " puluh " . numberToText($angka % 10);
+    } elseif ($angka < 200) {
+        $hasil = "seratus " . numberToText($angka - 100);
+    } elseif ($angka < 1000) {
+        $hasil = numberToText(intval($angka / 100)) . " ratus " . numberToText($angka % 100);
+    } elseif ($angka < 2000) {
+        $hasil = "seribu " . numberToText($angka - 1000);
+    } elseif ($angka < 1000000) {
+        $hasil = numberToText(intval($angka / 1000)) . " ribu " . numberToText($angka % 1000);
+    } else {
+        $hasil = "terlalu besar";
+    }
+
+    return strtoupper(trim($hasil));
+}
