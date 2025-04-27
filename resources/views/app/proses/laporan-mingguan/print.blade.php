@@ -50,7 +50,7 @@
         <div class="text-right mt-1 mr-5">
             <b>Minggu Ke &emsp14;&emsp14;&emsp14;: {{ toRoman($data->minggu_ke) }}</b>
         </div>
-        <table class="table table-bordered table-responsive table-hover mt-3" style="font-size: 12px; line-height: 0; border-collapse: collapse;">
+        <table class="table table-bordered table-hover mt-3" style="width: 100%; font-size: 12px; line-height: 0; border-collapse: collapse;">
             <tr>
               <th rowspan="2" class="text-center align-middle">NO</th>
               <th rowspan="2" class="text-center align-middle">URAIAN PEKERJAAN</th>

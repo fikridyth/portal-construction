@@ -15,7 +15,7 @@
                     <h4 class="card-title">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Laporan Mingguan</h4>
                 </div>
                 <div class="card-action">
-                        <a href="{{route('laporan-mingguan.index')}}" class="btn btn-sm btn-primary" role="button">Kembali</a>
+                        <a href="{{route('laporan-mingguan.index')}}" class="btn btn-sm btn-warning" role="button">Kembali</a>
                 </div>
                 </div>
                 <div class="card-body">
@@ -31,7 +31,7 @@
                                 ]) }}
                             </div>
                             <div class="form-group col-md-1">
-                                <label class="form-label" style="font-size: 15px;" for="minggu_ke">Minggu Ke: <span class="text-danger">*</span></label>
+                                <label class="form-label" style="font-size: 14px;" for="minggu_ke">Minggu Ke:</label>
                                 {{ Form::text('minggu_ke', $data->minggu_ke ?? old('minggu_ke'), ['class' => 'form-control placeholder-grey', 'id' => 'minggu_ke', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
                             </div>
                             <div class="form-group col-md-2">
@@ -132,37 +132,37 @@
                                     <input type="text" class="form-control" name="detail_id_pekerjaan[${item.id}]" value="${item.id_pekerjaan}" hidden>
                                     <input type="text" class="form-control" name="detail_id_detail_pekerjaan[${item.id}]" value="${item.id}" hidden>
                                     <div class="form-group col-md-5">
-                                        <label class="form-label" for="nama_pekerjaan_${groupIndex}_${index}">
+                                        <label class="form-label" style="font-size: 14px;" for="nama_pekerjaan_${groupIndex}_${index}">
                                             Nama Pekerjaan ${index + 1}
                                         </label>
                                         <input type="text" class="form-control" name="detail_nama_pekerjaan[${item.id}]" value="${item.nama}" readonly>
                                     </div>
                                     <div class="form-group col-md-1">
-                                        <label class="form-label" for="volume_${groupIndex}_${index}">
+                                        <label class="form-label" style="font-size: 14px;" for="volume_${groupIndex}_${index}">
                                             Volume
                                         </label>
                                         <input type="text" class="form-control" name="detail_volume[${item.id}]" value="${item.volume}" readonly>
                                     </div>
                                     <div class="form-group col-md-1">
-                                        <label class="form-label" for="satuan_${groupIndex}_${index}">
+                                        <label class="form-label" style="font-size: 14px;" for="satuan_${groupIndex}_${index}">
                                             Satuan
                                         </label>
                                         <input type="text" class="form-control" name="detail_satuan[${item.id}]" value="${item.satuan}" readonly>
                                     </div>
                                     <div class="form-group col-md-1">
-                                        <label class="form-label" for="bobot_${groupIndex}_${index}">
+                                        <label class="form-label" style="font-size: 14px;" for="bobot_${groupIndex}_${index}">
                                             Bobot (%)
                                         </label>
                                         <input type="text" class="form-control" name="detail_bobot[${item.id}]" value="${item.bobot}" readonly>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="form-label" for="last_progress_${groupIndex}_${index}">
+                                        <label class="form-label" style="font-size: 14px;" for="last_progress_${groupIndex}_${index}">
                                             Progress Sebelumnya (%)
                                         </label>
                                         <input type="text" class="form-control" name="last_progress[${item.id}]" value="${progressSebelumnya}%" readonly>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="form-label" for="detail_progress_${groupIndex}_${index}">
+                                        <label class="form-label" style="font-size: 14px;" for="detail_progress_${groupIndex}_${index}">
                                             Progress Saat Ini (%)
                                         </label>
                                         <input type="text" class="form-control" name="detail_progress[${item.id}]" value="${nilaiProgressSaatIni}" required>
