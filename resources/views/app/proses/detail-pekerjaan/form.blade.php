@@ -15,7 +15,7 @@
                     <h4 class="card-title">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Detail Pekerjaan</h4>
                 </div>
                 <div class="card-action">
-                        <a href="{{route('proyek.show', $data->id_proyek ?? $dataProyek->id)}}" class="btn btn-sm btn-primary" role="button">Kembali</a>
+                        <a href="{{route('proyek.show', $data->id_proyek ?? $dataProyek->id)}}" class="btn btn-sm btn-warning" role="button">Kembali</a>
                 </div>
                 </div>
                 <div class="card-body">

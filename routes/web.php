@@ -10,10 +10,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\LaporanMingguanController;
 use App\Http\Controllers\PekerjaanController;
+use App\Http\Controllers\PreorderController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\Security\RolePermission;
 use App\Http\Controllers\Security\RoleController;
 use App\Http\Controllers\Security\PermissionController;
+use App\Http\Controllers\TenagaKerjaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 // Packages
@@ -54,6 +56,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Master Pekerjaan
     Route::resource('pekerjaan', PekerjaanController::class);
 
+    // Master Tenaga Kerja
+    Route::resource('tenaga-kerja', TenagaKerjaController::class);
+
     // Proyek
     Route::resource('proyek', ProyekController::class);
     Route::get('proyek/{id}/print', [ProyekController::class, 'printProyek'])->name('proyek.print');
@@ -63,8 +68,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('proyek/{id}/index-detail-pekerjaan', [DetailPekerjaanController::class, 'indexDetailPekerjaan'])->name('proyek.detail-pekerjaan.index');
     Route::get('proyek/{id}/create-detail-pekerjaan', [DetailPekerjaanController::class, 'createDetailPekerjaan'])->name('proyek.detail-pekerjaan.create');
 
-    // Laporan Mingguan
+    // Preorder
+    Route::resource('preoder', PreorderController::class);
+
+    // Laporan Harian
     Route::resource('laporan-harian', LaporanHarianController::class);
+    Route::get('/get-data-proyek/{id}', [LaporanHarianController::class, 'getDataProyek']);
+    Route::get('laporan-harian/{id}/print', [LaporanHarianController::class, 'printLaporanHarian'])->name('laporan-harian.print');
 
     // Laporan Mingguan
         // Laporan Progress

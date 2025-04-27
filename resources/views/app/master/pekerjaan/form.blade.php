@@ -15,7 +15,7 @@
                     <h4 class="card-title">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Pekerjaan</h4>
                 </div>
                 <div class="card-action">
-                        <a href="{{route('pekerjaan.index')}}" class="btn btn-sm btn-primary" role="button">Kembali</a>
+                        <a href="{{route('pekerjaan.index')}}" class="btn btn-sm btn-warning" role="button">Kembali</a>
                 </div>
                 </div>
                 <div class="card-body">

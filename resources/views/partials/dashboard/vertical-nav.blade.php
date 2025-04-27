@@ -42,6 +42,12 @@
             <span class="item-name">Pekerjaan</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ activeRoute(route('tenaga-kerja.index')) }}" href="{{ route('tenaga-kerja.index') }}">
+            <i class="fas fa-user-pen mt-1"></i>
+            <span class="item-name">Tenaga Kerja</span>
+        </a>
+    </li>
     <li>
         <hr class="hr-horizontal">
     </li>
@@ -56,6 +62,22 @@
         <a class="nav-link {{ activeRoute(route('proyek.index')) }}" href="{{ route('proyek.index') }}">
             <i class="fas fa-briefcase mt-1"></i>
             <span class="item-name">Proyek</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ activeRoute(route('preoder.index')) }}" href="{{ route('preoder.index') }}">
+            <i class="fas fa-truck mt-1"></i>
+            <span class="item-name">Preorder</span>
+        </a>
+    </li>
+    <li>
+        <hr class="hr-horizontal">
+    </li>
+    {{-- Laporan --}}
+    <li class="nav-item static-item">
+        <a class="nav-link static-item disabled" href="#" tabindex="-1">
+            <span class="default-icon">Laporan</span>
+            <span class="mini-icon">-</span>
         </a>
     </li>
     <li class="nav-item">
