@@ -61,7 +61,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Proyek
     Route::resource('proyek', ProyekController::class);
-    Route::get('proyek/{id}/print', [ProyekController::class, 'printProyek'])->name('proyek.print');
+    Route::get('proyek/{id}/print-rab', [ProyekController::class, 'printRab'])->name('proyek.print-rab');
+    Route::get('proyek/{id}/print-boq', [ProyekController::class, 'printBoq'])->name('proyek.print-boq');
+    Route::get('proyek/{id}/print-rekap', [ProyekController::class, 'printRekap'])->name('proyek.print-rekap');
 
     // Detail Pekerjaan
     Route::resource('detail-pekerjaan', DetailPekerjaanController::class);

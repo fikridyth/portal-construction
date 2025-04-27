@@ -63,6 +63,7 @@ class ProyekController extends Controller
             'dari' => $request->dari,
             'sampai' => $request->sampai,
             'waktu_pelaksanaan' => $dari->diffInDays($sampai),
+            'total_meter' => $request->total_meter,
             'created_by' => auth()->user()->id,
             'updated_by' => auth()->user()->id,
         ];
@@ -130,6 +131,7 @@ class ProyekController extends Controller
             'dari' => $request->dari,
             'sampai' => $request->sampai,
             'waktu_pelaksanaan' => $dari->diffInDays($sampai),
+            'total_meter' => $request->total_meter,
             'updated_by' => auth()->user()->id,
         ];
         $dataProyek->update($data);
@@ -148,14 +150,36 @@ class ProyekController extends Controller
         //
     }
     
-    public function printProyek($id)
+    public function printRab($id)
     {
-        $pageHeader = 'Print Proyek';
+        $pageHeader = 'Print Rencana Anggaran Biaya';
         $dataProyek = Proyek::findOrFail($id);
         $dataPekerjaan = DetailPekerjaan::where('id_proyek', $dataProyek->id)->orderBy('id_pekerjaan', 'asc')->get();
         $dataPekerjaanById = $dataPekerjaan->groupBy('id_pekerjaan');
         // dd($dataPekerjaanById);
 
-        return view('app.proses.proyek.print', compact('pageHeader', 'dataProyek', 'dataPekerjaan', 'dataPekerjaanById'));
+        return view('app.proses.proyek.print-rab', compact('pageHeader', 'dataProyek', 'dataPekerjaan', 'dataPekerjaanById'));
+    }
+    
+    public function printBoq($id)
+    {
+        $pageHeader = 'Print Bill of Quantity';
+        $dataProyek = Proyek::findOrFail($id);
+        $dataPekerjaan = DetailPekerjaan::where('id_proyek', $dataProyek->id)->orderBy('id_pekerjaan', 'asc')->get();
+        $dataPekerjaanById = $dataPekerjaan->groupBy('id_pekerjaan');
+        // dd($dataPekerjaanById);
+
+        return view('app.proses.proyek.print-boq', compact('pageHeader', 'dataProyek', 'dataPekerjaan', 'dataPekerjaanById'));
+    }
+    
+    public function printRekap($id)
+    {
+        $pageHeader = 'Print Rekapitulasi Biaya';
+        $dataProyek = Proyek::findOrFail($id);
+        $dataPekerjaan = DetailPekerjaan::where('id_proyek', $dataProyek->id)->orderBy('id_pekerjaan', 'asc')->get();
+        $dataPekerjaanById = $dataPekerjaan->groupBy('id_pekerjaan');
+        // dd($dataPekerjaanById);
+
+        return view('app.proses.proyek.print-rekap', compact('pageHeader', 'dataProyek', 'dataPekerjaan', 'dataPekerjaanById'));
     }
 }

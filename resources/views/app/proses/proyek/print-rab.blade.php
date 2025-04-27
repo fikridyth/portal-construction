@@ -32,7 +32,7 @@
         <div class="text-center">
             <b>{{ strtoupper($dataProyek->nama) }}</b>
         </div>
-        <table class="table table-bordered table-responsive table-hover mt-3" style="font-size: 12px; line-height: 0; border-collapse: collapse;">
+        <table class="table table-bordered table-hover mt-3" style="width: 100%; font-size: 12px; line-height: 0; border-collapse: collapse;">
             <tr>
                 <th colspan="4" class="text-center align-middle" style="border: none;"></th>
                 <th colspan="3" class="text-center align-middle" style="border: none; background-color: orange;">RAB MODAL</th>

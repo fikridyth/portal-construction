@@ -51,17 +51,17 @@
             <b>Minggu Ke &emsp14;&emsp14;&emsp14;: {{ toRoman($data->minggu_ke) }}</b>
         </div>
         <table class="table table-bordered table-hover mt-3" style="width: 100%; font-size: 12px; line-height: 0; border-collapse: collapse;">
-            <tr>
+            <tr style="font-size: 10px;">
               <th rowspan="2" class="text-center align-middle">NO</th>
               <th rowspan="2" class="text-center align-middle">URAIAN PEKERJAAN</th>
               <th rowspan="2" class="text-center align-middle">VOLUME</th>
               <th rowspan="2" class="text-center align-middle">SATUAN</th>
               <th class="text-center align-middle">BOBOT</th>
-              <th colspan="2" class="text-center align-middle">TOTAL PROGRESS MINGGU LALU</th>
-              <th colspan="2" class="text-center align-middle">TOTAL PROGRESS MINGGU INI</th>
+              <th colspan="2" class="text-center align-middle" style="font-size: 10px;">TOTAL PROGRESS MINGGU LALU</th>
+              <th colspan="2" class="text-center align-middle" style="font-size: 10px;">TOTAL PROGRESS MINGGU INI</th>
               <th colspan="2" class="text-center align-middle">TOTAL PROGRESS</th>
             </tr>
-            <tr>
+            <tr style="font-size: 10px;">
                 <th class="text-center align-middle">%</th>
                 <th class="text-center align-middle">PRESTASI</th>
                 <th class="text-center align-middle">BOBOT</th>

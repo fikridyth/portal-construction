@@ -24,6 +24,7 @@ class CreateProyeksTable extends Migration
             $table->date('dari')->nullable();
             $table->date('sampai')->nullable();
             $table->bigInteger('waktu_pelaksanaan');
+            $table->bigInteger('total_meter');
             $table->foreignId('created_by')->references('id')->on('users');
             $table->foreignId('updated_by')->references('id')->on('users');
             $table->timestamps();

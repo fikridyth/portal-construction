@@ -53,10 +53,10 @@
                                 <label class="form-label" for="sampai">Tanggal Selesai: <span class="text-danger">*</span></label>
                                 {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control placeholder-grey', 'id' => 'sampai', 'placeholder' => 'Isi Data Tanggal Selesai', 'required']) }}
                             </div>
-                            {{-- <div class="form-group col-md-12">
-                                <label class="form-label" for="cname">Company Name: <span class="text-danger">*</span></label>
-                                {{ Form::text('userProfile[company_name]', old('userProfile[company_name]'), ['class' => 'form-control placeholder-grey', 'required', 'placeholder' => 'Company Name']) }}
-                            </div> --}}
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="total_meter">Total Meter:</label>
+                                {{ Form::text('total_meter', $data->total_meter ?? old('total_meter'), ['class' => 'form-control', 'id' => 'total_meter', 'placeholder' => 'Isi Data Total Meter', 'required']) }}
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Proyek</button>
                     </div>

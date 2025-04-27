@@ -6,8 +6,8 @@
                     <h4 class="card-title">Lihat Data Proyek</h4>
                 </div>
                 <div class="card-action">
-                    <a href="{{ route('proyek.print', $data->id) }}" class="btn btn-sm btn-success mx-2" style="min-width: 100px;" role="button">Print</a>
-                    <a href="{{ route('proyek.index') }}" class="btn btn-sm btn-primary" style="min-width: 100px;" role="button">Kembali</a>
+                    <a href="{{ route('proyek.edit', $data->id) }}" class="btn btn-sm btn-warning mx-2" style="min-width: 100px;" role="button">Edit</a>
+                    <a href="{{ route('proyek.index') }}" class="btn btn-sm btn-primary mx-2" style="min-width: 100px;" role="button">Kembali</a>
                 </div>
             </div>
             <div class="card-body">
@@ -45,10 +45,19 @@
                             <label class="form-label" for="sampai">Tanggal Selesai:</label>
                             {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control', 'id' => 'sampai', 'placeholder' => 'Isi Data Tanggal Selesai', 'disabled']) }}
                         </div>
-                        {{-- <div class="form-group col-md-12">
-                            <label class="form-label" for="cname">Company Name: <span class="text-danger">*</span></label>
-                            {{ Form::text('userProfile[company_name]', old('userProfile[company_name]'), ['class' => 'form-control', 'disabled', 'placeholder' => 'Company Name']) }}
-                        </div> --}}
+                        <div class="form-group col-md-6">
+                            <label class="form-label" for="waktu_pelaksanaan">Waktu Pelaksanaan:</label>
+                            {{ Form::text('waktu_pelaksanaan', $data->waktu_pelaksanaan ?? old('waktu_pelaksanaan'), ['class' => 'form-control', 'id' => 'waktu_pelaksanaan', 'placeholder' => 'Isi Data Waktu Pelaksanaan', 'disabled']) }}
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="form-label" for="total_meter">Total Meter:</label>
+                            {{ Form::text('total_meter', $data->total_meter ?? old('total_meter'), ['class' => 'form-control', 'id' => 'total_meter', 'placeholder' => 'Isi Data Total Meter', 'disabled']) }}
+                        </div>
+                        <div class="d-flex justify-content-center my-3">
+                            <a href="{{ route('proyek.print-rab', $data->id) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rencana Anggaran Biaya</a>
+                            <a href="{{ route('proyek.print-rekap', $data->id) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rekapitulasi Biaya</a>
+                            <a href="{{ route('proyek.print-boq', $data->id) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Bill of Quantity</a>
+                        </div>
                     </div>
                     <hr>
                     <div class="card-header d-flex justify-content-between">
@@ -62,7 +71,7 @@
                                 </button>
                             @else
                                 <a href="{{ route('proyek.detail-pekerjaan.create', $data->id) }}"
-                                    class="btn btn-sm btn-success" role="button">
+                                    class="btn btn-sm btn-primary" role="button">
                                     Tambah Detail Pekerjaan
                                 </a>
                             @endif
@@ -74,7 +83,7 @@
                         </div>
                     </div>
                     <div class="table-responsive mt-4">
-                        <table class="table table-bordered yajra-datatable" id="progressTable">
+                        <table class="table table-bordered yajra-datatable" id="pekerjaanTable">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -87,6 +96,33 @@
                                     <th>RAB Modal Upah</th>
                                     <th>RAB Jual Satuan</th>
                                     <th>RAB Jual Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <hr>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Data CCO</h4>
+                        </div>
+                        <div class="card-action">
+                            <a href="{{ route('proyek.detail-pekerjaan.create', $data->id) }}"
+                                class="btn btn-sm btn-primary" role="button">
+                                Tambah Data CCO
+                            </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-4">
+                        <table class="table table-bordered yajra-datatable" id="bahanTable">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Pekerjaan</th>
+                                    <th>Nama</th>
+                                    <th>Volume</th>
+                                    <th>Harga Modal</th>
+                                    <th>Harga Jual</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -114,7 +150,7 @@
 
 <script type="text/javascript">
     $(function() {
-        $('#progressTable').DataTable({
+        $('#pekerjaanTable').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('proyek.detail-pekerjaan.index', $data->id) }}",
