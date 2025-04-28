@@ -3,6 +3,7 @@
 // Controllers
 
 use App\Http\Controllers\BahanController;
+use App\Http\Controllers\CcoController;
 use App\Http\Controllers\CuacaMingguanController;
 use App\Http\Controllers\DetailPekerjaanController;
 use App\Http\Controllers\DokumentasiMingguanController;
@@ -70,6 +71,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('proyek/{id}/index-detail-pekerjaan', [DetailPekerjaanController::class, 'indexDetailPekerjaan'])->name('proyek.detail-pekerjaan.index');
     Route::get('proyek/{id}/create-detail-pekerjaan', [DetailPekerjaanController::class, 'createDetailPekerjaan'])->name('proyek.detail-pekerjaan.create');
 
+    // CCO
+    Route::resource('cco-pekerjaan', CcoController::class);
+    Route::get('proyek/{id}/index-cco-pekerjaan', [CcoController::class, 'indexCcoPekerjaan'])->name('proyek.cco-pekerjaan.index');
+    Route::get('proyek/{id}/create-cco-pekerjaan', [CcoController::class, 'createCcoPekerjaan'])->name('proyek.cco-pekerjaan.create');
+    Route::get('proyek/{id}/print-cco-pekerjaan', [CcoController::class, 'printCcoPekerjaan'])->name('proyek.cco-pekerjaan.print');
+    
     // Preorder
     Route::resource('preoder', PreorderController::class);
 

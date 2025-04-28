@@ -107,22 +107,22 @@
                             <h4 class="card-title">Data CCO</h4>
                         </div>
                         <div class="card-action">
-                            <a href="{{ route('proyek.detail-pekerjaan.create', $data->id) }}"
+                            <a href="{{ route('proyek.cco-pekerjaan.print', $data->id) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rencana Anggaran Biaya dengan CCO</a>
+                            <a href="{{ route('proyek.cco-pekerjaan.create', $data->id) }}"
                                 class="btn btn-sm btn-primary" role="button">
                                 Tambah Data CCO
                             </a>
                         </div>
                     </div>
                     <div class="table-responsive mt-4">
-                        <table class="table table-bordered yajra-datatable" id="bahanTable">
+                        <table class="table table-bordered yajra-datatable" style="width: 100%;" id="ccoTable">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Pekerjaan</th>
                                     <th>Nama</th>
                                     <th>Volume</th>
-                                    <th>Harga Modal</th>
-                                    <th>Harga Jual</th>
+                                    <th>Harga</th>
+                                    <th>Total Harga</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -193,6 +193,37 @@
                 {
                     data: 'harga_jual_total',
                     name: 'harga_jual_total'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
+                },
+            ]
+        });
+
+        $('#ccoTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('proyek.cco-pekerjaan.index', $data->id) }}",
+            columns: [{
+                    data: 'no',
+                    name: 'no'
+                },
+                {
+                    data: 'nama',
+                    name: 'nama'
+                },
+                {
+                    data: 'volume',
+                    name: 'volume'
+                },
+                {
+                    data: 'harga',
+                    name: 'harga'
+                },
+                {
+                    data: 'total_harga',
+                    name: 'total_harga'
                 },
                 {
                     data: 'action',
