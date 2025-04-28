@@ -2,12 +2,14 @@
 
 // Controllers
 
+use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\CcoController;
 use App\Http\Controllers\CuacaMingguanController;
 use App\Http\Controllers\DetailPekerjaanController;
 use App\Http\Controllers\DokumentasiMingguanController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LaporanBulananController;
 use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\LaporanMingguanController;
 use App\Http\Controllers\PekerjaanController;
@@ -80,6 +82,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Preorder
     Route::resource('preoder', PreorderController::class);
 
+    // Approval
+    Route::resource('approval', ApprovalController::class);
+
     // Laporan Harian
     Route::resource('laporan-harian', LaporanHarianController::class);
     Route::get('/get-data-proyek/{id}', [LaporanHarianController::class, 'getDataProyek']);
@@ -101,6 +106,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('cuaca-mingguan', CuacaMingguanController::class);
         Route::get('/get-cuaca-minggu-ke/{id}', [CuacaMingguanController::class, 'getMingguKe']);
         Route::get('cuaca-mingguan/{id}/print', [CuacaMingguanController::class, 'printCuacaMingguan'])->name('cuaca-mingguan.print');
+
+    // Laporan Bulanan
+    Route::resource('laporan-bulanan', LaporanBulananController::class);
 
     // Users
     Route::resource('users', UserController::class);

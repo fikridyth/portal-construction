@@ -70,6 +70,12 @@
             <span class="item-name">Preorder</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ activeRoute(route('approval.index')) }}" href="{{ route('approval.index') }}">
+            <i class="fas fa-clipboard-check mt-1"></i>
+            <span class="item-name">Approval</span>
+        </a>
+    </li>
     <li>
         <hr class="hr-horizontal">
     </li>
@@ -82,7 +88,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link {{ activeRoute(route('laporan-harian.index')) }}" href="{{ route('laporan-harian.index') }}">
-            <i class="fas fa-calendar-days mt-1"></i>
+            <i class="fas fa-calendar-day mt-1"></i>
             <span class="item-name">Laporan Harian</span>
         </a>
     </li>
@@ -138,6 +144,12 @@
             </li>
         </ul>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ activeRoute(route('laporan-bulanan.index')) }}" href="{{ route('laporan-bulanan.index') }}">
+            <i class="fas fa-calendar-days mt-1"></i>
+            <span class="item-name">Laporan Bulanan</span>
+        </a>
+    </li>
     <li>
         <hr class="hr-horizontal">
     </li>
@@ -148,7 +160,7 @@
             <span class="mini-icon">-</span>
         </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item mb-5">
         <a class="nav-link {{ activeRoute(route('users.index')) }}" href="{{ route('users.index') }}">
             <i class="fas fa-user mt-1"></i>
             <span class="item-name">Users</span>
