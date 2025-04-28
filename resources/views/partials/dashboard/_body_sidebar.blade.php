@@ -1,7 +1,7 @@
 <aside class="sidebar sidebar-default navs-rounded-all">
     <div class="sidebar-header d-flex align-items-center justify-content-start">
         <a href="{{ route('dashboard') }}" class="navbar-brand">
-            <img src="{{ asset('assets/images/digibiz_1.png') }}" alt="Logo" style="height: 30px;">
+            <img src="{{ asset('assets/images/adp.png') }}" alt="Logo" style="height: 30px;">
             <h4 class="logo-title">{{ env('APP_NAME') }}</h4>
         </a>
         <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">

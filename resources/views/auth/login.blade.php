@@ -7,7 +7,7 @@
                   <div class="card card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
                      <div class="card-body">
                         <a href="{{route('dashboard')}}" class="navbar-brand d-flex align-items-center mb-3">
-                           <img src="{{asset('assets/images/digibiz_1.png')}}" alt="Logo" style="height: 30px;">
+                           <img src="{{asset('assets/images/adp.png')}}" alt="Logo" style="height: 30px;">
                            <h4 class="logo-title ms-3">{{env('APP_NAME')}}</h4>
                         </a>
                         <h2 class="mb-2 text-center">Sign In</h2>

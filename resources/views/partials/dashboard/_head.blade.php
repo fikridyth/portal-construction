@@ -1,5 +1,5 @@
 <!-- Favicon -->
-<link rel="shortcut icon" href="{{ asset('assets/images/digibiz_1.png') }}" />
+<link rel="shortcut icon" href="{{ asset('assets/images/adp.png') }}" />
 <link rel="stylesheet" href="{{ asset('css/libs.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/hope-ui.css?v=1.1.0') }}">
 <link rel="stylesheet" href="{{ asset('css/custom.css?v=1.1.0') }}">
