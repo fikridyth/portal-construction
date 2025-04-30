@@ -8,7 +8,7 @@
             </svg>
         </span>
     </a>
-    @if(auth()->user()->hasRole('admin') && auth()->id() !== $id)
+    @if(auth()->user()->user_type == 1)
     <?php 
     $message = __('global-message.delete_alert', ['form' => __('users.title')])
     ?>

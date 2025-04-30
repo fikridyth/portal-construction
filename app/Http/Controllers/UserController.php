@@ -34,7 +34,7 @@ class UserController extends Controller
     public function create()
     {
         $pageHeader = 'Tambah User';
-        $roles = Role::where('status', 1)->get()->pluck('title', 'id');
+        $roles = Role::where('status', 1)->where('name', '!=', 'system_admin')->get()->pluck('title', 'id');
 
         return view('users.form', compact('pageHeader', 'roles'));
     }
@@ -47,18 +47,26 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $request['password'] = bcrypt($request->password);
+        // dd($request->all());
+        $passwordData = bcrypt($request->password);
+        $usernameData = $request->username ?? stristr($request->email, "@", true) . rand(100, 1000);
 
-        $request['username'] = $request->username ?? stristr($request->email, "@", true) . rand(100, 1000);
+        $data = [
+            "username" => $usernameData,
+            "first_name" => $request->first_name,
+            "last_name" => $request->last_name,
+            "email" => $request->email,
+            "password" => $passwordData,
+            "user_type" => $request->user_type,
+            "phone_number" => $request->phone_number ?? null
+        ];
+        // dd($data);
+        User::create($data);
 
-        $user = User::create($request->all());
-
-        storeMediaFile($user, $request->profile_image, 'profile_image');
-
-        $user->assignRole('user');
-
-        // Save user Profile data...
-        $user->userProfile()->create($request->userProfile);
+        // storeMediaFile($user, $request->profile_image, 'profile_image');
+        // $user->assignRole('user');
+        // // Save user Profile data...
+        // $user->userProfile()->create($request->userProfile);
 
         return redirect()->route('users.index')->withSuccess(__('Tambah User Berhasil', ['name' => __('users.store')]));
     }

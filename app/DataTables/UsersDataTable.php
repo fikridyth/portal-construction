@@ -18,14 +18,8 @@ class UsersDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)
+            ->eloquent($query->where('user_type', '!=', 1))
             ->addIndexColumn()
-            ->editColumn('userProfile.country', function ($query) {
-                return $query->userProfile->country ?? '-';
-            })
-            ->editColumn('userProfile.company_name', function ($query) {
-                return $query->userProfile->company_name ?? '-';
-            })
             ->editColumn('status', function ($query) {
                 $status = 'warning';
                 switch ($query->status) {
@@ -41,22 +35,18 @@ class UsersDataTable extends DataTable
                 }
                 return '<span class="text-capitalize badge bg-' . $status . '">' . $query->status . '</span>';
             })
+            ->editColumn('phone_number', function ($query) {
+                return $query->phone_number ?? '-';
+            })
+            ->editColumn('user_type', function ($query) {
+                return $query->role->title;
+            })
             ->editColumn('created_at', function ($query) {
                 return date('Y/m/d', strtotime($query->created_at));
             })
             ->filterColumn('full_name', function ($query, $keyword) {
                 $sql = "CONCAT(users.first_name,' ',users.last_name)  like ?";
                 return $query->whereRaw($sql, ["%{$keyword}%"]);
-            })
-            ->filterColumn('userProfile.company_name', function ($query, $keyword) {
-                return $query->orWhereHas('userProfile', function ($q) use ($keyword) {
-                    $q->where('company_name', 'like', "%{$keyword}%");
-                });
-            })
-            ->filterColumn('userProfile.country', function ($query, $keyword) {
-                return $query->orWhereHas('userProfile', function ($q) use ($keyword) {
-                    $q->where('country', 'like', "%{$keyword}%");
-                });
             })
             ->addColumn('action', 'users.action')
             ->rawColumns(['action', 'status']);
@@ -106,8 +96,7 @@ class UsersDataTable extends DataTable
             ['data' => 'phone_number', 'name' => 'phone_number', 'title' => 'Phone Number', 'className' => 'text-center'],
             ['data' => 'email', 'name' => 'email', 'title' => 'Email', 'className' => 'text-center'],
             ['data' => 'user_type', 'name' => 'user_type', 'title' => 'Role', 'className' => 'text-center'],
-            ['data' => 'status', 'name' => 'status', 'title' => 'Status', 'className' => 'text-center'],
-            ['data' => 'userProfile.company_name', 'name' => 'userProfile.company_name', 'title' => 'Company', 'className' => 'text-center'],
+            // ['data' => 'status', 'name' => 'status', 'title' => 'Status', 'className' => 'text-center'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Join Date', 'className' => 'text-center'],
             Column::computed('action')
                 ->exportable(false)

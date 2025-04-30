@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-
+// use Spatie\Permission\Contracts\Role;
 
 class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
@@ -26,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'last_name',
         'phone_number',
         'status',
+        'user_type',
         'banned',
         'email',
         'password',
@@ -59,5 +60,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
 
     public function userProfile() {
         return $this->hasOne(UserProfile::class, 'user_id', 'id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'user_type');
     }
 }

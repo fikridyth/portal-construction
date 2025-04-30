@@ -34,28 +34,30 @@ class UserRequest extends FormRequest
         switch ($method) {
             case 'post':
                 $rules = [
-                    'username' => 'required|max:20',
-                    'password' => 'required|confirmed|min:8',
+                    // 'username' => 'required|max:20',
+                    // 'password' => 'required|confirmed|min:8',
+                    'password' => 'required|min:8',
                     'email' => 'required|max:191|email|unique:users',
                     'phone_number'=>'max:13',
                     // 'userProfile.gender' =>  'required',
-                    'userProfile.country' =>  'max:191',
-                    'userProfile.state' =>  'max:191',
-                    'userProfile.city' =>  'max:191',
-                    'userProfile.pin_code' =>  'max:191',
+                    // 'userProfile.country' =>  'max:191',
+                    // 'userProfile.state' =>  'max:191',
+                    // 'userProfile.city' =>  'max:191',
+                    // 'userProfile.pin_code' =>  'max:191',
                 ];
                 break;
             case 'patch':
                 $rules = [
-                    'username' => 'required|max:20',
+                    // 'username' => 'required|max:20',
                     'email' => 'required|max:191|email|unique:users,email,'.$user_id,
                     'phone_number'=>'max:13',
-                    'password' => 'confirmed|min:8|nullable',
+                    'password' => 'min:8|nullable',
+                    // 'password' => 'confirmed|min:8|nullable',
                     // 'userProfile.gender' =>  'required',
-                    'userProfile.country' =>  'max:191',
-                    'userProfile.state' =>  'max:191',
-                    'userProfile.city' =>  'max:191',
-                    'userProfile.pin_code' =>  'max:191',
+                    // 'userProfile.country' =>  'max:191',
+                    // 'userProfile.state' =>  'max:191',
+                    // 'userProfile.city' =>  'max:191',
+                    // 'userProfile.pin_code' =>  'max:191',
                 ];
                 break;
 

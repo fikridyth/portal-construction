@@ -209,18 +209,18 @@
           <img src="{{asset('images/avatars/avtar_3.png')}}" alt="User-Profile" class="theme-color-pink-img img-fluid avatar avatar-50 avatar-rounded">
             <div class="caption ms-3 d-none d-md-block ">
               <h6 class="mb-0 caption-title">{{ auth()->user()->full_name ?? 'Austin Robertson'  }}</h6>
-              <p class="mb-0 caption-sub-title text-capitalize">{{ str_replace('_',' ',auth()->user()->user_type) ?? 'Marketing Administrator' }}</p>
+              <p class="mb-0 caption-sub-title text-capitalize">{{ auth()->user()->role->title }}</p>
             </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{{route('users.show', auth()->id() || 1)}}">Profile</a></li>
+            {{-- <li><a class="dropdown-item" href="{{route('users.show', auth()->id() || 1)}}">Profile</a></li> --}}
             {{-- <li><a class="dropdown-item" href="{{route('auth.userprivacysetting')}}">Privacy Setting</a></li> --}}
-            <li><hr class="dropdown-divider"></li>
+            {{-- <li><hr class="dropdown-divider"></li> --}}
             <li><form method="POST" action="{{route('logout')}}">
               @csrf
               <a href="javascript:void(0)" class="dropdown-item"
                 onclick="event.preventDefault();
-              this.closest('form').submit();">
+                this.closest('form').submit();">
                   {{ __('Log out') }}
               </a>
               </form>
