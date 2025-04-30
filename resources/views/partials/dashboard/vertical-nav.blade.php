@@ -65,7 +65,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ activeRoute(route('preoder.index')) }}" href="{{ route('preoder.index') }}">
+        <a class="nav-link {{ activeRoute(route('preorder.index')) }}" href="{{ route('preorder.index') }}">
             <i class="fas fa-truck mt-1"></i>
             <span class="item-name">Preorder</span>
         </a>

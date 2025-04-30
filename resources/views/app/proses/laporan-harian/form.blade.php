@@ -75,7 +75,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label" for="jumlah">Jumlah: <span class="text-danger">*</span></label>
-                                            {{ Form::number('tenaga[0][jumlah]', null, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Jumlah']) }}
+                                            {{ Form::number('tenaga[0][jumlah]', null, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Jumlah', 'required']) }}
                                         </div>
                                         <div class="col-md-2 d-flex align-items-end mt-2">
                                             <button type="button" class="btn btn-success btn-add-tenaga w-100">+</button>
@@ -101,7 +101,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label" for="jumlah">Jumlah: <span class="text-danger">*</span></label>
-                                            {{ Form::number('bahan[0][jumlah]', null, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Jumlah']) }}
+                                            {{ Form::number('bahan[0][jumlah]', null, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Jumlah', 'required']) }}
                                         </div>
                                         <div class="col-md-2 d-flex align-items-end mt-2">
                                             <button type="button" class="btn btn-success btn-add-bahan w-100">+</button>
@@ -166,7 +166,7 @@
                         ${createSelectTenaga(indexT)}
                     </div>
                     <div class="col-md-3">
-                        <input type="number" name="tenaga[${indexT}][jumlah]" class="form-control placeholder-grey" placeholder="Jumlah">
+                        <input type="number" name="tenaga[${indexT}][jumlah]" class="form-control placeholder-grey" placeholder="Jumlah" required>
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
                         <button type="button" class="btn btn-danger btn-remove-tenaga w-100">-</button>
@@ -201,7 +201,7 @@
                         ${createSelectBahan(indexB)}
                     </div>
                     <div class="col-md-3">
-                        <input type="number" name="bahan[${indexB}][jumlah]" class="form-control placeholder-grey" placeholder="Jumlah">
+                        <input type="number" name="bahan[${indexB}][jumlah]" class="form-control placeholder-grey" placeholder="Jumlah" required>
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
                         <button type="button" class="btn btn-danger btn-remove-bahan w-100">-</button>

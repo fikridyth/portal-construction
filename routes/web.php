@@ -80,7 +80,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('proyek/{id}/print-cco-pekerjaan', [CcoController::class, 'printCcoPekerjaan'])->name('proyek.cco-pekerjaan.print');
     
     // Preorder
-    Route::resource('preoder', PreorderController::class);
+    Route::resource('preorder', PreorderController::class);
+    Route::get('/get-preorder-minggu-ke/{id}', [PreorderController::class, 'getMingguKe']);
+    Route::get('preorder/{id}/print', [PreorderController::class, 'printPreorder'])->name('preorder.print');
 
     // Approval
     Route::resource('approval', ApprovalController::class);
