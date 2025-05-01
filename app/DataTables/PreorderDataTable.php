@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Preorder;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -29,7 +30,7 @@ class PreorderDataTable extends DataTable
                 return $query->laporanMingguan->proyek->pelaksana ?? '-';
             })
             ->addColumn('purchasing', function ($query) {
-                return $query->createdBy->first_name ?? '-';
+                return $query->createdBy->first_name . ' ' . $query->createdBy->last_name ?? '-';
             })
             ->addColumn('masa_pelaksanaan', function ($query) {
                 $dari = Carbon::parse($query->dari);
@@ -43,11 +44,33 @@ class PreorderDataTable extends DataTable
                 // Jika bulan berbeda
                 return $dari->format('d') . ' S/D ' . $sampai->format('d F Y');
             })
-            ->addColumn('waktu_pelaksanaan', function ($query) {
-                return $query->laporanMingguan->proyek->waktu_pelaksanaan . ' Hari' ?? '-';
+            ->editColumn('total', function ($query) {
+                return number_format($query->total, 0);
             })
-            ->addColumn('action', 'app.purchase.preorder.action')
-            ->rawColumns(['action']);
+            // ->addColumn('waktu_pelaksanaan', function ($query) {
+            //     return $query->laporanMingguan->proyek->waktu_pelaksanaan . ' Hari' ?? '-';
+            // })
+            ->editColumn('status', function ($query) {
+                switch ($query->status) {
+                    case 1:
+                        return '<span class="badge bg-warning">Menunggu Approval Project Manager</span>';
+                    case 2:
+                        return '<span class="badge bg-warning">Menunggu Approval Owner</span>';
+                    case 3:
+                        return '<span class="badge bg-warning">Menunggu Approval Finance</span>';
+                    case 4:
+                        return '<span class="badge bg-success">Disetujui</span>';
+                    default:
+                        return '<span class="badge bg-secondary">-</span>';
+                }
+            })
+            ->addColumn('action', function ($query) {
+                return view('app.purchase.preorder.action', [
+                    'id' => $query->id,
+                    'status' => $query->status,
+                ]);
+            })
+            ->rawColumns(['action', 'status']);
     }
 
     /**
@@ -94,7 +117,8 @@ class PreorderDataTable extends DataTable
             ['data' => 'pelaksana_proyek', 'name' => 'pelaksana_proyek', 'title' => 'Kontraktor', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'purchasing', 'name' => 'purchasing', 'title' => 'Purchasing', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'masa_pelaksanaan', 'name' => 'masa_pelaksanaan', 'title' => 'Masa Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
-            ['data' => 'waktu_pelaksanaan', 'name' => 'waktu_pelaksanaan', 'title' => 'Waktu Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'total', 'name' => 'total', 'title' => 'Total', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'status', 'name' => 'status', 'title' => 'Status', 'orderable' => false, 'className' => 'text-center'],
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

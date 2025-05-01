@@ -17,13 +17,14 @@ class CreatePreordersTable extends Migration
             $table->id();
             $table->foreignId('id_proyek')->references('id')->on('proyeks');
             $table->foreignId('id_laporan_mingguan')->references('id')->on('laporan_mingguans');
-            $table->json('no_po');
+            $table->string('no_po');
             $table->bigInteger('minggu_ke');
             $table->json('list_pesanan')->nullable();
             $table->date('dari');
             $table->date('sampai');
             $table->decimal('total', 16, 2)->nullable();
             $table->decimal('bobot_total', 16, 2)->nullable();
+            $table->bigInteger('status');
             $table->foreignId('created_by')->references('id')->on('users');
             $table->foreignId('updated_by')->references('id')->on('users');
             $table->timestamps();

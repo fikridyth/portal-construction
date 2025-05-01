@@ -74,8 +74,11 @@ class PreorderController extends Controller
             // Hanya ambil proyek yang total bobotnya 100 DAN BELUM punya laporan
             return $totalBobot == 100 && !$sudahAdaLaporan;
         });
+        $listPesanan = [
+            ['nama' => '', 'volume' => '', 'satuan' => '', 'harga' => '']
+        ];
 
-        return view('app.purchase.preorder.form', compact('pageHeader', 'dataProyek'));
+        return view('app.purchase.preorder.form', compact('pageHeader', 'dataProyek', 'listPesanan'));
     }
 
     /**
@@ -87,7 +90,7 @@ class PreorderController extends Controller
     public function store(Request $request)
     {
         $getDataLap = LaporanMingguan::where('id_proyek', $request->id_proyek)->where('minggu_ke', $request->minggu_ke)->first();
-        dd($getDataLap, $request->all());
+        // dd($getDataLap, $request->all());
 
         // get nomor po
         $sequence = '0001';
@@ -105,6 +108,21 @@ class PreorderController extends Controller
         }
         $getNomorPo = 'PO-' . $dateNow . '-' . str_pad($sequence, 4, 0, STR_PAD_LEFT);
 
+        // list pesanan
+        $preoderInput = $request->input('preorder');
+        $preorderResult = [];
+        $totalHarga = 0;
+        foreach ($preoderInput   as $item) {
+            $preorderResult[] = [
+                "nama" => $item['nama'],
+                "volume" => $item['volume'],
+                "satuan" => $item['satuan'],
+                "harga" => $item['harga'],
+                "total" => $item['harga'] * $item['volume']
+            ];
+            $totalHarga += $item['harga'] * $item['volume'];
+        }
+
         $data = [
             'id_proyek' => $request->id_proyek,
             'id_laporan_mingguan' => $getDataLap->id,
@@ -113,12 +131,13 @@ class PreorderController extends Controller
             'sampai' => $request->sampai,
             'bobot_total' => $getDataLap->bobot_total,
             'no_po' => $getNomorPo,
-            // 'list_pesanan' => json_encode($listGambar),
-            // 'total' => ',
+            'list_pesanan' => json_encode($preorderResult),
+            'total' => $totalHarga,
+            'status' => 1,
             'created_by' => auth()->user()->id,
             'updated_by' => auth()->user()->id,
         ];
-        DokumentasiMingguan::create($data);
+        Preorder::create($data);
 
         return redirect()->route('preorder.index')->withSuccess(__('Tambah Preorder Berhasil', ['name' => __('preorder.store')]));
     }
@@ -142,7 +161,11 @@ class PreorderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pageHeader = 'Create Dokumentasi Mingguan';
+        $data = Preorder::findOrFail($id);
+        $listPesanan = json_decode($data->list_pesanan, true);
+
+        return view('app.purchase.preorder.form', compact('id', 'pageHeader', 'data', 'listPesanan'));
     }
 
     /**
@@ -154,7 +177,38 @@ class PreorderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // list pesanan
+        $preoderInput = $request->input('preorder');
+        $preorderResult = [];
+        $totalHarga = 0;
+        foreach ($preoderInput   as $item) {
+            $preorderResult[] = [
+                "nama" => $item['nama'],
+                "volume" => $item['volume'],
+                "satuan" => $item['satuan'],
+                "harga" => $item['harga'],
+                "total" => $item['harga'] * $item['volume']
+            ];
+            $totalHarga += $item['harga'] * $item['volume'];
+        }
+
+        $preorder = Preorder::findOrFail($id);
+        $data = [
+            'id_proyek' => $preorder->id_proyek,
+            'id_laporan_mingguan' => $preorder->id_laporan_mingguan,
+            'minggu_ke' => $preorder->minggu_ke,
+            'dari' => $preorder->dari,
+            'sampai' => $preorder->sampai,
+            'bobot_total' => $preorder->bobot_total,
+            'no_po' => $preorder->no_po,
+            'list_pesanan' => json_encode($preorderResult),
+            'total' => $totalHarga,
+            'status' => 1,
+            'updated_by' => auth()->user()->id,
+        ];
+        $preorder->update($data);
+
+        return redirect()->route('preorder.index')->withSuccess(__('Ubah Preorder Berhasil', ['name' => __('preorder.update')]));
     }
 
     /**
@@ -170,6 +224,13 @@ class PreorderController extends Controller
 
     public function printPreorder($id)
     {
-        //
+        $data = Preorder::findOrFail($id);
+        $listPesanan = json_decode($data->list_pesanan, true);
+
+        $dari = Carbon::parse($data->dari);
+        $sampai = Carbon::parse($data->sampai);
+        $range = $dari->format('d') . ' - ' . $sampai->format('d F Y');
+
+        return view('app.purchase.preorder.print', compact('data', 'listPesanan', 'range'));
     }
 }

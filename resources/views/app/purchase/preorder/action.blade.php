@@ -4,11 +4,13 @@
             <i class="fas fa-eye mt-1"></i>
         </span>
     </a> --}}
-    {{-- <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data dokumentasi Mingguan" href="{{ route('preorder.edit',$id) }}">
-        <span class="btn-inner">
-            <i class="fas fa-edit mt-1"></i>
-        </span>
-    </a> --}}
+    @if ($status == 1)
+        <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Preorder" href="{{ route('preorder.edit',$id) }}">
+            <span class="btn-inner">
+                <i class="fas fa-edit mt-1"></i>
+            </span>
+        </a>
+    @endif
     <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Preorder" href="{{ route('preorder.print',$id) }}">
         <span class="btn-inner">
             <i class="fas fa-print mt-1"></i>

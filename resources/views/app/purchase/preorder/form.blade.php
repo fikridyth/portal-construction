@@ -37,12 +37,16 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="nama">Proyek: <span class="text-danger">*</span></label>
-                                {{ Form::select('id_proyek', $dataProyek->pluck('nama', 'id'), null, [
-                                    'class' => 'form-control placeholder-grey',
-                                    'placeholder' => 'Pilih Proyek',
-                                    'required',
-                                    'id' => 'id_proyek'
-                                ]) }}
+                                @if($id !== null)
+                                    {{ Form::text('id_proyek', $data->laporanMingguan->proyek->nama, ['class' => 'form-control placeholder-grey', 'id' => 'id_proyek', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
+                                @else
+                                    {{ Form::select('id_proyek', $dataProyek->pluck('nama', 'id'), null, [
+                                        'class' => 'form-control placeholder-grey',
+                                        'placeholder' => 'Pilih Proyek',
+                                        'required',
+                                        'id' => 'id_proyek'
+                                    ]) }}
+                                @endif
                             </div>
                             <div class="form-group col-md-2">
                                 <label class="form-label" for="minggu_ke">Minggu Ke: <span class="text-danger">*</span></label>
@@ -61,28 +65,43 @@
                                     <h5 class="mb-0 fw-bold">List Preorder
                                 </div>
                                 <div class="card-body row preorder-wrapper">
-                                    <div class="row preorder-item">
-                                        <div class="col-md-3">
-                                            <label class="form-label" for="nama_preorder">Nama: <span class="text-danger">*</span></label>
-                                            {{ Form::text('preorder[0][nama]', null, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', 'required']) }}
+                                    @foreach ($listPesanan as $i => $item)
+                                        <div class="row preorder-item {{ $i > 0 ? 'mt-2' : '' }}">
+                                            <div class="col-md-3">
+                                                @if ($i == 0)
+                                                    <label class="form-label">Nama: <span class="text-danger">*</span></label>
+                                                @endif
+                                                {{ Form::text("preorder[$i][nama]", $item['nama'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', 'required']) }}
+                                            </div>
+                                            <div class="col-md-3">
+                                                @if ($i == 0)
+                                                    <label class="form-label">Volume: <span class="text-danger">*</span></label>
+                                                @endif
+                                                {{ Form::number("preorder[$i][volume]", $item['volume'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Volume', 'required']) }}
+                                            </div>
+                                            <div class="col-md-2">
+                                                @if ($i == 0)
+                                                    <label class="form-label">Satuan: <span class="text-danger">*</span></label>
+                                                @endif
+                                                {{ Form::text("preorder[$i][satuan]", $item['satuan'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Satuan', 'required']) }}
+                                            </div>
+                                            <div class="col-md-3">
+                                                @if ($i == 0)
+                                                    <label class="form-label">Harga: <span class="text-danger">*</span></label>
+                                                @endif
+                                                {{ Form::number("preorder[$i][harga]", $item['harga'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Harga', 'required']) }}
+                                            </div>
+                                            <div class="col-md-1 d-flex align-items-end">
+                                                @if ($i == 0)
+                                                    <button type="button" class="btn btn-success btn-add w-100">+</button>
+                                                @else
+                                                    <button type="button" class="btn btn-danger btn-remove w-100">-</button>
+                                                @endif
+                                            </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <label class="form-label" for="volume">Volume: <span class="text-danger">*</span></label>
-                                            {{ Form::number('preorder[0][volume]', null, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Volume', 'required']) }}
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="form-label" for="satuan">Satuan: <span class="text-danger">*</span></label>
-                                            {{ Form::text('preorder[0][satuan]', null, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Satuan', 'required']) }}
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="form-label" for="harga">Harga: <span class="text-danger">*</span></label>
-                                            {{ Form::number('preorder[0][harga]', null, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Harga', 'required']) }}
-                                        </div>
-                                        <div class="col-md-1 d-flex align-items-end mt-2">
-                                            <button type="button" class="btn btn-success btn-add w-100">+</button>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
+                                
                             </div>                          
                         </div>
                         <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Preorder</button>
@@ -120,18 +139,18 @@
     });
 
     $(document).ready(function () {
-        let index = 1;
+        let index = {{ count($listPesanan) }};
         $(document).on('click', '.btn-add', function () {
             let newItem = `
                 <div class="row preorder-item mt-2">
                     <div class="col-md-3">
-                        <input type="number" name="preorder[${index}][nama]" class="form-control placeholder-grey" placeholder="Isi Nama" required>
+                        <input type="text" name="preorder[${index}][nama]" class="form-control placeholder-grey" placeholder="Isi Nama" required>
                     </div>
                     <div class="col-md-3">
                         <input type="number" name="preorder[${index}][volume]" class="form-control placeholder-grey" placeholder="Isi Volume" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="number" name="preorder[${index}][satuan]" class="form-control placeholder-grey" placeholder="Isi Satuan" required>
+                        <input type="text" name="preorder[${index}][satuan]" class="form-control placeholder-grey" placeholder="Isi Satuan" required>
                     </div>
                     <div class="col-md-3">
                         <input type="number" name="preorder[${index}][harga]" class="form-control placeholder-grey" placeholder="Isi Harga" required>
