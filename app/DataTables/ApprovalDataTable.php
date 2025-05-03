@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class PreorderDataTable extends DataTable
+class ApprovalDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,7 +19,7 @@ class PreorderDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->where('status', 4)->where('created_by', Auth::user()->id))
+            ->eloquent($query)
             ->addIndexColumn()
             ->addColumn('nama_proyek', function ($query) {
                 return $query->laporanMingguan->proyek->nama ?? '-';
@@ -50,6 +50,8 @@ class PreorderDataTable extends DataTable
             // })
             ->editColumn('status', function ($query) {
                 switch ($query->status) {
+                    case 0:
+                        return '<span class="badge bg-danger">Ditolak</span>';
                     case 1:
                         return '<span class="badge bg-warning">Menunggu Approval Project Manager</span>';
                     case 2:
@@ -63,7 +65,7 @@ class PreorderDataTable extends DataTable
                 }
             })
             ->addColumn('action', function ($query) {
-                return view('app.purchase.preorder.action', [
+                return view('app.purchase.approval.action', [
                     'id' => $query->id,
                     'status' => $query->status,
                 ]);
@@ -79,7 +81,15 @@ class PreorderDataTable extends DataTable
      */
     public function query(Preorder $model)
     {
-        return $model->newQuery();
+        if (Auth::user()->role->name == 'project_manager') {
+            return $model->where('status',  1)->newQuery();
+        } else if (Auth::user()->role->name == 'owner') {
+            return $model->where('status',  2)->newQuery();
+        } else if (Auth::user()->role->name == 'finance') {
+            return $model->where('status',  3)->newQuery();
+        } else {
+            return $model->where('created_by',  Auth::user()->id)->newQuery();
+        }
     }
 
     /**
@@ -108,7 +118,7 @@ class PreorderDataTable extends DataTable
      */
     protected function getColumns()
     {
-        return [
+        $columns = [
             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
             ['data' => 'nama_proyek', 'name' => 'nama_proyek', 'title' => 'Proyek', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'minggu_ke', 'name' => 'minggu_ke', 'title' => 'Minggu Ke', 'orderable' => false, 'className' => 'text-center'],
@@ -116,14 +126,20 @@ class PreorderDataTable extends DataTable
             ['data' => 'purchasing', 'name' => 'purchasing', 'title' => 'Purchasing', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'masa_pelaksanaan', 'name' => 'masa_pelaksanaan', 'title' => 'Masa Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'total', 'name' => 'total', 'title' => 'Total', 'orderable' => false, 'className' => 'text-center'],
-            ['data' => 'kode_bayar', 'name' => 'kode_bayar', 'title' => 'Kode Bayar', 'orderable' => false, 'className' => 'text-center'],
-            Column::computed('action')
+            ['data' => 'status', 'name' => 'status', 'title' => 'Status', 'orderable' => false, 'className' => 'text-center'],
+        ];
+        
+        if (Auth::user()->role->name !== 'admin_purchasing') {
+            $columns[] = Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->searchable(false)
                 ->width(60)
-                ->addClass('text-center hide-search'),
-        ];
+                ->addClass('text-center hide-search');
+        }
+        
+        return $columns;
+        
     }
 
     /**
@@ -133,6 +149,6 @@ class PreorderDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Approval_' . date('YmdHis');
+        return 'Preorder_' . date('YmdHis');
     }
 }

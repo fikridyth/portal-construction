@@ -25,6 +25,13 @@ class CreatePreordersTable extends Migration
             $table->decimal('total', 16, 2)->nullable();
             $table->decimal('bobot_total', 16, 2)->nullable();
             $table->bigInteger('status');
+            $table->string('kode_bayar');
+            $table->foreignId('approved_manager_by')->nullable()->constrained('users');
+            $table->timestamp('approved_manager_at')->nullable();
+            $table->foreignId('approved_owner_by')->nullable()->constrained('users');
+            $table->timestamp('approved_owner_at')->nullable();
+            $table->foreignId('approved_finance_by')->nullable()->constrained('users');
+            $table->timestamp('approved_finance_at')->nullable();
             $table->foreignId('created_by')->references('id')->on('users');
             $table->foreignId('updated_by')->references('id')->on('users');
             $table->timestamps();

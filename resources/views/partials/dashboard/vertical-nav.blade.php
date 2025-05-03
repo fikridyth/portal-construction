@@ -44,7 +44,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link {{ activeRoute(route('tenaga-kerja.index')) }}" href="{{ route('tenaga-kerja.index') }}">
-            <i class="fas fa-user-pen mt-1"></i>
+            <i class="fas fa-users mt-1"></i>
             <span class="item-name">Tenaga Kerja</span>
         </a>
     </li>

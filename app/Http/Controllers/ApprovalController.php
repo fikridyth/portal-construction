@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ApprovalDataTable;
+use App\Helpers\AuthHelper;
+use App\Models\Preorder;
 use Illuminate\Http\Request;
 
 class ApprovalController extends Controller
@@ -11,9 +14,13 @@ class ApprovalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ApprovalDataTable $dataTable)
     {
-        //
+        $pageHeader = 'Index Approval';
+        $pageTitle = 'List Approval';
+        $auth_user = AuthHelper::authSession();
+        $assets = ['data-table'];
+        return $dataTable->render('app.purchase.approval.index', compact('pageHeader', 'pageTitle', 'auth_user', 'assets'));
     }
 
     /**
@@ -56,7 +63,12 @@ class ApprovalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $id = dekrip($id);
+        $pageHeader = 'Approval';
+        $data = Preorder::findOrFail($id);
+        $listPesanan = json_decode($data->list_pesanan, true);
+
+        return view('app.purchase.approval.form', compact('id', 'pageHeader', 'data', 'listPesanan'));
     }
 
     /**
@@ -68,7 +80,47 @@ class ApprovalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $preorder = Preorder::findOrFail($id);
+        // list pesanan
+        $preoderInput = $request->input('preorder');
+        $preorderResult = [];
+        $totalHarga = 0;
+        foreach ($preoderInput   as $item) {
+            $preorderResult[] = [
+                "nama" => $item['nama'],
+                "volume" => $item['volume'],
+                "satuan" => $item['satuan'],
+                "harga" => $item['harga'],
+                "total" => $item['harga'] * $item['volume']
+            ];
+            $totalHarga += $item['harga'] * $item['volume'];
+        }
+
+        $data = [
+            'id_proyek' => $preorder->id_proyek,
+            'id_laporan_mingguan' => $preorder->id_laporan_mingguan,
+            'minggu_ke' => $preorder->minggu_ke,
+            'dari' => $preorder->dari,
+            'sampai' => $preorder->sampai,
+            'bobot_total' => $preorder->bobot_total,
+            'no_po' => $preorder->no_po,
+            'list_pesanan' => json_encode($preorderResult),
+            'total' => $totalHarga,
+            'updated_by' => auth()->id(),
+        ];
+        
+        if ($request->aksi === 'approve') {
+            $data['approved_manager_by'] = auth()->id();
+            $data['approved_manager_at'] = now();
+            $data['status'] = 2;
+        } else {
+            $data['approved_manager_by'] = auth()->id();
+            $data['approved_manager_at'] = now();
+            $data['status'] = 0;
+        }
+        $preorder->update($data);
+
+        return redirect()->route('approval.index')->withSuccess(__('Ubah Approval Berhasil', ['name' => __('approval.update')]));
     }
 
     /**

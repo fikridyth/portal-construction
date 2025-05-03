@@ -9,6 +9,7 @@ use App\Models\LaporanMingguan;
 use App\Models\Preorder;
 use App\Models\Proyek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PreorderController extends Controller
 {
@@ -67,7 +68,7 @@ class PreorderController extends Controller
      */
     public function create()
     {
-        $pageHeader = 'Create Dokumentasi Mingguan';
+        $pageHeader = 'Create Preorder';
         $dataProyek = Proyek::all()->filter(function ($proyek) {
             $totalBobot = DetailPekerjaan::where('id_proyek', $proyek->id)->sum('bobot');
             $sudahAdaLaporan = Preorder::where('id_proyek', $proyek->id)->where('bobot_total', '>=', 100)->exists();
@@ -134,12 +135,13 @@ class PreorderController extends Controller
             'list_pesanan' => json_encode($preorderResult),
             'total' => $totalHarga,
             'status' => 1,
+            'kode_bayar' => Str::random(10),
             'created_by' => auth()->user()->id,
             'updated_by' => auth()->user()->id,
         ];
         Preorder::create($data);
 
-        return redirect()->route('preorder.index')->withSuccess(__('Tambah Preorder Berhasil', ['name' => __('preorder.store')]));
+        return redirect()->route('approval.index')->withSuccess(__('Tambah Preorder Berhasil', ['name' => __('preorder.store')]));
     }
 
     /**
@@ -161,7 +163,8 @@ class PreorderController extends Controller
      */
     public function edit($id)
     {
-        $pageHeader = 'Create Dokumentasi Mingguan';
+        $id = dekrip($id);
+        $pageHeader = 'Edit Preorder';
         $data = Preorder::findOrFail($id);
         $listPesanan = json_decode($data->list_pesanan, true);
 
