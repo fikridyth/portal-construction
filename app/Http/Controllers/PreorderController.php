@@ -8,6 +8,7 @@ use App\Models\DetailPekerjaan;
 use App\Models\LaporanMingguan;
 use App\Models\Preorder;
 use App\Models\Proyek;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -34,7 +35,7 @@ class PreorderController extends Controller
         $dataDari = now()->format('Y-m-d');
         $dataSampai = now()->format('Y-m-d');
 
-        $dataDok = Preorder::where('id_proyek', $id)->orderBy('created_at', 'desc')->first();
+        $dataDok = Preorder::where('id_proyek', $id)->where('status', 4)->orderBy('created_at', 'desc')->first();
         if ($dataDok) {
             $dataLap = LaporanMingguan::where('id_proyek', $id)->where('minggu_ke', $dataDok->minggu_ke)->first();
         } else {

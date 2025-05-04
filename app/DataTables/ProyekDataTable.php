@@ -19,7 +19,7 @@ class ProyekDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)
+            ->eloquent($query->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->addColumn('bobot', function ($query) {
                 $data = DetailPekerjaan::where('id_proyek', $query->id)->get();

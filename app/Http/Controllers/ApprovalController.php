@@ -6,6 +6,7 @@ use App\DataTables\ApprovalDataTable;
 use App\Helpers\AuthHelper;
 use App\Models\Preorder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApprovalController extends Controller
 {
@@ -67,8 +68,9 @@ class ApprovalController extends Controller
         $pageHeader = 'Approval';
         $data = Preorder::findOrFail($id);
         $listPesanan = json_decode($data->list_pesanan, true);
+        $userRole = Auth::user()->role->name;
 
-        return view('app.purchase.approval.form', compact('id', 'pageHeader', 'data', 'listPesanan'));
+        return view('app.purchase.approval.form', compact('id', 'pageHeader', 'data', 'listPesanan', 'userRole'));
     }
 
     /**
@@ -81,6 +83,7 @@ class ApprovalController extends Controller
     public function update(Request $request, $id)
     {
         $preorder = Preorder::findOrFail($id);
+        $userRole = Auth::user()->role->name;
         // list pesanan
         $preoderInput = $request->input('preorder');
         $preorderResult = [];
@@ -108,19 +111,35 @@ class ApprovalController extends Controller
             'total' => $totalHarga,
             'updated_by' => auth()->id(),
         ];
-        
-        if ($request->aksi === 'approve') {
+
+        if ($request->aksi === 'approve' && $userRole == 'project_manager') {
             $data['approved_manager_by'] = auth()->id();
             $data['approved_manager_at'] = now();
             $data['status'] = 2;
-        } else {
+        } else if ($request->aksi === 'reject' && $userRole == 'project_manager') {
             $data['approved_manager_by'] = auth()->id();
             $data['approved_manager_at'] = now();
+            $data['status'] = 0;
+        } else if ($request->aksi === 'approve' && $userRole == 'owner') {
+            $data['approved_owner_by'] = auth()->id();
+            $data['approved_owner_at'] = now();
+            $data['status'] = 3;
+        } else if ($request->aksi === 'reject' && $userRole == 'owner') {
+            $data['approved_owner_by'] = auth()->id();
+            $data['approved_owner_at'] = now();
+            $data['status'] = 0;
+        } else if ($request->aksi === 'approve' && $userRole == 'finance') {
+            $data['approved_finance_by'] = auth()->id();
+            $data['approved_finance_at'] = now();
+            $data['status'] = 4;
+        } else if ($request->aksi === 'reject' && $userRole == 'finance') {
+            $data['approved_finance_by'] = auth()->id();
+            $data['approved_finance_at'] = now();
             $data['status'] = 0;
         }
         $preorder->update($data);
 
-        return redirect()->route('approval.index')->withSuccess(__('Ubah Approval Berhasil', ['name' => __('approval.update')]));
+        return redirect()->route('approval.index')->withSuccess(__('Updata Data Approval Berhasil', ['name' => __('approval.update')]));
     }
 
     /**

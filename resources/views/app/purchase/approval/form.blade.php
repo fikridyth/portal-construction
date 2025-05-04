@@ -67,51 +67,97 @@
                                 <div class="card-body row preorder-wrapper">
                                     @foreach ($listPesanan as $i => $item)
                                         <div class="row preorder-item {{ $i > 0 ? 'mt-2' : '' }}">
-                                            <div class="col-md-3">
-                                                @if ($i == 0)
-                                                    <label class="form-label">Nama: <span class="text-danger">*</span></label>
-                                                @endif
-                                                {{ Form::text("preorder[$i][nama]", $item['nama'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', 'required']) }}
-                                            </div>
-                                            <div class="col-md-3">
-                                                @if ($i == 0)
-                                                    <label class="form-label">Volume: <span class="text-danger">*</span></label>
-                                                @endif
-                                                {{ Form::number("preorder[$i][volume]", $item['volume'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Volume', 'required']) }}
-                                            </div>
-                                            <div class="col-md-2">
-                                                @if ($i == 0)
-                                                    <label class="form-label">Satuan: <span class="text-danger">*</span></label>
-                                                @endif
-                                                {{ Form::text("preorder[$i][satuan]", $item['satuan'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Satuan', 'required']) }}
-                                            </div>
-                                            <div class="col-md-3">
-                                                @if ($i == 0)
-                                                    <label class="form-label">Harga: <span class="text-danger">*</span></label>
-                                                @endif
-                                                {{ Form::number("preorder[$i][harga]", $item['harga'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Harga', 'required']) }}
-                                            </div>
-                                            <div class="col-md-1 d-flex align-items-end">
-                                                @if ($i == 0)
-                                                    <button type="button" class="btn btn-success btn-add w-100">+</button>
-                                                @else
-                                                    <button type="button" class="btn btn-danger btn-remove w-100">-</button>
-                                                @endif
-                                            </div>
+                                            @if ($userRole == 'project_manager' || $userRole == 'owner')
+                                                <div class="col-md-3">
+                                                    @if ($i == 0)
+                                                        <label class="form-label">Nama: <span class="text-danger">*</span></label>
+                                                    @endif
+                                                    {{ Form::text("preorder[$i][nama]", $item['nama'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', $userRole == 'admin_purchasing' || $userRole == 'finance' ? 'readonly' : 'required']) }}
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @if ($i == 0)
+                                                        <label class="form-label">Volume: <span class="text-danger">*</span></label>
+                                                    @endif
+                                                    {{ Form::number("preorder[$i][volume]", $item['volume'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Volume', $userRole == 'admin_purchasing' || $userRole == 'finance' ? 'readonly' : 'required']) }}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    @if ($i == 0)
+                                                        <label class="form-label">Satuan: <span class="text-danger">*</span></label>
+                                                    @endif
+                                                    {{ Form::text("preorder[$i][satuan]", $item['satuan'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Satuan', $userRole == 'admin_purchasing' || $userRole == 'finance' ? 'readonly' : 'required']) }}
+                                                </div>
+                                                <div class="{{ $userRole == 'admin_purchasing' || $userRole == 'finance' ? 'col-md-4' : 'col-md-3' }}">
+                                                    @if ($i == 0)
+                                                        <label class="form-label">Harga: <span class="text-danger">*</span></label>
+                                                    @endif
+                                                    {{ Form::number("preorder[$i][harga]", $item['harga'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Harga', $userRole == 'admin_purchasing' || $userRole == 'finance' ? 'readonly' : 'required']) }}
+                                                </div>
+                                                <div class="col-md-1 d-flex align-items-end">
+                                                    @if ($i == 0)
+                                                        <button type="button" class="btn btn-success btn-add w-100">+</button>
+                                                    @else
+                                                        <button type="button" class="btn btn-danger btn-remove w-100">-</button>
+                                                    @endif
+                                                </div>
+                                            @else
+                                                {{ Form::text("preorder[$i][nama]", $item['nama'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', 'hidden']) }}
+                                                {{ Form::number("preorder[$i][volume]", $item['volume'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Volume', 'hidden']) }}
+                                                {{ Form::text("preorder[$i][satuan]", $item['satuan'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Satuan', 'hidden']) }}
+                                                {{ Form::number("preorder[$i][harga]", $item['harga'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Harga', 'hidden']) }}
+                                                <div class="col-md-6">
+                                                    @if ($i == 0)
+                                                        <label class="form-label">Nama: <span class="text-danger">*</span></label>
+                                                    @endif
+                                                    {{ Form::text("test", $item['nama'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', 'disabled']) }}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    @if ($i == 0)
+                                                        <label class="form-label">Volume: <span class="text-danger">*</span></label>
+                                                    @endif
+                                                    {{ Form::text("test", $item['volume'] . ' ' . $item['satuan'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', 'disabled']) }}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    @if ($i == 0)
+                                                        <label class="form-label">Harga: <span class="text-danger">*</span></label>
+                                                    @endif
+                                                    {{ Form::text("test", number_format($item['harga'], 0), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', 'disabled']) }}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    @if ($i == 0)
+                                                        <label class="form-label">Total Harga: <span class="text-danger">*</span></label>
+                                                    @endif
+                                                    {{ Form::text("test", number_format($item['harga'] * $item['volume'], 0), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', 'disabled']) }}
+                                                </div>
+                                            @endif
                                         </div>
                                     @endforeach
                                 </div>  
                             </div>                          
                         </div>
-                        <div class="d-flex items-center justify-content-center">
-                            <button type="submit" name="aksi" value="approve" class="btn btn-primary mx-5" style="width: 150px;">
-                                Approve
-                            </button>
-                        
-                            <button type="submit" name="aksi" value="reject" class="btn btn-danger mx-5" style="width: 150px;">
-                                Reject
-                            </button>
-                        </div>
+                        @if ($userRole == 'finance')
+                            <div class="d-flex items-center justify-content-center">
+                                <span style="font-size: 18px;">Silahkan lakukan pembayaran dengan note: <b>{{ $data->kode_bayar }}</b></span>
+                            </div>
+                            <div class="d-flex items-center justify-content-center">
+                                <span style="font-size: 18px;">Total bayar: <b>{{ number_format($data->total, 0) }}</b></span>
+                            </div>
+                            <div class="d-flex items-center justify-content-center mt-3">
+                                <button type="submit" name="aksi" value="approve" class="btn btn-primary mx-5" style="width: 150px;">
+                                    Selesai
+                                </button>
+                            </div>
+                        @endif
+                        @if ($userRole == 'project_manager' || $userRole == 'owner')
+                            <div class="d-flex items-center justify-content-center">
+                                <button type="submit" name="aksi" value="approve" class="btn btn-primary mx-5" style="width: 150px;">
+                                    Approve
+                                </button>
+                            
+                                <button type="submit" name="aksi" value="reject" class="btn btn-danger mx-5" style="width: 150px;">
+                                    Reject
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

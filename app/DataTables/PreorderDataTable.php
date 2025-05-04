@@ -19,7 +19,7 @@ class PreorderDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->where('status', 4)->where('created_by', Auth::user()->id))
+            ->eloquent($query->where('status', 4)->where('created_by', Auth::user()->id)->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->addColumn('nama_proyek', function ($query) {
                 return $query->laporanMingguan->proyek->nama ?? '-';
@@ -61,6 +61,10 @@ class PreorderDataTable extends DataTable
                     default:
                         return '<span class="badge bg-secondary">-</span>';
                 }
+            })
+            ->editColumn('created_at', function ($query) {
+                $tanggal = Carbon::parse($query->created_at);
+                return $tanggal->format('d F Y');
             })
             ->addColumn('action', function ($query) {
                 return view('app.purchase.preorder.action', [
@@ -117,6 +121,7 @@ class PreorderDataTable extends DataTable
             ['data' => 'masa_pelaksanaan', 'name' => 'masa_pelaksanaan', 'title' => 'Masa Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'total', 'name' => 'total', 'title' => 'Total', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'kode_bayar', 'name' => 'kode_bayar', 'title' => 'Kode Bayar', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Tanggal', 'orderable' => false, 'className' => 'text-center'],
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

@@ -21,7 +21,7 @@ class DokumentasiMingguanDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)
+            ->eloquent($query->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->addColumn('nama_proyek', function ($query) {
                 return $query->laporanMingguan->proyek->nama ?? '-';

@@ -21,7 +21,7 @@ class LaporanMingguanDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)
+            ->eloquent($query->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->editColumn('id_proyek', function ($query) {
                 return $query->proyek->nama ?? '-';

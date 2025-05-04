@@ -19,7 +19,7 @@ class ApprovalDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)
+            ->eloquent($query->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->addColumn('nama_proyek', function ($query) {
                 return $query->laporanMingguan->proyek->nama ?? '-';
@@ -57,7 +57,7 @@ class ApprovalDataTable extends DataTable
                     case 2:
                         return '<span class="badge bg-warning">Menunggu Approval Owner</span>';
                     case 3:
-                        return '<span class="badge bg-warning">Menunggu Approval Finance</span>';
+                        return '<span class="badge bg-warning">Menunggu Pembayaran Finance</span>';
                     case 4:
                         return '<span class="badge bg-success">Disetujui</span>';
                     default:
@@ -68,6 +68,7 @@ class ApprovalDataTable extends DataTable
                 return view('app.purchase.approval.action', [
                     'id' => $query->id,
                     'status' => $query->status,
+                    'userRole' => Auth::user()->role->name,
                 ]);
             })
             ->rawColumns(['action', 'status']);
@@ -129,14 +130,14 @@ class ApprovalDataTable extends DataTable
             ['data' => 'status', 'name' => 'status', 'title' => 'Status', 'orderable' => false, 'className' => 'text-center'],
         ];
         
-        if (Auth::user()->role->name !== 'admin_purchasing') {
+        // if (Auth::user()->role->name !== 'admin_purchasing') {
             $columns[] = Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->searchable(false)
                 ->width(60)
                 ->addClass('text-center hide-search');
-        }
+        // }
         
         return $columns;
         
