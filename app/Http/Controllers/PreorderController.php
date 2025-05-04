@@ -25,7 +25,7 @@ class PreorderController extends Controller
         $pageTitle = 'List Preorder';
         $auth_user = AuthHelper::authSession();
         $assets = ['data-table'];
-        $headerAction = '<a href="' . route('preorder.create') . '" class="btn btn-sm btn-primary" role="button">Tambah Preorder</a>';
+        $headerAction = '<a href="' . route('preorder.create') . '" class="btn btn-primary" role="button">Tambah Preorder</a>';
         return $dataTable->render('app.purchase.preorder.index', compact('pageHeader', 'pageTitle', 'auth_user', 'assets', 'headerAction'));
     }
 
@@ -79,8 +79,20 @@ class PreorderController extends Controller
         $listPesanan = [
             ['nama' => '', 'volume' => '', 'satuan' => '', 'harga' => '']
         ];
+        $dataType = [
+            ['id' => 'Material', 'nama' => 'Material'],
+            ['id' => 'Upah Borong Bangunan', 'nama' => 'Upah Borong Bangunan'],
+            ['id' => 'Upah Borong Non Bangunan', 'nama' => 'Upah Borong Non Bangunan'],
+            ['id' => 'Partisipasi', 'nama' => 'Partisipasi'],
+            ['id' => 'Ongkos Kirim', 'nama' => 'Ongkos Kirim'],
+            ['id' => 'Operasional Proyek', 'nama' => 'Operasional Proyek'],
+            ['id' => 'Uang Makan Supervisor', 'nama' => 'Uang Makan Supervisor'],
+            ['id' => 'Biaya Kendaraan', 'nama' => 'Biaya Kendaraan'],
+            ['id' => 'Mobilisasi', 'nama' => 'Mobilisasi'],
+            ['id' => 'Adm', 'nama' => 'Adm'],
+        ];
 
-        return view('app.purchase.preorder.form', compact('pageHeader', 'dataProyek', 'listPesanan'));
+        return view('app.purchase.preorder.form', compact('pageHeader', 'dataProyek', 'listPesanan', 'dataType'));
     }
 
     /**
@@ -120,7 +132,8 @@ class PreorderController extends Controller
                 "volume" => $item['volume'],
                 "satuan" => $item['satuan'],
                 "harga" => $item['harga'],
-                "total" => $item['harga'] * $item['volume']
+                "total" => $item['harga'] * $item['volume'],
+                "type" => $item['type']
             ];
             $totalHarga += $item['harga'] * $item['volume'];
         }
@@ -191,7 +204,8 @@ class PreorderController extends Controller
                 "volume" => $item['volume'],
                 "satuan" => $item['satuan'],
                 "harga" => $item['harga'],
-                "total" => $item['harga'] * $item['volume']
+                "total" => $item['harga'] * $item['volume'],
+                "type" => $item['type']
             ];
             $totalHarga += $item['harga'] * $item['volume'];
         }
@@ -230,11 +244,16 @@ class PreorderController extends Controller
     {
         $data = Preorder::findOrFail($id);
         $listPesanan = json_decode($data->list_pesanan, true);
+        $totalPerType = collect($listPesanan)->groupBy('type')->map(function ($items) {
+            return $items->sum('total');
+        });
 
+        $now = Carbon::parse($data->created_at)->format('d F Y');
+        $last = Carbon::parse($data->updated_at)->format('d/m/y');
         $dari = Carbon::parse($data->dari);
         $sampai = Carbon::parse($data->sampai);
         $range = $dari->format('d') . ' - ' . $sampai->format('d F Y');
 
-        return view('app.purchase.preorder.print', compact('data', 'listPesanan', 'range'));
+        return view('app.purchase.preorder.print', compact('now', 'last', 'data', 'listPesanan', 'range', 'totalPerType'));
     }
 }

@@ -19,7 +19,7 @@ class ApprovalDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->orderBy('created_at', 'desc'))
+            ->eloquent($query->Filter(request(['periode']))->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->addColumn('nama_proyek', function ($query) {
                 return $query->laporanMingguan->proyek->nama ?? '-';
@@ -63,6 +63,10 @@ class ApprovalDataTable extends DataTable
                     default:
                         return '<span class="badge bg-secondary">-</span>';
                 }
+            })
+            ->editColumn('created_at', function ($query) {
+                $tanggal = Carbon::parse($query->created_at);
+                return $tanggal->format('d F Y');
             })
             ->addColumn('action', function ($query) {
                 return view('app.purchase.approval.action', [
@@ -128,6 +132,7 @@ class ApprovalDataTable extends DataTable
             ['data' => 'masa_pelaksanaan', 'name' => 'masa_pelaksanaan', 'title' => 'Masa Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'total', 'name' => 'total', 'title' => 'Total', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'status', 'name' => 'status', 'title' => 'Status', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Tanggal', 'orderable' => false, 'className' => 'text-center'],
         ];
         
         // if (Auth::user()->role->name !== 'admin_purchasing') {

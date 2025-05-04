@@ -19,7 +19,7 @@ class PreorderDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->where('status', 4)->where('created_by', Auth::user()->id)->orderBy('created_at', 'desc'))
+            ->eloquent($query->where('status', 4)->where('created_by', Auth::user()->id)->Filter(request(['periode']))->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->addColumn('nama_proyek', function ($query) {
                 return $query->laporanMingguan->proyek->nama ?? '-';

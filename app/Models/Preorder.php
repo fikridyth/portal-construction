@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Preorder extends Model
 {
@@ -25,5 +26,13 @@ class Preorder extends Model
     public function updatedBy()
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['periode'] ?? false, function ($query, $periode) {
+            $arrPeriode = explode(' - ', $periode);
+            $query->whereBetween(DB::raw("DATE(created_at)"), $arrPeriode);
+        });
     }
 }

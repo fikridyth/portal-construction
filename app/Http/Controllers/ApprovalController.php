@@ -69,8 +69,20 @@ class ApprovalController extends Controller
         $data = Preorder::findOrFail($id);
         $listPesanan = json_decode($data->list_pesanan, true);
         $userRole = Auth::user()->role->name;
+        $dataType = [
+            ['id' => 'Material', 'nama' => 'Material'],
+            ['id' => 'Upah Borong Bangunan', 'nama' => 'Upah Borong Bangunan'],
+            ['id' => 'Upah Borong Non Bangunan', 'nama' => 'Upah Borong Non Bangunan'],
+            ['id' => 'Partisipasi', 'nama' => 'Partisipasi'],
+            ['id' => 'Ongkos Kirim', 'nama' => 'Ongkos Kirim'],
+            ['id' => 'Operasional Proyek', 'nama' => 'Operasional Proyek'],
+            ['id' => 'Uang Makan Supervisor', 'nama' => 'Uang Makan Supervisor'],
+            ['id' => 'Biaya Kendaraan', 'nama' => 'Biaya Kendaraan'],
+            ['id' => 'Mobilisasi', 'nama' => 'Mobilisasi'],
+            ['id' => 'Adm', 'nama' => 'Adm'],
+        ];
 
-        return view('app.purchase.approval.form', compact('id', 'pageHeader', 'data', 'listPesanan', 'userRole'));
+        return view('app.purchase.approval.form', compact('id', 'pageHeader', 'data', 'listPesanan', 'userRole', 'dataType'));
     }
 
     /**
@@ -94,7 +106,8 @@ class ApprovalController extends Controller
                 "volume" => $item['volume'],
                 "satuan" => $item['satuan'],
                 "harga" => $item['harga'],
-                "total" => $item['harga'] * $item['volume']
+                "total" => $item['harga'] * $item['volume'],
+                "type" => $item['type']
             ];
             $totalHarga += $item['harga'] * $item['volume'];
         }
