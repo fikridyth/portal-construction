@@ -34,5 +34,8 @@ class Preorder extends Model
             $arrPeriode = explode(' - ', $periode);
             $query->whereBetween(DB::raw("DATE(created_at)"), $arrPeriode);
         });
+        $query->when($filters['status'] ?? false, function ($query, $status) {
+            $query->where('status', $status);
+        });
     }
 }

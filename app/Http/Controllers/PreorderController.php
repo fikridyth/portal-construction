@@ -42,7 +42,7 @@ class PreorderController extends Controller
             $dataLap = LaporanMingguan::where('id_proyek', $id)->orderBy('created_at', 'asc')->first();
         }
 
-        $dataMingguan = Preorder::where('id_laporan_mingguan', $dataLap->id)->orderBy('created_at', 'desc')->first();
+        $dataMingguan = Preorder::where('id_laporan_mingguan', $dataLap->id)->where('status', 4)->orderBy('created_at', 'desc')->first();
         if ($dataMingguan) {
             $data = $dataMingguan->minggu_ke + 1;
             $dataDate = LaporanMingguan::where('id_proyek', $id)->where('minggu_ke', $dataMingguan->minggu_ke + 1)->first();
@@ -104,7 +104,14 @@ class PreorderController extends Controller
     public function store(Request $request)
     {
         $getDataLap = LaporanMingguan::where('id_proyek', $request->id_proyek)->where('minggu_ke', $request->minggu_ke)->first();
+        $getLastData = Preorder::where('id_proyek', $request->id_proyek)->where('minggu_ke', $request->minggu_ke)->first();
         // dd($getDataLap, $request->all());
+
+        if (isset($getLastData)) {
+            if ($request->minggu_ke == $getLastData->minggu_ke && $request->id_proyek == $getLastData->id_proyek && in_array($getLastData->status, [1, 2, 3])) {
+                return redirect()->route('preorder.create')->withErrors(__('Sudah ada data '. $getLastData->laporanMingguan->proyek->nama .' yang sedang dalam proses approval', ['name' => __('preorder.create')]));
+            }
+        }
 
         // get nomor po
         $sequence = '0001';

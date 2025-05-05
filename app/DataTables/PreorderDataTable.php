@@ -45,23 +45,6 @@ class PreorderDataTable extends DataTable
             ->editColumn('total', function ($query) {
                 return number_format($query->total, 0);
             })
-            // ->addColumn('waktu_pelaksanaan', function ($query) {
-            //     return $query->laporanMingguan->proyek->waktu_pelaksanaan . ' Hari' ?? '-';
-            // })
-            ->editColumn('status', function ($query) {
-                switch ($query->status) {
-                    case 1:
-                        return '<span class="badge bg-warning">Menunggu Approval Project Manager</span>';
-                    case 2:
-                        return '<span class="badge bg-warning">Menunggu Approval Owner</span>';
-                    case 3:
-                        return '<span class="badge bg-warning">Menunggu Approval Finance</span>';
-                    case 4:
-                        return '<span class="badge bg-success">Disetujui</span>';
-                    default:
-                        return '<span class="badge bg-secondary">-</span>';
-                }
-            })
             ->editColumn('created_at', function ($query) {
                 $tanggal = Carbon::parse($query->created_at);
                 return $tanggal->format('d F Y');
@@ -72,7 +55,7 @@ class PreorderDataTable extends DataTable
                     'status' => $query->status,
                 ]);
             })
-            ->rawColumns(['action', 'status']);
+            ->rawColumns(['action']);
     }
 
     /**

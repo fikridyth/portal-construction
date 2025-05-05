@@ -19,7 +19,7 @@ class ApprovalDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->Filter(request(['periode']))->orderBy('created_at', 'desc'))
+            ->eloquent($query->Filter(request(['periode', 'status']))->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->addColumn('nama_proyek', function ($query) {
                 return $query->laporanMingguan->proyek->nama ?? '-';
@@ -50,8 +50,6 @@ class ApprovalDataTable extends DataTable
             // })
             ->editColumn('status', function ($query) {
                 switch ($query->status) {
-                    case 0:
-                        return '<span class="badge bg-danger">Ditolak</span>';
                     case 1:
                         return '<span class="badge bg-warning">Menunggu Approval Project Manager</span>';
                     case 2:
@@ -60,6 +58,8 @@ class ApprovalDataTable extends DataTable
                         return '<span class="badge bg-warning">Menunggu Pembayaran Finance</span>';
                     case 4:
                         return '<span class="badge bg-success">Disetujui</span>';
+                    case 5:
+                        return '<span class="badge bg-danger">Ditolak</span>';
                     default:
                         return '<span class="badge bg-secondary">-</span>';
                 }

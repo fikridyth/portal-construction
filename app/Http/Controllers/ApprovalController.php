@@ -132,7 +132,7 @@ class ApprovalController extends Controller
         } else if ($request->aksi === 'reject' && $userRole == 'project_manager') {
             $data['approved_manager_by'] = auth()->id();
             $data['approved_manager_at'] = now();
-            $data['status'] = 0;
+            $data['status'] = 5;
         } else if ($request->aksi === 'approve' && $userRole == 'owner') {
             $data['approved_owner_by'] = auth()->id();
             $data['approved_owner_at'] = now();
@@ -140,7 +140,7 @@ class ApprovalController extends Controller
         } else if ($request->aksi === 'reject' && $userRole == 'owner') {
             $data['approved_owner_by'] = auth()->id();
             $data['approved_owner_at'] = now();
-            $data['status'] = 0;
+            $data['status'] = 5;
         } else if ($request->aksi === 'approve' && $userRole == 'finance') {
             $data['approved_finance_by'] = auth()->id();
             $data['approved_finance_at'] = now();
@@ -148,7 +148,7 @@ class ApprovalController extends Controller
         } else if ($request->aksi === 'reject' && $userRole == 'finance') {
             $data['approved_finance_by'] = auth()->id();
             $data['approved_finance_at'] = now();
-            $data['status'] = 0;
+            $data['status'] = 5;
         }
         $preorder->update($data);
 
