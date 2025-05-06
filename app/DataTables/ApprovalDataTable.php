@@ -113,6 +113,18 @@ class ApprovalDataTable extends DataTable
             ->parameters([
                 "processing" => true,
                 "autoWidth" => false,
+                'buttons' => [
+                    [
+                        'extend' => 'excel',
+                        'text' => 'Export Excel',
+                        'className' => 'btn btn-success btn-sm mx-3' // Tambahkan class di sini
+                    ],
+                    [
+                        'extend' => 'pdf',
+                        'text' => 'Export PDF',
+                        'className' => 'btn btn-danger btn-sm'
+                    ],
+                ],
             ]);
     }
 
@@ -134,18 +146,17 @@ class ApprovalDataTable extends DataTable
             ['data' => 'status', 'name' => 'status', 'title' => 'Status', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Tanggal', 'orderable' => false, 'className' => 'text-center'],
         ];
-        
+
         // if (Auth::user()->role->name !== 'admin_purchasing') {
-            $columns[] = Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->searchable(false)
-                ->width(60)
-                ->addClass('text-center hide-search');
+        $columns[] = Column::computed('action')
+            ->exportable(false)
+            ->printable(false)
+            ->searchable(false)
+            ->width(60)
+            ->addClass('text-center hide-search');
         // }
-        
+
         return $columns;
-        
     }
 
     /**

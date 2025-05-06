@@ -21,6 +21,9 @@
 <link rel="stylesheet" href="{{ asset('vendor/vanillajs-datepicker/dist/css/datepicker.min.css') }}" />
 
 <link rel="stylesheet" href="{{ asset('vendor/aos/dist/aos.css') }}" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap4.min.css">
+
 
 <style>
     th.hide-search input {

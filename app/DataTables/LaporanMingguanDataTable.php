@@ -72,6 +72,18 @@ class LaporanMingguanDataTable extends DataTable
             ->parameters([
                 "processing" => true,
                 "autoWidth" => false,
+                'buttons' => [
+                    [
+                        'extend' => 'excel',
+                        'text' => 'Export Excel',
+                        'className' => 'btn btn-success btn-sm mx-3' // Tambahkan class di sini
+                    ],
+                    [
+                        'extend' => 'pdf',
+                        'text' => 'Export PDF',
+                        'className' => 'btn btn-danger btn-sm'
+                    ],
+                ],
             ]);
     }
 
