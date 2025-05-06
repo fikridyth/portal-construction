@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Preorder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +15,38 @@ class HomeController extends Controller
     {
         $pageHeader = 'Dashboard';
         $assets = ['chart', 'animation'];
-        return view('dashboards.dashboard', compact('pageHeader', 'assets'));
+        $userRole = Auth::user()->role->name;
+
+        if ($userRole == 'admin_purchasing') {
+            $counts = Preorder::where('created_by', Auth::id())
+                ->selectRaw('status, COUNT(*) as total')
+                ->whereIn('status', [1, 2, 3, 4, 5])
+                ->groupBy('status')
+                ->pluck('total', 'status');
+        } else if ($userRole == 'project_manager') {
+            $counts = Preorder::selectRaw('status, COUNT(*) as total')
+                ->whereIn('status', [1])
+                ->groupBy('status')
+                ->pluck('total', 'status');
+        } else if ($userRole == 'owner') {
+            $counts = Preorder::selectRaw('status, COUNT(*) as total')
+                ->whereIn('status', [2])
+                ->groupBy('status')
+                ->pluck('total', 'status');
+        } else if ($userRole == 'finance') {
+            $counts = Preorder::selectRaw('status, COUNT(*) as total')
+                ->whereIn('status', [3])
+                ->groupBy('status')
+                ->pluck('total', 'status');
+        }
+
+        $manager = $counts[1] ?? 0;
+        $owner = $counts[2] ?? 0;
+        $finance = $counts[3] ?? 0;
+        $disetujui = $counts[4] ?? 0;
+        $ditolak = $counts[5] ?? 0;
+
+        return view('dashboards.dashboard', compact('pageHeader', 'assets', 'manager', 'owner', 'finance', 'ditolak', 'disetujui'));
     }
 
     /*
