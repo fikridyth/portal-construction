@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('preorder', PreorderController::class);
     Route::get('/get-preorder-minggu-ke/{id}', [PreorderController::class, 'getMingguKe']);
     Route::get('preorder/{id}/print', [PreorderController::class, 'printPreorder'])->name('preorder.print');
+    Route::get('preorder/{id}/print-selected', [PreorderController::class, 'printSelectedPreorder'])->name('preorder.print-selected');
 
     // Approval
     Route::resource('approval', ApprovalController::class);

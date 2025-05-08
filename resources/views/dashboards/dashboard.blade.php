@@ -81,8 +81,8 @@
                     <div class="card" data-aos="fade-up" data-aos-delay="800">
                         <div class="card-header d-flex justify-content-between flex-wrap">
                             <div class="header-title">
-                                <h4 class="card-title">$855.8K</h4>
-                                <p class="mb-0">Gross Sales</p>
+                                {{-- <h4 class="card-title">$855.8K</h4> --}}
+                                <p class="mb-0">Chart</p>
                             </div>
                             <div class="d-flex align-items-center align-self-center">
                                 <div class="d-flex align-items-center text-primary">
@@ -94,7 +94,7 @@
                                         </g>
                                     </svg>
                                     <div class="ms-2">
-                                        <span class="text-secondary">Sales</span>
+                                        <span class="text-secondary">RAB Modal</span>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center ms-3 text-info">
@@ -106,7 +106,7 @@
                                         </g>
                                     </svg>
                                     <div class="ms-2">
-                                        <span class="text-secondary">Cost</span>
+                                        <span class="text-secondary">RAB Jual</span>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 col-lg-6">
+                {{-- <div class="col-md-12 col-lg-6">
                     <div class="card" data-aos="fade-up" data-aos-delay="1000">
                         <div class="card-header d-flex justify-content-between flex-wrap">
                             <div class="header-title">
@@ -202,7 +202,7 @@
                             <div id="d-activity" class="d-activity"></div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

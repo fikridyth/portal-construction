@@ -173,7 +173,12 @@ class PreorderController extends Controller
      */
     public function show($id)
     {
-        //
+        $id = dekrip($id);
+        $pageHeader = 'Show Preorder';
+        $data = Preorder::findOrFail($id);
+        $listPesanan = json_decode($data->list_pesanan, true);
+
+        return view('app.purchase.preorder.show', compact('id', 'pageHeader', 'data', 'listPesanan'));
     }
 
     /**
@@ -249,6 +254,7 @@ class PreorderController extends Controller
 
     public function printPreorder($id)
     {
+        $id = dekrip($id);
         $data = Preorder::findOrFail($id);
         $listPesanan = json_decode($data->list_pesanan, true);
         $totalPerType = collect($listPesanan)->groupBy('type')->map(function ($items) {
@@ -262,5 +268,27 @@ class PreorderController extends Controller
         $range = $dari->format('d') . ' - ' . $sampai->format('d F Y');
 
         return view('app.purchase.preorder.print', compact('now', 'last', 'data', 'listPesanan', 'range', 'totalPerType'));
+    }
+
+    public function printSelectedPreorder(Request $request, $id)
+    {
+        $id = dekrip($id);
+        $data = Preorder::findOrFail($id);
+        $listPesanan = json_decode($data->list_pesanan, true);
+        $selected = $request->input('selected', []);
+        $filteredPesanan = [];
+        foreach ($selected as $index) {
+            if (isset($listPesanan[$index])) {
+                $filteredPesanan[] = $listPesanan[$index];
+            }
+        }
+
+        $now = Carbon::parse($data->created_at)->format('d F Y');
+        $last = Carbon::parse($data->updated_at)->format('d/m/y');
+        $dari = Carbon::parse($data->dari);
+        $sampai = Carbon::parse($data->sampai);
+        $range = $dari->format('d') . ' - ' . $sampai->format('d F Y');
+
+        return view('app.purchase.preorder.print-selected', compact('now', 'last', 'data', 'range', 'filteredPesanan'));
     }
 }
