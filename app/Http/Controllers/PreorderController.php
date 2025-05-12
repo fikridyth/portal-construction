@@ -73,8 +73,9 @@ class PreorderController extends Controller
         $dataProyek = Proyek::all()->filter(function ($proyek) {
             $totalBobot = DetailPekerjaan::where('id_proyek', $proyek->id)->sum('bobot');
             $sudahAdaLaporan = Preorder::where('id_proyek', $proyek->id)->where('bobot_total', '>=', 100)->exists();
-            // Hanya ambil proyek yang total bobotnya 100 DAN BELUM punya laporan
-            return $totalBobot == 100 && !$sudahAdaLaporan;
+            $lastPo = Preorder::where('id_proyek', $proyek->id)->orderBy('minggu_ke', 'desc')->first();
+            $sudahAdaPreorder = $lastPo && in_array($lastPo->status, [1, 2, 3]);
+            return $totalBobot == 100 && !$sudahAdaLaporan && !$sudahAdaPreorder;
         });
         $listPesanan = [
             ['nama' => '', 'volume' => '', 'satuan' => '', 'harga' => '']

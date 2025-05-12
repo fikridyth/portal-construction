@@ -36,7 +36,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="harga">Harga:</label>
-                                {{ Form::text('harga', (int)str_replace(',', '', $data->harga) ?? old('harga'), ['class' => 'form-control placeholder-grey', 'id' => 'harga', 'placeholder' => 'Isi Harga', 'oninput' => "this.value = this.value.replace(/,/g, '')"]) }}
+                                {{ Form::text('harga', (int)str_replace(',', '', $data->harga ?? '') ?? old('harga'), ['class' => 'form-control placeholder-grey', 'id' => 'harga', 'placeholder' => 'Isi Harga', 'oninput' => "this.value = this.value.replace(/,/g, '')"]) }}
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data CCO</button>

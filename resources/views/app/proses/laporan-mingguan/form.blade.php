@@ -131,25 +131,25 @@
                                     <input type="text" class="form-control" name="detail_id_proyek[${item.id}]" value="${item.id_proyek}" hidden>
                                     <input type="text" class="form-control" name="detail_id_pekerjaan[${item.id}]" value="${item.id_pekerjaan}" hidden>
                                     <input type="text" class="form-control" name="detail_id_detail_pekerjaan[${item.id}]" value="${item.id}" hidden>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-6">
                                         <label class="form-label" style="font-size: 14px;" for="nama_pekerjaan_${groupIndex}_${index}">
                                             Nama Pekerjaan ${index + 1}
                                         </label>
                                         <input type="text" class="form-control" name="detail_nama_pekerjaan[${item.id}]" value="${item.nama}" readonly>
                                     </div>
-                                    <div class="form-group col-md-1">
+                                    <div hidden class="form-group col-md-1">
                                         <label class="form-label" style="font-size: 14px;" for="volume_${groupIndex}_${index}">
                                             Volume
                                         </label>
                                         <input type="text" class="form-control" name="detail_volume[${item.id}]" value="${item.volume}" readonly>
                                     </div>
-                                    <div class="form-group col-md-1">
+                                    <div hidden class="form-group col-md-1">
                                         <label class="form-label" style="font-size: 14px;" for="satuan_${groupIndex}_${index}">
                                             Satuan
                                         </label>
                                         <input type="text" class="form-control" name="detail_satuan[${item.id}]" value="${item.satuan}" readonly>
                                     </div>
-                                    <div class="form-group col-md-1">
+                                    <div class="form-group col-md-2">
                                         <label class="form-label" style="font-size: 14px;" for="bobot_${groupIndex}_${index}">
                                             Bobot (%)
                                         </label>
