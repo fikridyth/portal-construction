@@ -9,9 +9,10 @@ use App\Http\Controllers\CuacaMingguanController;
 use App\Http\Controllers\DetailPekerjaanController;
 use App\Http\Controllers\DokumentasiMingguanController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LaporanBulananController;
 use App\Http\Controllers\LaporanHarianController;
+use App\Http\Controllers\LaporanKegiatanController;
 use App\Http\Controllers\LaporanMingguanController;
+use App\Http\Controllers\LaporanPelaksanaanController;
 use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\PreorderController;
 use App\Http\Controllers\ProyekController;
@@ -111,7 +112,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('cuaca-mingguan/{id}/print', [CuacaMingguanController::class, 'printCuacaMingguan'])->name('cuaca-mingguan.print');
 
     // Laporan Bulanan
-    Route::resource('laporan-bulanan', LaporanBulananController::class);
+        // Laporan Pelaksanaan
+        Route::resource('laporan-pelaksanaan', LaporanPelaksanaanController::class);
+        Route::get('laporan-pelaksanaan/{id}/print', [LaporanPelaksanaanController::class, 'printPelaksanaan'])->name('laporan-pelaksanaan.print');
+
+        // Laporan Kegiatan
+        Route::resource('laporan-kegiatan', LaporanKegiatanController::class);
+        Route::get('laporan-kegiatan/{id}/print', [LaporanKegiatanController::class, 'printKegiatan'])->name('laporan-kegiatan.print');
 
     // Users
     Route::resource('users', UserController::class);

@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\LaporanKegiatanDataTable;
+use App\Helpers\AuthHelper;
 use Illuminate\Http\Request;
 
-class LaporanBulananController extends Controller
+class LaporanKegiatanController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(LaporanKegiatanDataTable $dataTable)
     {
-        //
+        $pageHeader = 'Index Laporan Kegiatan';
+        $pageTitle = 'List Laporan Kegiatan';
+        $auth_user = AuthHelper::authSession();
+        $assets = ['data-table'];
+        $headerAction = '<a href="' . route('laporan-kegiatan.create') . '" class="btn btn-sm btn-primary" role="button">Tambah Laporan</a>';
+        return $dataTable->render('app.proses.laporan-kegiatan.index', compact('pageHeader', 'pageTitle', 'auth_user', 'assets', 'headerAction'));
     }
 
     /**
@@ -78,6 +85,11 @@ class LaporanBulananController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        //
+    }
+
+    public function printKegiatan($id)
     {
         //
     }

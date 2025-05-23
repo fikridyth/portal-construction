@@ -145,10 +145,43 @@
         </ul>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ activeRoute(route('laporan-bulanan.index')) }}" href="{{ route('laporan-bulanan.index') }}">
+        <a class="nav-link" data-bs-toggle="collapse" href="#laporan-bulanan" role="button" aria-expanded="false" aria-controls="laporan-bulanan">
             <i class="fas fa-calendar-days mt-1"></i>
             <span class="item-name">Laporan Bulanan</span>
+            <i class="right-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </i>
         </a>
+        <ul class="sub-nav collapse" id="laporan-bulanan" data-bs-parent="#sidebar">
+            <li class="nav-item ">
+                <a class="nav-link {{ activeRoute(route('laporan-pelaksanaan.index')) }}" href="{{ route('laporan-pelaksanaan.index') }}">
+                  <i class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                            <g>
+                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                            </g>
+                        </svg>
+                    </i>
+                    <i class="fas fa-bars sidenav-mini-icon mt-1"></i>
+                  <span class="item-name">Laporan Pelaksanaan</span>
+                </a>
+            </li>
+            <li class=" nav-item ">
+                <a class="nav-link {{ activeRoute(route('laporan-kegiatan.index')) }}" href="{{ route('laporan-kegiatan.index') }}">
+                    <i class="icon svg-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                            <g>
+                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                            </g>
+                        </svg>
+                    </i>
+                    <i class="fas fa-book sidenav-mini-icon mt-1"></i>
+                    <span class="item-name">Laporan Kegiatan</span>
+                </a>
+            </li>
+        </ul>
     </li>
     <li>
         <hr class="hr-horizontal">

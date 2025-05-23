@@ -64,6 +64,7 @@ class ProyekController extends Controller
             'sampai' => $request->sampai,
             'waktu_pelaksanaan' => $dari->diffInDays($sampai),
             'total_meter' => $request->total_meter,
+            'nilai_kontrak' => $request->nilai_kontrak,
             'created_by' => auth()->user()->id,
             'updated_by' => auth()->user()->id,
         ];
@@ -132,6 +133,7 @@ class ProyekController extends Controller
             'sampai' => $request->sampai,
             'waktu_pelaksanaan' => $dari->diffInDays($sampai),
             'total_meter' => $request->total_meter,
+            'nilai_kontrak' => $request->nilai_kontrak,
             'updated_by' => auth()->user()->id,
         ];
         $dataProyek->update($data);

@@ -55,7 +55,11 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="total_meter">Total Meter:</label>
-                                {{ Form::text('total_meter', $data->total_meter ?? old('total_meter'), ['class' => 'form-control', 'id' => 'total_meter', 'placeholder' => 'Isi Data Total Meter', 'required']) }}
+                                {{ Form::text('total_meter', $data->total_meter ?? old('total_meter'), ['class' => 'form-control placeholder-grey', 'id' => 'total_meter', 'placeholder' => 'Isi Data Total Meter', 'required']) }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="nilai_kontrak">Nilai Kontrak:</label>
+                                {{ Form::number('nilai_kontrak', $data->nilai_kontrak ?? old('nilai_kontrak'), ['class' => 'form-control placeholder-grey', 'id' => 'nilai_kontrak', 'placeholder' => 'Isi Data Nilai Kontrak', 'required']) }}
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Proyek</button>
