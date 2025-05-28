@@ -118,6 +118,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Laporan Kegiatan
         Route::resource('laporan-kegiatan', LaporanKegiatanController::class);
+        Route::get('/get-bulan-pekerjaan/{id}', [LaporanKegiatanController::class, 'getDetailPekerjaan']);
+        Route::get('/get-bulan-ke/{id}', [LaporanKegiatanController::class, 'getBulanKe']);
         Route::get('laporan-kegiatan/{id}/print', [LaporanKegiatanController::class, 'printKegiatan'])->name('laporan-kegiatan.print');
 
     // Users

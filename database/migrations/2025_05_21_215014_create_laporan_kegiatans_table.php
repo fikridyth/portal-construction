@@ -24,6 +24,7 @@ class CreateLaporanKegiatansTable extends Migration
             $table->decimal('rencana', 16, 2)->nullable();
             $table->decimal('kemajuan', 16, 2)->nullable();
             $table->string('situasi_pekerjaan')->nullable();
+            $table->string('permasalahan')->nullable();
             $table->timestamps();
         });
     }

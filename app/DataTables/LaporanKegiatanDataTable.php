@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\LaporanKegiatan;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -22,7 +23,31 @@ class LaporanKegiatanDataTable extends DataTable
         return datatables()
             ->eloquent($query->orderBy('created_at', 'desc'))
             ->addIndexColumn()
-            ->addColumn('action', 'app.proses.laporan-pelaksanaan.action')
+            ->editColumn('id_proyek', function ($query) {
+                return $query->proyek->nama ?? '-';
+            })
+            ->editColumn('realisasi', function ($query) {
+                return $query->realisasi . ' %' ?? '-';
+            })
+            ->editColumn('rencana', function ($query) {
+                return $query->rencana . ' %' ?? '-';
+            })
+            ->editColumn('kemajuan', function ($query) {
+                return $query->kemajuan . ' %' ?? '-';
+            })
+            ->addColumn('masa_pelaksanaan', function ($query) {
+                $dari = Carbon::parse($query->dari);
+                $sampai = Carbon::parse($query->sampai);
+
+                // Jika bulan sama
+                // if ($dari->format('F') === $sampai->format('F')) {
+                //     return $dari->format('d') . '–' . $sampai->format('d F Y');
+                // }
+
+                // Jika bulan berbeda
+                return $dari->format('d') . ' - ' . $sampai->format('d F Y');
+            })
+            ->addColumn('action', 'app.proses.laporan-kegiatan.action')
             ->rawColumns(['action']);
     }
 
@@ -77,6 +102,12 @@ class LaporanKegiatanDataTable extends DataTable
     {
         return [
             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
+            ['data' => 'id_proyek', 'name' => 'id_proyek', 'title' => 'Proyek', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'bulan_ke', 'name' => 'bulan_ke', 'title' => 'Bulan Ke', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'masa_pelaksanaan', 'name' => 'masa_pelaksanaan', 'title' => 'Masa Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'realisasi', 'name' => 'realisasi', 'title' => 'Realisasi', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'rencana', 'name' => 'rencana', 'title' => 'Rencana', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'kemajuan', 'name' => 'kemajuan', 'title' => 'Kemajuan', 'orderable' => false, 'className' => 'text-center'],
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
