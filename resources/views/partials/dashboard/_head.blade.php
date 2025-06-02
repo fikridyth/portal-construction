@@ -1,5 +1,7 @@
 <!-- Favicon -->
 <link rel="shortcut icon" href="{{ asset('assets/images/adp.png') }}" />
+
+{{-- Other --}}
 <link rel="stylesheet" href="{{ asset('css/libs.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/hope-ui.css?v=1.1.0') }}">
 <link rel="stylesheet" href="{{ asset('css/custom.css?v=1.1.0') }}">
@@ -24,8 +26,14 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap4.min.css">
 
+{{-- Font --}}
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+    body {
+        font-family: 'Lato', sans-serif;
+    }
+
     th.hide-search input {
         display: none;
     }
