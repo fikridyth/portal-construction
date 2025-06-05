@@ -43,6 +43,12 @@ class PekerjaanController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|unique:pekerjaans,nama',
+        ], [
+            'nama.unique' => 'Nama pekerjaan sudah digunakan!',
+        ]);
+
         $data = [
             'nama' => $request->nama,
             'created_by' => auth()->user()->id,

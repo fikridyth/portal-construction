@@ -44,6 +44,12 @@ class BahanController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|unique:bahans,nama',
+        ], [
+            'nama.unique' => 'Nama bahan sudah digunakan!',
+        ]);
+
         $data = [
             'nama' => $request->nama,
             // 'volume' => $request->volume,

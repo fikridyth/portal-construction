@@ -43,6 +43,12 @@ class TenagaKerjaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|unique:tenaga_kerjas,nama',
+        ], [
+            'nama.unique' => 'Nama tenaga kerja sudah digunakan!',
+        ]);
+
         $data = [
             'nama' => $request->nama,
             'created_by' => auth()->user()->id,

@@ -46,6 +46,12 @@ class ProyekController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|unique:proyeks,nama',
+        ], [
+            'nama.unique' => 'Nama proyek sudah digunakan!',
+        ]);
+
         $dari = Carbon::parse($request->dari);
         $sampai = Carbon::parse($request->sampai);
 
