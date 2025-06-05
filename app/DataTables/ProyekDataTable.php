@@ -30,7 +30,7 @@ class ProyekDataTable extends DataTable
             ->addColumn('progress', function ($query) {
                 $proyek = Proyek::find($query->id);
                 $getBobot = LaporanMingguan::where('id_proyek', $proyek->id)->orderBy('created_at', 'desc')->first();
-                return $getBobot->bobot_total . '%' ?? '0%';
+                return $getBobot ? $getBobot->bobot_total . '%' : '0%';
             })
             ->addColumn('status', function ($query) {
                 $proyek = Proyek::find($query->id);
