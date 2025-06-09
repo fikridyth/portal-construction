@@ -54,15 +54,15 @@
                                 {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control placeholder-grey', 'id' => 'sampai', 'placeholder' => 'Isi Data Tanggal Selesai', 'required']) }}
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="total_meter">Total Meter:</label>
+                                <label class="form-label" for="total_meter">Total Meter: <span class="text-danger">*</span></label>
                                 {{ Form::text('total_meter', $data->total_meter ?? old('total_meter'), ['class' => 'form-control placeholder-grey', 'id' => 'total_meter', 'placeholder' => 'Isi Data Total Meter', 'required']) }}
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label" for="nilai_kontrak">Nilai Kontrak:</label>
-                                {{ Form::number('nilai_kontrak', $data->nilai_kontrak ?? old('nilai_kontrak'), ['class' => 'form-control placeholder-grey', 'id' => 'nilai_kontrak', 'placeholder' => 'Isi Data Nilai Kontrak', 'required']) }}
+                                <label class="form-label" for="nilai_kontrak">Nilai Kontrak: <span class="text-danger">*</span></label>
+                                {{ Form::number('nilai_kontrak', floor($data->nilai_kontrak) ?? old('nilai_kontrak'), ['class' => 'form-control placeholder-grey', 'id' => 'nilai_kontrak', 'placeholder' => 'Isi Data Nilai Kontrak', 'required']) }}
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Proyek</button>
+                        <button type="submit" id="submitButton" class="btn btn-primary" disabled>{{$id !== null ? 'Ubah' : 'Tambah' }} Data Proyek</button>
                     </div>
                 </div>
             </div>
@@ -71,3 +71,25 @@
     </div>
  </x-app-layout>
  
+ <script>
+    $(document).ready(function() {
+        // Panggil fungsi cek validasi pertama kali
+        toggleSubmitButton();
+    
+        // Event listener untuk setiap input yang required
+        $('input[required]').on('input', function() {
+            toggleSubmitButton();
+        });
+    
+        function toggleSubmitButton() {
+            let allFilled = true;
+            $('input[required]').each(function() {
+                if ($(this).val().trim() === '') {
+                    allFilled = false;
+                }
+            });
+    
+            $('#submitButton').prop('disabled', !allFilled);
+        }
+    });
+ </script>

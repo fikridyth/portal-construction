@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">User Role: <span class="text-danger">*</span></label>
-                            {{Form::select('user_type', $roles , old('user_type') ? old('user_type') : $data->user_type ?? '', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Select User Role', 'required'])}}
+                            {{Form::select('user_type', $roles , old('user_type') ? old('user_type') : $data->user_type ?? null, ['class' => 'form-control placeholder-grey', 'placeholder' => 'Select User Role', 'required'])}}
                          </div>
                          <div class="form-group col-md-6">
                              <label class="form-label" for="pno">Phone Number:</label>
@@ -87,7 +87,7 @@
                             {{ Form::password('password_confirmation', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Repeat Password']) }}
                         </div>
                     </div> --}}
-                    <button type="submit" class="btn btn-primary">{{$id !== null ? 'Update' : 'Add' }} User</button>
+                    <button type="submit" id="submitButton" class="btn btn-primary" disabled>{{$id !== null ? 'Update' : 'Add' }} User</button>
                 </div>
             </div>
         </div>
@@ -95,3 +95,26 @@
       {!! Form::close() !!}
    </div>
 </x-app-layout>
+
+<script>
+    $(document).ready(function() {
+        // Panggil fungsi cek validasi pertama kali
+        toggleSubmitButton();
+    
+        // Event listener untuk setiap input yang required
+        $('input[required]').on('input', function() {
+            toggleSubmitButton();
+        });
+    
+        function toggleSubmitButton() {
+            let allFilled = true;
+            $('input[required]').each(function() {
+                if ($(this).val().trim() === '') {
+                    allFilled = false;
+                }
+            });
+    
+            $('#submitButton').prop('disabled', !allFilled);
+        }
+    });
+ </script>

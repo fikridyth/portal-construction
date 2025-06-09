@@ -26,7 +26,7 @@
                                 {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama Tenaga Kerja', 'required']) }}
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data Tenaga Kerja</button>
+                        <button type="submit" id="submitButton" class="btn btn-primary" disabled>{{$id !== null ? 'Ubah' : 'Tambah' }} Data Tenaga Kerja</button>
                     </div>
                 </div>
             </div>
@@ -35,3 +35,25 @@
     </div>
  </x-app-layout>
  
+ <script>
+    $(document).ready(function() {
+        // Panggil fungsi cek validasi pertama kali
+        toggleSubmitButton();
+    
+        // Event listener untuk setiap input yang required
+        $('input[required]').on('input', function() {
+            toggleSubmitButton();
+        });
+    
+        function toggleSubmitButton() {
+            let allFilled = true;
+            $('input[required]').each(function() {
+                if ($(this).val().trim() === '') {
+                    allFilled = false;
+                }
+            });
+    
+            $('#submitButton').prop('disabled', !allFilled);
+        }
+    });
+ </script>

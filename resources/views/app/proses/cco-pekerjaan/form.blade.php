@@ -39,7 +39,7 @@
                                 {{ Form::text('harga', (int)str_replace(',', '', $data->harga ?? '') ?? old('harga'), ['class' => 'form-control placeholder-grey', 'id' => 'harga', 'placeholder' => 'Isi Harga', 'oninput' => "this.value = this.value.replace(/,/g, '')"]) }}
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">{{$id !== null ? 'Ubah' : 'Tambah' }} Data CCO</button>
+                        <button type="submit" id="submitButton" class="btn btn-primary" disabled>{{$id !== null ? 'Ubah' : 'Tambah' }} Data CCO</button>
                     </div>
                 </div>
             </div>
@@ -47,3 +47,27 @@
         {!! Form::close() !!}
     </div>
  </x-app-layout>
+
+ <script>
+    
+    $(document).ready(function() {
+        // Panggil fungsi cek validasi pertama kali
+        toggleSubmitButton();
+    
+        // Event listener untuk setiap input yang required
+        $('input[required]').on('input', function() {
+            toggleSubmitButton();
+        });
+    
+        function toggleSubmitButton() {
+            let allFilled = true;
+            $('input[required]').each(function() {
+                if ($(this).val().trim() === '') {
+                    allFilled = false;
+                }
+            });
+    
+            $('#submitButton').prop('disabled', !allFilled);
+        }
+    });
+ </script>
