@@ -6,6 +6,7 @@ use App\DataTables\BahanDataTable;
 use App\Helpers\AuthHelper;
 use App\Models\Bahan;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class BahanController extends Controller
 {
@@ -100,6 +101,15 @@ class BahanController extends Controller
     public function update(Request $request, $id)
     {
         $dataBahan = Bahan::findOrFail($id);
+        $request->validate([
+            'nama' => [
+                'required',
+                Rule::unique('bahans', 'nama')->ignore($dataBahan->id),
+            ],
+        ], [
+            'nama.unique' => 'Nama bahan sudah digunakan!',
+        ]);
+        
         $data = [
             'nama' => $request->nama,
             // 'volume' => $request->volume,

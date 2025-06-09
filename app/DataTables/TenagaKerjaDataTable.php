@@ -22,7 +22,7 @@ class TenagaKerjaDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-            ->addColumn('action', 'app.master.pekerjaan.action')
+            ->addColumn('action', 'app.master.tenaga-kerja.action')
             ->rawColumns(['action', 'status']);
     }
 

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Helpers\AuthHelper;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\UserRequest;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -48,8 +49,15 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         // dd($request->all());
+        $request->validate([
+            'username' => 'unique:users,username',
+            'email' => 'required|unique:users,email',
+        ], [
+            'username.unique' => 'Username user sudah digunakan!',
+            'email.unique' => 'Email user sudah digunakan!',
+        ]);
         $passwordData = bcrypt($request->password);
-        $usernameData = $request->username ?? stristr($request->email, "@", true) . rand(100, 1000);
+        $usernameData = stristr($request->email, "@", true) . rand(1000000, 10000000);
 
         $data = [
             "username" => $usernameData,
@@ -96,15 +104,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $pageHeader = 'Ubah User';
-        $data = User::with('userProfile', 'roles')->findOrFail($id);
+        $data = User::findOrFail($id);
+        $roles = Role::where('status', 1)->where('name', '!=', 'system_admin')->get()->pluck('title', 'id');
 
-        $data['user_type'] = $data->roles->pluck('id')[0] ?? null;
-
-        $roles = Role::where('status', 1)->get()->pluck('title', 'id');
-
-        $profileImage = getSingleMedia($data, 'profile_image');
-
-        return view('users.form', compact('pageHeader', 'data', 'id', 'roles', 'profileImage'));
+        return view('users.form', compact('pageHeader', 'data', 'roles', 'id'));
     }
 
     /**
@@ -117,34 +120,47 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         // dd($request->all());
-        $user = User::with('userProfile')->findOrFail($id);
+        $user = User::findOrFail($id);
+        $request->validate([
+            'username' => [
+                Rule::unique('users', 'username')->ignore($user->id),
+            ],
+            'email' => [
+                'required',
+                Rule::unique('users', 'email')->ignore($user->id),
+            ],
+        ], [
+            'username.unique' => 'Username user sudah digunakan!',
+            'email.unique' => 'Email user sudah digunakan!',
+        ]);
 
-        $role = Role::find($request->user_role);
-        if (env('IS_DEMO')) {
-            if ($role->name === 'admin' && $user->user_type === 'admin') {
-                return redirect()->back()->with('error', 'Permission denied');
-            }
+        $usernameData = stristr($request->email, "@", true) . rand(1000000, 10000000);
+
+        if ($request->password == null) {
+            $data = [
+                "username" => $usernameData,
+                "first_name" => $request->first_name,
+                "last_name" => $request->last_name,
+                "email" => $request->email,
+                "user_type" => $request->user_type,
+                "phone_number" => $request->phone_number ?? null
+            ];
+        } else {
+            $passwordData = bcrypt($request->password);
+            $data = [
+                "username" => $usernameData,
+                "first_name" => $request->first_name,
+                "last_name" => $request->last_name,
+                "email" => $request->email,
+                "password" => $passwordData,
+                "user_type" => $request->user_type,
+                "phone_number" => $request->phone_number ?? null
+            ];
         }
-        $user->assignRole($role->name);
+        // dd($data);
+        $user->update($data);
 
-        $request['password'] = $request->password != '' ? bcrypt($request->password) : $user->password;
-
-        // User user data...
-        $user->fill($request->all())->update();
-
-        // Save user image...
-        if (isset($request->profile_image) && $request->profile_image != null) {
-            $user->clearMediaCollection('profile_image');
-            $user->addMediaFromRequest('profile_image')->toMediaCollection('profile_image');
-        }
-
-        // user profile data....
-        $user->userProfile->fill($request->userProfile)->update();
-
-        if (auth()->check()) {
-            return redirect()->route('users.index')->withSuccess(__('Update User Berhasil', ['name' => __('message.user')]));
-        }
-        return redirect()->back()->withSuccess(__('Update User Berhasil', ['name' => 'My Profile']));
+        return redirect()->route('users.index')->withSuccess(__('Update User Berhasil', ['name' => __('message.user')]));
     }
 
     /**

@@ -9,6 +9,7 @@ use App\Models\LaporanMingguan;
 use App\Models\Proyek;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 class ProyekController extends Controller
 {
@@ -121,6 +122,15 @@ class ProyekController extends Controller
     public function update(Request $request, $id)
     {
         $dataProyek = Proyek::findOrFail($id);
+        $request->validate([
+            'nama' => [
+                'required',
+                Rule::unique('proyeks', 'nama')->ignore($dataProyek->id),
+            ],
+        ], [
+            'nama.unique' => 'Nama proyek sudah digunakan!',
+        ]);
+
         $dari = Carbon::parse($request->dari);
         $sampai = Carbon::parse($request->sampai);
 

@@ -94,6 +94,7 @@ class ApprovalController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $preorder = Preorder::findOrFail($id);
         $userRole = Auth::user()->role->name;
         // list pesanan
@@ -121,9 +122,14 @@ class ApprovalController extends Controller
             'bobot_total' => $preorder->bobot_total,
             'no_po' => $preorder->no_po,
             'list_pesanan' => json_encode($preorderResult),
-            'total' => $totalHarga,
             'updated_by' => auth()->id(),
         ];
+
+        if ($request->total) {
+            $data['total'] = (int)$request->total;
+        } else {
+            $data['total'] = $totalHarga;
+        }
 
         if ($request->aksi === 'approve' && $userRole == 'project_manager') {
             $data['approved_manager_by'] = auth()->id();
@@ -144,12 +150,14 @@ class ApprovalController extends Controller
         } else if ($request->aksi === 'approve' && $userRole == 'finance') {
             $data['approved_finance_by'] = auth()->id();
             $data['approved_finance_at'] = now();
+            $data['kode_bayar'] = $request->kode_bayar ?? $preorder->kode_bayar;
             $data['status'] = 4;
         } else if ($request->aksi === 'reject' && $userRole == 'finance') {
             $data['approved_finance_by'] = auth()->id();
             $data['approved_finance_at'] = now();
             $data['status'] = 5;
         }
+        // dd($data);
         $preorder->update($data);
 
         return redirect()->route('approval.index')->withSuccess(__('Updata Data Approval Berhasil', ['name' => __('approval.update')]));

@@ -23,27 +23,32 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label class="form-label" for="fname">First Name: <span class="text-danger">*</span></label>
-                            {{ Form::text('first_name', old('first_name'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'First Name', 'required']) }}
+                            {{ Form::text('first_name', $data->first_name ??old('first_name'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'First Name', 'required']) }}
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label" for="lname">Last Name: <span class="text-danger">*</span></label>
-                            {{ Form::text('last_name', old('last_name'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Last Name' ,'required']) }}
+                            {{ Form::text('last_name', $data->last_name ??old('last_name'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Last Name' ,'required']) }}
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label" for="email">Email: <span class="text-danger">*</span></label>
-                            {{ Form::email('email', old('email'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Enter E-Mail', 'required']) }}
+                            {{ Form::email('email', $data->email ??old('email'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Enter E-Mail', 'required']) }}
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="form-label" for="pass">Password: <span class="text-danger">*</span></label>
-                            {{ Form::password('password', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Password']) }}
+                            @if ($id !== null)
+                                <label class="form-label" for="pass">Password: <span class="text-danger">(Kosongkan bila tidak ingin mengubah password)</span></label>
+                                {{ Form::password('password', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Password']) }}
+                            @else
+                                <label class="form-label" for="pass">Password: <span class="text-danger">*</span></label>
+                                {{ Form::password('password', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Password', 'required']) }}
+                            @endif
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">User Role: <span class="text-danger">*</span></label>
-                            {{Form::select('user_type', $roles , old('user_type') ? old('user_type') : $data->user_type ?? 'user', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Select User Role'])}}
+                            {{Form::select('user_type', $roles , old('user_type') ? old('user_type') : $data->user_type ?? '', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Select User Role', 'required'])}}
                          </div>
                          <div class="form-group col-md-6">
                              <label class="form-label" for="pno">Phone Number:</label>
-                             {{ Form::number('phone_number', old('phone_number'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Enter Phone Number']) }}
+                             {{ Form::number('phone_number', $data->phone_number ??old('phone_number'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Enter Phone Number']) }}
                          </div>
                         {{-- <div class="form-group">
                             <div class="profile-img-edit position-relative">

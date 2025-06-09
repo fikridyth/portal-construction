@@ -6,6 +6,7 @@ use App\DataTables\PekerjaanDataTable;
 use App\Helpers\AuthHelper;
 use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PekerjaanController extends Controller
 {
@@ -94,6 +95,15 @@ class PekerjaanController extends Controller
     public function update(Request $request, $id)
     {
         $dataPekerjaan = Pekerjaan::findOrFail($id);
+        $request->validate([
+            'nama' => [
+                'required',
+                Rule::unique('pekerjaans', 'nama')->ignore($dataPekerjaan->id),
+            ],
+        ], [
+            'nama.unique' => 'Nama pekerjaan sudah digunakan!',
+        ]);
+
         $data = [
             'nama' => $request->nama,
             'updated_by' => auth()->user()->id,
