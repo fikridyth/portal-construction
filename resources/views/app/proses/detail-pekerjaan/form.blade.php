@@ -46,6 +46,7 @@
                                 <label class="form-label" for="bobot">Bobot (%): <span class="text-danger">*</span></label>
                                 {{ Form::text('bobot', $data->bobot ?? old('bobot'), ['class' => 'form-control placeholder-grey', 'id' => 'bobot', 'placeholder' => 'Isi Bobot', 'required']) }}
                             </div>
+                            <label class="form-label" style="font-size: 18px;"><b>Input salah satu harga modal material / upah</b></label>
                             <div class="form-group col-md-4">
                                 <label class="form-label" for="harga_modal_material">RAB Modal Material:</label>
                                 {{ Form::text('harga_modal_material', $data->harga_modal_material ?? old('harga_modal_material'), ['class' => 'form-control placeholder-grey', 'id' => 'harga_modal_material', 'placeholder' => 'Isi RAB Modal Material', 'oninput' => "this.value = this.value.replace(/,/g, '')"]) }}
@@ -55,8 +56,8 @@
                                 {{ Form::text('harga_modal_upah', $data->harga_modal_upah ?? old('harga_modal_upah'), ['class' => 'form-control placeholder-grey', 'id' => 'harga_modal_upah', 'placeholder' => 'Isi RAB Modal Upah', 'oninput' => "this.value = this.value.replace(/,/g, '')"]) }}
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="form-label" for="harga_jual_satuan">RAB Jual Satuan:</label>
-                                {{ Form::text('harga_jual_satuan', $data->harga_jual_satuan ?? old('harga_jual_satuan'), ['class' => 'form-control placeholder-grey', 'id' => 'harga_jual_satuan', 'placeholder' => 'Isi RAB Jual Satuan', 'oninput' => "this.value = this.value.replace(/,/g, '')"]) }}
+                                <label class="form-label" for="harga_jual_satuan">RAB Jual Satuan: <span class="text-danger">*</span></label>
+                                {{ Form::text('harga_jual_satuan', $data->harga_jual_satuan ?? old('harga_jual_satuan'), ['class' => 'form-control placeholder-grey', 'id' => 'harga_jual_satuan', 'placeholder' => 'Isi RAB Jual Satuan', 'required', 'oninput' => "this.value = this.value.replace(/,/g, '')"]) }}
                             </div>
                             <div class="form-group col-md-4">
                                 <div class="form-check form-switch mb-2">
@@ -116,85 +117,71 @@
         });
     }
 
+    function toggleRequired() {
+        const formBahan = document.getElementById('formBahan');
+        const requiredFields = formBahan.querySelectorAll('[name^="id_bahan"], [name^="volume_bahan"]');
+
+        requiredFields.forEach(field => {
+            if (formBahan.hidden) {
+                field.removeAttribute('required');
+            } else {
+                field.setAttribute('required', 'required');
+            }
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
-        // checkbox bahan
         const checkbox = document.getElementById('bahan');
-        const formSection = document.getElementById('formBahan');
+        const formBahan = document.getElementById('formBahan');
         const bahanWrapper = document.getElementById('bahanWrapper');
         const btnTambah = document.getElementById('btnTambahBahan');
         const templateItem = bahanWrapper.querySelector('.bahan-item');
-        const listBahan = JSON.parse(@json($data->list_bahan ?? '[]'));
-        const isBahanChecked = {{ $data->is_bahan ?? 0 }};
+        const listBahan = @json($data->list_bahan ?? []);
 
-        function toggleRequired() {
-            const isHidden = formBahan.hidden;
-            const requiredFields = formBahan.querySelectorAll("[required]");
-
-            requiredFields.forEach(function (field) {
-                if (isHidden) {
-                    field.setAttribute("data-was-required", "true");
-                    field.removeAttribute("required");
-                } else {
-                    if (field.getAttribute("data-was-required") === "true") {
-                        field.setAttribute("required", "required");
-                    }
-                }
-            });
-        }
-        
-        if (isBahanChecked) {
-            checkbox.checked = true;
-            formSection.removeAttribute('hidden');
-
-            // Bersihkan semua elemen awal
+        // Initialize on load
+        if (checkbox.checked) {
+            formBahan.hidden = false;
             bahanWrapper.innerHTML = '';
 
             listBahan.forEach(item => {
                 const newItem = templateItem.cloneNode(true);
-
                 newItem.querySelector('[name="id_bahan[]"]').value = item.id_bahan;
                 newItem.querySelector('[name="volume_bahan[]"]').value = item.volume;
-
                 bahanWrapper.appendChild(newItem);
             });
 
             updateLabelBahan();
-            toggleRequired();
         }
 
+        toggleRequired();
+
+        // Toggle on checkbox change
         checkbox.addEventListener('change', function () {
-            if (this.checked) {
-                formSection.removeAttribute('hidden');
-            } else {
-                formSection.setAttribute('hidden', true);
-            }
+            formBahan.hidden = !this.checked;
+            toggleRequired();
         });
 
+        // Add row
         btnTambah.addEventListener('click', function () {
-            const firstItem = bahanWrapper.querySelector('.bahan-item');
-            const newItem = firstItem.cloneNode(true);
-
-            // Kosongkan nilai input
+            const newItem = templateItem.cloneNode(true);
             newItem.querySelectorAll('select, input').forEach(el => el.value = '');
-
             bahanWrapper.appendChild(newItem);
             updateLabelBahan();
+            toggleRequired();
         });
 
+        // Remove row
         bahanWrapper.addEventListener('click', function (e) {
             if (e.target.classList.contains('btnHapusBahan')) {
                 const items = bahanWrapper.querySelectorAll('.bahan-item');
                 if (items.length > 1) {
                     e.target.closest('.bahan-item').remove();
                     updateLabelBahan();
+                    toggleRequired();
                 } else {
                     alert('Minimal satu detail bahan harus ada.');
                 }
             }
         });
-
-        updateLabelBahan();
-        toggleRequired();
     });
-
  </script>

@@ -108,6 +108,14 @@ class DetailPekerjaanController extends Controller
     public function store(Request $request)
     {
         // dd($request->all(), isset($request->is_bahan));
+        if ($request->harga_modal_upah == null && $request->harga_modal_material == null) {
+            return redirect()->back()->withInput()->withErrors(['Peringatan' => 'Harga material dan upah tidak boleh kosong.']);
+        }
+
+        if ($request->harga_modal_upah !== null && $request->harga_modal_material !== null) {
+            return redirect()->back()->withInput()->withErrors(['Peringatan' => 'Pilih 1 antara harga material dan upah.']);
+        }
+
         if (isset($request->is_bahan)) {
             $isBahan = true;
             $idBahan = $request->input('id_bahan');
