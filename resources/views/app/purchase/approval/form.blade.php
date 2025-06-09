@@ -153,11 +153,23 @@
                             </div>                          
                         </div>
                         @if ($userRole == 'finance')
-                            <div class="d-flex items-center justify-content-center">
+                            {{-- <div class="d-flex items-center justify-content-center">
                                 <span style="font-size: 18px;">Silahkan lakukan pembayaran dengan note: <b>{{ $data->kode_bayar }}</b></span>
                             </div>
                             <div class="d-flex items-center justify-content-center">
                                 <span style="font-size: 18px;">Total bayar: <b>{{ number_format($data->total, 0) }}</b></span>
+                            </div> --}}
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="form-label" for="kode_bayar">Kode Bayar: <span class="text-danger">*</span></label>
+                                    {{ Form::text('kode_bayar', $data->kode_bayar ?? old('kode_bayar'), ['class' => 'form-control placeholder-grey', 'id' => 'kode_bayar', 'placeholder' => 'Isi kode bayar']) }}
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="form-label" for="total">Total Bayar: <span class="text-danger">*</span></label>
+                                    {{ Form::number('total', floor($data->total) ?? old('total'), ['class' => 'form-control placeholder-grey', 'id' => 'total', 'placeholder' => 'Isi total bayar']) }}
+                                </div>
                             </div>
                             <div class="d-flex items-center justify-content-center mt-3">
                                 <button type="submit" name="aksi" value="approve" class="btn btn-primary mx-5" style="width: 150px;">

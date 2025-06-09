@@ -50,15 +50,15 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label class="form-label" for="minggu_ke">Minggu Ke: <span class="text-danger">*</span></label>
-                                {{ Form::text('minggu_ke', $data->minggu_ke ?? old('minggu_ke'), ['class' => 'form-control placeholder-grey', 'id' => 'minggu_ke', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
+                                {{ Form::text('minggu_ke', $data->minggu_ke ?? old('minggu_ke'), ['class' => 'form-control placeholder-grey', 'id' => 'minggu_ke', 'placeholder' => 'Isi minggu ke']) }}
                             </div>
                             <div class="form-group col-md-2">
                                 <label class="form-label" for="dari">Dari: <span class="text-danger">*</span></label>
-                                {{ Form::date('dari', $data->dari ?? old('dari'), ['class' => 'form-control placeholder-grey', 'id' => 'dari', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
+                                {{ Form::date('dari', $data->dari ?? old('dari'), ['class' => 'form-control placeholder-grey', 'id' => 'dari', 'placeholder' => 'Isi tanggal']) }}
                             </div>
                             <div class="form-group col-md-2">
                                 <label class="form-label" for="sampai">Sampai: <span class="text-danger">*</span></label>
-                                {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control placeholder-grey', 'id' => 'sampai', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
+                                {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control placeholder-grey', 'id' => 'sampai', 'placeholder' => 'Isi tanggal']) }}
                             </div>
                             <div class="card mx-auto responsive-width">
                                 <div class="card-header text-center">
@@ -124,29 +124,29 @@
  </x-app-layout>
  
  <script>
-    document.getElementById('id_proyek').addEventListener('change', function() {
-        const proyekId = this.value;
+    // document.getElementById('id_proyek').addEventListener('change', function() {
+    //     const proyekId = this.value;
 
-        if (proyekId) {
-            fetch(`/get-preorder-minggu-ke/${proyekId}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('minggu_ke').value = data.minggu_ke;
-                    document.getElementById('dari').value = data.dari;
-                    document.getElementById('sampai').value = data.sampai;
-                })
-                .catch(error => {
-                    console.error('Gagal mengambil data minggu ke:', error);
-                    document.getElementById('minggu_ke').value = '';
-                    document.getElementById('dari').value = '';
-                    document.getElementById('sampai').value = '';
-                });
-        } else {
-            document.getElementById('minggu_ke').value = '';
-            document.getElementById('dari').value = '';
-            document.getElementById('sampai').value = '';
-        }
-    });
+    //     if (proyekId) {
+    //         fetch(`/get-preorder-minggu-ke/${proyekId}`)
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 document.getElementById('minggu_ke').value = data.minggu_ke;
+    //                 document.getElementById('dari').value = data.dari;
+    //                 document.getElementById('sampai').value = data.sampai;
+    //             })
+    //             .catch(error => {
+    //                 console.error('Gagal mengambil data minggu ke:', error);
+    //                 document.getElementById('minggu_ke').value = '';
+    //                 document.getElementById('dari').value = '';
+    //                 document.getElementById('sampai').value = '';
+    //             });
+    //     } else {
+    //         document.getElementById('minggu_ke').value = '';
+    //         document.getElementById('dari').value = '';
+    //         document.getElementById('sampai').value = '';
+    //     }
+    // });
 
     $(document).ready(function () {
         let index = {{ count($listPesanan) }};
