@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label class="form-label" for="nama">Proyek: <span class="text-danger">*</span></label>
-                                {{ Form::select('id_proyek', $dataProyek->pluck('nama', 'id'), null, [
+                                {{ Form::select('id_proyek', $dataProyek->pluck('nama', 'id'), old('id_proyek', $data->id_proyek ?? null), [
                                     'class' => 'form-control placeholder-grey',
                                     'placeholder' => 'Pilih Proyek',
                                     'required',
@@ -125,7 +125,8 @@
 
                             grouped[groupName].forEach((item, index) => {
                                 let progressSebelumnya = progressData[item.id] ?? 0;
-                                let nilaiProgressSaatIni = (progressSebelumnya == 100) ? 100 : '';
+                                let nilaiProgressSaatIni = progressSebelumnya;
+                                let isReadonly = nilaiProgressSaatIni == 100 ? 'readonly' : '';
 
                                 html += `
                                     <input type="text" class="form-control" name="detail_id_proyek[${item.id}]" value="${item.id_proyek}" hidden>
@@ -165,7 +166,11 @@
                                         <label class="form-label" style="font-size: 14px;" for="detail_progress_${groupIndex}_${index}">
                                             Progress Saat Ini (%)
                                         </label>
-                                        <input type="text" class="form-control" name="detail_progress[${item.id}]" value="${nilaiProgressSaatIni}" required>
+                                        <input type="number" class="form-control detail-progress-input" 
+                                            name="detail_progress[${item.id}]" 
+                                            id="detail_progress_${item.id}" 
+                                            value="${nilaiProgressSaatIni}" ${isReadonly} required>
+                                        <div class="invalid-feedback">Nilai melebihi 100!</div>
                                     </div>
                                     <hr>
                                 `;
@@ -173,6 +178,20 @@
 
                             html += `</div></div>`;
                         });
+
+                        setTimeout(() => {
+                            document.querySelectorAll('.detail-progress-input').forEach(input => {
+                                input.addEventListener('input', function () {
+                                    const maxVolume = 100;
+                                    const value = parseFloat(this.value);
+                                    if (value > maxVolume) {
+                                        this.classList.add('is-invalid');
+                                    } else {
+                                        this.classList.remove('is-invalid');
+                                    }
+                                });
+                            });
+                        }, 0);
 
                         $('#pekerjaanWrapper').html(html);
                     },
@@ -184,5 +203,12 @@
                 $('#pekerjaanWrapper').empty();
             }
         });
+
+        // Jalankan auto-fetch jika sebelumnya sudah dipilih
+        const oldProyekId = '{{ old("id_proyek", $data->id_proyek ?? "") }}';
+        if (oldProyekId) {
+            $('#id_proyek').val(oldProyekId).trigger('change');
+        }
+
     });
 </script>

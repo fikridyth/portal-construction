@@ -91,7 +91,25 @@ class LaporanMingguanController extends Controller
         $dVolume = array_values($request->input('detail_volume'));
         $dSatuan = array_values($request->input('detail_satuan'));
         $dBobot = array_values($request->input('detail_bobot'));
+        $dLastProgress = array_values($request->input('last_progress'));
         $dProgress = array_values($request->input('detail_progress'));
+        foreach ($dProgress as $index => $value) {
+            $progressBaru = (float) $value;
+            $progressLama = (float) ($dLastProgress[$index] ?? 0);
+        
+            if ($progressBaru > 100) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['detail_progress.' . $index => 'Progress tidak boleh lebih dari 100.']);
+            }
+        
+            if ($progressBaru < $progressLama) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['detail_progress.' . $index => 'Progress harus lebih besar dari progress sebelumnya.']);
+            }
+        }
+
         $getLastData = [];
         if ($request->minggu_ke > 1) {
             $pastReports = LaporanMingguan::where('id_proyek', $request->id_proyek)
