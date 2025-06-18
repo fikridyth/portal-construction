@@ -87,6 +87,12 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link {{ activeRoute(route('laporan-komparasi.index')) }}" href="{{ route('laporan-komparasi.index') }}">
+            <i class="fas fa-receipt mt-1"></i>
+            <span class="item-name">Laporan Komparasi</span>
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link {{ activeRoute(route('laporan-harian.index')) }}" href="{{ route('laporan-harian.index') }}">
             <i class="fas fa-calendar-day mt-1"></i>
             <span class="item-name">Laporan Harian</span>
