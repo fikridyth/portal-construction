@@ -18,6 +18,11 @@ class Preorder extends Model
         return $this->belongsTo(LaporanMingguan::class, 'id_laporan_mingguan');
     }
 
+    public function proyek()
+    {
+        return $this->belongsTo(Proyek::class, 'id_proyek');
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');

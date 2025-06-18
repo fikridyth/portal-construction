@@ -11,6 +11,7 @@ use App\Http\Controllers\DokumentasiMingguanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\LaporanKegiatanController;
+use App\Http\Controllers\LaporanKomparasiController;
 use App\Http\Controllers\LaporanMingguanController;
 use App\Http\Controllers\LaporanPelaksanaanController;
 use App\Http\Controllers\PekerjaanController;
@@ -88,6 +89,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Approval
     Route::resource('approval', ApprovalController::class);
+
+    // Laporan Harian
+    Route::resource('laporan-komparasi', LaporanKomparasiController::class);
+    Route::get('/get-detail-bahan/{id}', [LaporanKomparasiController::class, 'getDetailBahan']);
+    Route::get('laporan-komparasi/{id}/print', [LaporanKomparasiontroller::class, 'printKomparasiKomparasi'])->name('laporan-komparasi.print');
 
     // Laporan Harian
     Route::resource('laporan-harian', LaporanHarianController::class);
