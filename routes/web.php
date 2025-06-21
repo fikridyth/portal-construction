@@ -93,7 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Laporan Komparasi
     Route::resource('laporan-komparasi', LaporanKomparasiController::class);
     Route::get('/get-detail-bahan/{id}', [LaporanKomparasiController::class, 'getDetailBahan']);
-    Route::get('laporan-komparasi/{id}/print', [LaporanKomparasiontroller::class, 'printKomparasiKomparasi'])->name('laporan-komparasi.print');
+    Route::get('laporan-komparasi/{id}/print', [LaporanKomparasiController::class, 'printLaporanKomparasi'])->name('laporan-komparasi.print');
 
     // Laporan Harian
     Route::resource('laporan-harian', LaporanHarianController::class);

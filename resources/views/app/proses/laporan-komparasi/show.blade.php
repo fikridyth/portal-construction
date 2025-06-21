@@ -11,6 +11,7 @@
         <div class="card-body">
             <p><strong>Nama:</strong> {{ $data->preorder->proyek->nama }} - Minggu ke {{ $data->preorder->minggu_ke }}</p>
             <p><strong>Pelaksanaan:</strong> {{ $masaPelaksanaan }}</p>
+            <p><strong>Total Bobot:</strong> {{ $data->total_progress }}%</p>
 
             @if (!empty($listPesanan) && is_array($listPesanan))
                 <form method="GET" action="{{ route('preorder.print-selected', enkrip($data->id)) }}">
@@ -24,8 +25,7 @@
                                     </th> --}}
                                     <th class="px-4 py-2 border border-gray-300 w-50">Nama</th>
                                     <th class="px-4 py-2 border border-gray-300 w-1/6">Volume</th>
-                                    <th class="px-4 py-2 border border-gray-300 w-1/6">Satuan</th>
-                                    <th class="px-4 py-2 border border-gray-300 w-1/6">Progress</th>
+                                    <th class="px-4 py-2 border border-gray-300 w-1/6">Penggunaan</th>
                                     <th class="px-4 py-2 border border-gray-300 w-1/6">Bobot</th>
                                 </tr>
                             </thead>
@@ -36,10 +36,9 @@
                                             <input type="checkbox" name="selected[]" value="{{ $index }}" class="row-checkbox form-checkbox">
                                         </td> --}}
                                         <td class="px-4 py-2 border border-gray-300">{{ $item['nama'] ?? '-' }}</td>
-                                        <td class="px-4 py-2 border border-gray-300">{{ $item['volume'] ?? '-' }}</td>
-                                        <td class="px-4 py-2 border border-gray-300">{{ $item['satuan'] ?? '-' }}</td>
-                                        <td class="px-4 py-2 border border-gray-300">{{ $item['progress'] ?? '-' }}</td>
-                                        <td class="px-4 py-2 border border-gray-300">{{ $item['bobot'] ?? '-' }}</td>
+                                        <td class="px-4 py-2 border border-gray-300">{{ $item['volume'] . ' ' . $item['satuan'] ?? '-' }}</td>
+                                        <td class="px-4 py-2 border border-gray-300">{{ $item['progress'] . ' ' . $item['satuan'] ?? '-' }}</td>
+                                        <td class="px-4 py-2 border border-gray-300">{{ number_format($item['bobot'],0) . '%' ?? '-' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

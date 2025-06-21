@@ -103,6 +103,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Ubah User';
         $data = User::findOrFail($id);
         $roles = Role::where('status', 1)->where('name', '!=', 'system_admin')->get()->pluck('title', 'id');

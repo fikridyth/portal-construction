@@ -193,4 +193,18 @@ class LaporanKomparasiController extends Controller
     {
         //
     }
+
+    public function printLaporanKomparasi($id)
+    {
+        $id = dekrip($id);
+        $pageHeader = 'Print Laporan Komparasi';
+        $data = LaporanKomparasi::findOrFail($id);
+        $listPesanan = json_decode($data->list_pesanan, true);
+
+        $dari = Carbon::parse($data->dari);
+        $sampai = Carbon::parse($data->sampai);
+        $masaPelaksanaan = $dari->format('d') . ' S/D ' . $sampai->format('d F Y');
+
+        return view('app.proses.laporan-komparasi.print', compact('pageHeader', 'data', 'listPesanan', 'masaPelaksanaan'));
+    }
 }
