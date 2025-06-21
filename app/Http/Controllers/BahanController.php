@@ -85,6 +85,7 @@ class BahanController extends Controller
      */
     public function edit($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Lihat Bahan';
         $data = Bahan::findOrFail($id);
         

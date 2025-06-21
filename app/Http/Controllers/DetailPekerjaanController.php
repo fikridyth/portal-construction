@@ -37,7 +37,7 @@ class DetailPekerjaanController extends Controller
                     </div>';
                 } else {
                     return '<div class="text-center">
-                        <a href="' . route('detail-pekerjaan.edit', $row->id) . '" 
+                        <a href="' . route('detail-pekerjaan.edit', enkrip($row->id)) . '" 
                             class="btn btn-xs btn-warning" role="button">
                             <i class="fas fa-edit"></i>
                         </a>
@@ -91,6 +91,7 @@ class DetailPekerjaanController extends Controller
      */
     public function createDetailPekerjaan($idProyek)
     {
+        $idProyek = dekrip($idProyek);
         $pageHeader = 'Create Detail Pekerjaan';
         $dataProyek = Proyek::findOrFail($idProyek);
         $dataPekerjaan = Pekerjaan::all();
@@ -164,7 +165,7 @@ class DetailPekerjaanController extends Controller
         ];
         DetailPekerjaan::create($data);
 
-        return redirect()->route('proyek.show', $request->id_proyek)->withSuccess(__('Tambah Detail Pekerjaan Berhasil', ['name' => __('detail-pekerjaan.store')]));
+        return redirect()->route('proyek.show', enkrip($request->id_proyek))->withSuccess(__('Tambah Detail Pekerjaan Berhasil', ['name' => __('detail-pekerjaan.store')]));
     }
 
     /**
@@ -186,6 +187,7 @@ class DetailPekerjaanController extends Controller
      */
     public function edit($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Ubah DetailPekerjaan';
         $data = DetailPekerjaan::findOrFail($id);
         $dataPekerjaan = Pekerjaan::all();
@@ -253,7 +255,7 @@ class DetailPekerjaanController extends Controller
         ];
         $dataDetailPekerjaan->update($data);
 
-        return redirect()->route('proyek.show', $request->id_proyek)->withSuccess(__('Update Detail Pekerjaan Berhasil', ['name' => __('detail-pekerjaan.update')]));
+        return redirect()->route('proyek.show', enkrip($request->id_proyek))->withSuccess(__('Update Detail Pekerjaan Berhasil', ['name' => __('detail-pekerjaan.update')]));
     }
 
     /**

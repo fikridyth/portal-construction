@@ -79,6 +79,7 @@ class PekerjaanController extends Controller
      */
     public function edit($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Lihat Pekerjaan';
         $data = Pekerjaan::findOrFail($id);
         

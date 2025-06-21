@@ -79,6 +79,7 @@ class TenagaKerjaController extends Controller
      */
     public function edit($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Lihat Tenaga Kerja';
         $data = TenagaKerja::findOrFail($id);
         

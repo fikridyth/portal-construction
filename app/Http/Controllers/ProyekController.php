@@ -88,6 +88,7 @@ class ProyekController extends Controller
      */
     public function show($id)
     {
+        $id = dekrip($id);
         $assets = ['data-table'];
         $pageHeader = 'Lihat Proyek';
         $data = Proyek::findOrFail($id);
@@ -106,6 +107,7 @@ class ProyekController extends Controller
      */
     public function edit($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Ubah Proyek';
         $data = Proyek::findOrFail($id);
 
@@ -170,6 +172,7 @@ class ProyekController extends Controller
     
     public function printRab($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Print Rencana Anggaran Biaya';
         $dataProyek = Proyek::findOrFail($id);
         $dataPekerjaan = DetailPekerjaan::where('id_proyek', $dataProyek->id)->orderBy('id_pekerjaan', 'asc')->get();
@@ -181,6 +184,7 @@ class ProyekController extends Controller
     
     public function printBoq($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Print Bill of Quantity';
         $dataProyek = Proyek::findOrFail($id);
         $dataPekerjaan = DetailPekerjaan::where('id_proyek', $dataProyek->id)->orderBy('id_pekerjaan', 'asc')->get();
@@ -192,6 +196,7 @@ class ProyekController extends Controller
     
     public function printRekap($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Print Rekapitulasi Biaya';
         $dataProyek = Proyek::findOrFail($id);
         $dataPekerjaan = DetailPekerjaan::where('id_proyek', $dataProyek->id)->orderBy('id_pekerjaan', 'asc')->get();

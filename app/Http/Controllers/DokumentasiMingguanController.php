@@ -167,6 +167,7 @@ class DokumentasiMingguanController extends Controller
     
     public function printDokumentasiMingguan($id)
     {
+        $id = dekrip($id);
         $data = DokumentasiMingguan::findOrFail($id);
         $listGambar = json_decode($data->list_gambar, true);
 

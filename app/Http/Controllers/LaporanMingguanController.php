@@ -190,6 +190,7 @@ class LaporanMingguanController extends Controller
      */
     public function show($id)
     {
+        $id = dekrip($id);
         $assets = ['data-table'];
         $pageHeader = 'Lihat Laporan Mingguan';
         $data = LaporanMingguan::findOrFail($id);
@@ -210,6 +211,7 @@ class LaporanMingguanController extends Controller
      */
     public function edit($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Ubah Laporan Mingguan';
         $data = LaporanMingguan::findOrFail($id);
 
@@ -241,6 +243,7 @@ class LaporanMingguanController extends Controller
 
     public function printLaporanMingguan($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Print Laporan Mingguan';
         $data = LaporanMingguan::findOrFail($id);
         $dataPekerjaan = DetailPekerjaan::where('id_proyek', $data->id_proyek)->orderBy('id_pekerjaan', 'asc')->get();

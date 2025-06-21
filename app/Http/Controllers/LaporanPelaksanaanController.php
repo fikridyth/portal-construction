@@ -127,6 +127,7 @@ class LaporanPelaksanaanController extends Controller
 
     public function printPelaksanaan($id)
     {
+        $id = dekrip($id);
         $data = LaporanPelaksanaan::findOrFail($id);
         $mulai = Carbon::parse($data->proyek->dari);
         $dari = Carbon::parse($data->dari);

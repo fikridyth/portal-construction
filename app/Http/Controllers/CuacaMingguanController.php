@@ -153,6 +153,7 @@ class CuacaMingguanController extends Controller
 
     public function printCuacaMingguan($id)
     {
+        $id = dekrip($id);
         $data = CuacaMingguan::findOrFail($id);
         $listCuaca = json_decode($data->list_cuaca, true);
 

@@ -26,7 +26,7 @@ class CcoController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return '<div class="text-center">
-                        <a href="' . route('cco-pekerjaan.edit', $row->id) . '" 
+                        <a href="' . route('cco-pekerjaan.edit', enkrip($row->id)) . '" 
                             class="btn btn-xs btn-warning" role="button">
                             <i class="fas fa-edit"></i>
                         </a>
@@ -55,6 +55,7 @@ class CcoController extends Controller
      */
     public function createCcoPekerjaan($idProyek)
     {
+        $idProyek = dekrip($idProyek);
         $pageHeader = 'Create CCO Pekerjaan';
         $dataProyek = Proyek::findOrFail($idProyek);
 
@@ -79,7 +80,7 @@ class CcoController extends Controller
         ];
         Cco::create($data);
 
-        return redirect()->route('proyek.show', $request->id_proyek)->withSuccess(__('Tambah CCO Pekerjaan Berhasil', ['name' => __('cco-pekerjaan.store')]));
+        return redirect()->route('proyek.show', enkrip($request->id_proyek))->withSuccess(__('Tambah CCO Pekerjaan Berhasil', ['name' => __('cco-pekerjaan.store')]));
     }
 
     /**
@@ -101,6 +102,7 @@ class CcoController extends Controller
      */
     public function edit($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Create CCO Pekerjaan';
         $data = Cco::findOrFail($id);
 
@@ -127,7 +129,7 @@ class CcoController extends Controller
         ];
         $dataCco->update($data);
 
-        return redirect()->route('proyek.show', $request->id_proyek)->withSuccess(__('Ubah CCO Pekerjaan Berhasil', ['name' => __('cco-pekerjaan.update')]));
+        return redirect()->route('proyek.show', enkrip($request->id_proyek))->withSuccess(__('Ubah CCO Pekerjaan Berhasil', ['name' => __('cco-pekerjaan.update')]));
     }
 
     /**
@@ -143,6 +145,7 @@ class CcoController extends Controller
 
     public function printCcoPekerjaan($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Print Rencana Anggaran Biaya dengan CCO';
         $dataProyek = Proyek::findOrFail($id);
         $dataPekerjaan = DetailPekerjaan::where('id_proyek', $dataProyek->id)->orderBy('id_pekerjaan', 'asc')->get();

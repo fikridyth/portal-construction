@@ -178,6 +178,7 @@ class LaporanKegiatanController extends Controller
 
     public function printKegiatan($id)
     {
+        $id = dekrip($id);
         $data = LaporanKegiatan::findOrFail($id);
         $dataPekerjaan = DetailPekerjaan::where('id_proyek', $data->id_proyek)->orderBy('id_pekerjaan', 'asc')->get();
         $dataPekerjaanById = $dataPekerjaan->groupBy('id_pekerjaan');

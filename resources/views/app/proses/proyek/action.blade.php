@@ -1,10 +1,10 @@
 <div class="flex align-items-center list-proyek-action">
-    <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Proyek" href="{{ route('proyek.show',$id) }}">
+    <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Proyek" href="{{ route('proyek.show',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-eye mt-1"></i>
         </span>
     </a>
-    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Proyek" href="{{ route('proyek.edit',$id) }}">
+    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Proyek" href="{{ route('proyek.edit',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-edit mt-1"></i>
         </span>

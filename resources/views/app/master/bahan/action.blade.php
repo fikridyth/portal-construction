@@ -1,5 +1,5 @@
 <div class="flex align-items-center list-bahan-action">
-    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Bahan" href="{{ route('bahan.edit',$id) }}">
+    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Bahan" href="{{ route('bahan.edit',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-edit mt-1"></i>
         </span>

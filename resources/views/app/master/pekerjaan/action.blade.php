@@ -1,5 +1,5 @@
 <div class="flex align-items-center list-pekerjaan-action">
-    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Pekerjaan" href="{{ route('pekerjaan.edit',$id) }}">
+    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Pekerjaan" href="{{ route('pekerjaan.edit',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-edit mt-1"></i>
         </span>

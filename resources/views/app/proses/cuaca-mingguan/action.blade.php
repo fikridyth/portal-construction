@@ -9,7 +9,7 @@
             <i class="fas fa-edit mt-1"></i>
         </span>
     </a> --}}
-    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Cuaca Mingguan" href="{{ route('cuaca-mingguan.print',$id) }}">
+    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Cuaca Mingguan" href="{{ route('cuaca-mingguan.print',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-print mt-1"></i>
         </span>

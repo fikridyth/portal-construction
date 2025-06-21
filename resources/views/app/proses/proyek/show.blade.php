@@ -6,7 +6,7 @@
                     <h4 class="card-title">Lihat Data Proyek</h4>
                 </div>
                 <div class="card-action">
-                    <a href="{{ route('proyek.edit', $data->id) }}" class="btn btn-sm btn-warning mx-2" style="min-width: 100px;" role="button">Edit</a>
+                    <a href="{{ route('proyek.edit', enkrip($data->id)) }}" class="btn btn-sm btn-warning mx-2" style="min-width: 100px;" role="button">Edit</a>
                     <a href="{{ route('proyek.index') }}" class="btn btn-sm btn-primary mx-2" style="min-width: 100px;" role="button">Kembali</a>
                 </div>
             </div>
@@ -54,9 +54,9 @@
                             {{ Form::text('total_meter', $data->total_meter ?? old('total_meter'), ['class' => 'form-control', 'id' => 'total_meter', 'placeholder' => 'Isi Data Total Meter', 'disabled']) }}
                         </div>
                         <div class="d-flex justify-content-center my-3">
-                            <a href="{{ route('proyek.print-rab', $data->id) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rencana Anggaran Biaya</a>
-                            <a href="{{ route('proyek.print-rekap', $data->id) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rekapitulasi Biaya</a>
-                            <a href="{{ route('proyek.print-boq', $data->id) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Bill of Quantity</a>
+                            <a href="{{ route('proyek.print-rab', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rencana Anggaran Biaya</a>
+                            <a href="{{ route('proyek.print-rekap', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rekapitulasi Biaya</a>
+                            <a href="{{ route('proyek.print-boq', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Bill of Quantity</a>
                         </div>
                     </div>
                     <hr>
@@ -70,7 +70,7 @@
                                     Tambah Detail Pekerjaan
                                 </button>
                             @else
-                                <a href="{{ route('proyek.detail-pekerjaan.create', $data->id) }}"
+                                <a href="{{ route('proyek.detail-pekerjaan.create', enkrip($data->id)) }}"
                                     class="btn btn-sm btn-primary" role="button">
                                     Tambah Detail Pekerjaan
                                 </a>
@@ -107,8 +107,8 @@
                             <h4 class="card-title">Data CCO</h4>
                         </div>
                         <div class="card-action">
-                            <a href="{{ route('proyek.cco-pekerjaan.print', $data->id) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rencana Anggaran Biaya dengan CCO</a>
-                            <a href="{{ route('proyek.cco-pekerjaan.create', $data->id) }}"
+                            <a href="{{ route('proyek.cco-pekerjaan.print', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rencana Anggaran Biaya dengan CCO</a>
+                            <a href="{{ route('proyek.cco-pekerjaan.create', enkrip($data->id)) }}"
                                 class="btn btn-sm btn-primary" role="button">
                                 Tambah Data CCO
                             </a>

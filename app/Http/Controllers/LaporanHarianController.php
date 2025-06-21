@@ -179,6 +179,7 @@ class LaporanHarianController extends Controller
 
     public function printLaporanHarian($id)
     {
+        $id = dekrip($id);
         $pageHeader = 'Print Laporan Harian';
         $data = LaporanHarian::findOrFail($id);
         $dataTanggal = Carbon::parse($data->tanggal)->locale('id')->isoFormat('DD MMMM YYYY');

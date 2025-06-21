@@ -1,15 +1,15 @@
 <div class="flex align-items-center list-laporan-mingguan-action">
-    <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Laporan Mingguan" href="{{ route('laporan-mingguan.show',$id) }}">
+    <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Laporan Mingguan" href="{{ route('laporan-mingguan.show',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-eye mt-1"></i>
         </span>
     </a>
-    {{-- <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Laporan Mingguan" href="{{ route('laporan-mingguan.edit',$id) }}">
+    {{-- <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Ubah Data Laporan Mingguan" href="{{ route('laporan-mingguan.edit',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-edit mt-1"></i>
         </span>
     </a> --}}
-    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Laporan Mingguan" href="{{ route('laporan-mingguan.print',$id) }}">
+    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Laporan Mingguan" href="{{ route('laporan-mingguan.print',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-print mt-1"></i>
         </span>
