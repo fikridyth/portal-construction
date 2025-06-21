@@ -1,5 +1,5 @@
 <div class="flex align-items-center list-laporan-komparasi-action">
-    <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Laporan Komparasi" href="{{ route('laporan-komparasi.show',$id) }}">
+    <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Laporan Komparasi" href="{{ route('laporan-komparasi.show',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-eye mt-1"></i>
         </span>
@@ -9,7 +9,7 @@
             <i class="fas fa-edit mt-1"></i>
         </span>
     </a> --}}
-    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Laporan Komparasi" href="{{ route('laporan-komparasi.print',$id) }}">
+    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Laporan Komparasi" href="{{ route('laporan-komparasi.print',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-print mt-1"></i>
         </span>

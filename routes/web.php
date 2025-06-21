@@ -90,7 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Approval
     Route::resource('approval', ApprovalController::class);
 
-    // Laporan Harian
+    // Laporan Komparasi
     Route::resource('laporan-komparasi', LaporanKomparasiController::class);
     Route::get('/get-detail-bahan/{id}', [LaporanKomparasiController::class, 'getDetailBahan']);
     Route::get('laporan-komparasi/{id}/print', [LaporanKomparasiontroller::class, 'printKomparasiKomparasi'])->name('laporan-komparasi.print');

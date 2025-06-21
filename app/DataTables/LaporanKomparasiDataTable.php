@@ -96,7 +96,7 @@ class LaporanKomparasiDataTable extends DataTable
     {
         return [
             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
-            ['data' => 'id_preorder', 'name' => 'id_preorder', 'title' => 'Nama', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'id_preorder', 'name' => 'id_preorder', 'title' => 'Data Preorder', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'masa_pelaksanaan', 'name' => 'masa_pelaksanaan', 'title' => 'Masa Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'total_progress', 'name' => 'total_progress', 'title' => 'Progress Penggunaan Bahan', 'className' => 'text-center'],
             Column::computed('action')

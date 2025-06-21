@@ -6,6 +6,7 @@ use App\DataTables\LaporanKomparasiDataTable;
 use App\Helpers\AuthHelper;
 use App\Models\LaporanKomparasi;
 use App\Models\Preorder;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LaporanKomparasiController extends Controller
@@ -147,7 +148,16 @@ class LaporanKomparasiController extends Controller
      */
     public function show($id)
     {
-        //
+        $id = dekrip($id);
+        $pageHeader = 'Show Laporan Komparasi';
+        $data = LaporanKomparasi::findOrFail($id);
+        $listPesanan = json_decode($data->list_pesanan, true);
+
+        $dari = Carbon::parse($data->dari);
+        $sampai = Carbon::parse($data->sampai);
+        $masaPelaksanaan = $dari->format('d') . ' S/D ' . $sampai->format('d F Y');
+
+        return view('app.proses.laporan-komparasi.show', compact('id', 'pageHeader', 'data', 'listPesanan', 'masaPelaksanaan'));
     }
 
     /**
