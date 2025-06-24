@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LaporanKomparasi;
+use App\Models\LaporanMingguan;
 use App\Models\Preorder;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,7 +49,32 @@ class HomeController extends Controller
         $disetujui = $counts[4] ?? 0;
         $ditolak = $counts[5] ?? 0;
 
-        return view('dashboards.dashboard', compact('pageHeader', 'assets', 'manager', 'owner', 'finance', 'ditolak', 'disetujui'));
+        $dataMingguan = LaporanMingguan::orderBy('created_at', 'desc')->first();
+        $dari = Carbon::parse($dataMingguan->proyek->dari);
+        $sampai = Carbon::parse($dataMingguan->proyek->sampai);
+        $masaPelaksanaan = $dari->format('d F') . ' - ' . $sampai->format('d F Y');
+
+        $lapMingguan = LaporanMingguan::where('id_proyek', $dataMingguan->id_proyek)->orderBy('minggu_ke', 'asc')->get();
+        $mingguKe = $lapMingguan->pluck('minggu_ke');
+        $bobotTotal = $lapMingguan->pluck('bobot_total')
+            ->map(fn($v) => number_format($v, 0, ',', '.'));
+        $bobotRencana = $lapMingguan->pluck('bobot_rencana')
+            ->map(fn($v) => number_format($v, 0, ',', '.'));
+            
+        $dataPreorder = Preorder::orderBy('created_at', 'asc')->first();
+        $dariP = Carbon::parse($dataPreorder->proyek->dari);
+        $sampaiP = Carbon::parse($dataPreorder->proyek->sampai);
+        $masaPelaksanaanP = $dariP->format('d F') . ' - ' . $sampaiP->format('d F Y');
+
+        $lapPreorder = Preorder::where('id_proyek', $dataPreorder->id_proyek)->where('status', 4)->orderBy('minggu_ke', 'asc')->get();
+        $mingguKeP = $lapPreorder->pluck('minggu_ke');
+        $dataProgress = [];
+        foreach ($lapPreorder as $lap) {
+            $getLapKomparasi = LaporanKomparasi::where('id_preorder', $lap->id)->orderBy('total_progress', 'desc')->pluck('total_progress')->first() ?? 0;
+            $dataProgress[] = intval($getLapKomparasi);
+        }
+
+        return view('dashboards.dashboard', compact('pageHeader', 'assets', 'manager', 'owner', 'finance', 'ditolak', 'disetujui', 'dataMingguan', 'masaPelaksanaan', 'mingguKe', 'bobotTotal', 'bobotRencana', 'dataPreorder', 'masaPelaksanaanP', 'mingguKeP', 'dataProgress'));
     }
 
     /*
