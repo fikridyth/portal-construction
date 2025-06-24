@@ -346,7 +346,7 @@ const dataProgress = @json($dataProgress);
 if (document.querySelectorAll('#d-activity2').length) {
     const options = {
       series: [{
-        name: 'Data',
+        name: 'Penggunaan Bahan',
         data: dataProgress
       }],
     //   series: [{
