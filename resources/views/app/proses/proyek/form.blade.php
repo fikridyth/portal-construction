@@ -59,7 +59,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="nilai_kontrak">Nilai Kontrak: <span class="text-danger">*</span></label>
-                                {{ Form::number('nilai_kontrak', floor($data->nilai_kontrak) ?? old('nilai_kontrak'), ['class' => 'form-control placeholder-grey', 'id' => 'nilai_kontrak', 'placeholder' => 'Isi Data Nilai Kontrak', 'required']) }}
+                                {{ Form::number('nilai_kontrak', floor($data->nilai_kontrak ?? 0) ?? old('nilai_kontrak'), ['class' => 'form-control placeholder-grey', 'id' => 'nilai_kontrak', 'placeholder' => 'Isi Data Nilai Kontrak', 'required']) }}
                             </div>
                         </div>
                         <button type="submit" id="submitButton" class="btn btn-primary" disabled>{{$id !== null ? 'Ubah' : 'Tambah' }} Data Proyek</button>
