@@ -49,11 +49,11 @@
     {{-- <div class="container"> --}}
         <div class="row mt-3 mb-1" style="font-size: 12px;">
             <div class="col-3">PROYEK</div>
-            <div class="col-9">: {{ $data->laporanMingguan->proyek->nama }}</div>
+            <div class="col-9">: {{ $data->proyek->nama }}</div>
             <div class="col-3">PERIODE</div>
             <div class="col-9">: {{ $now }} ( Minggu ke-{{ $data->minggu_ke }} Tgl {{ $range }} )</div>
             <div class="col-3">PELAKSANA PROYEK</div>
-            <div class="col-9">: {{ $data->laporanMingguan->proyek->pelaksana }}</div>
+            <div class="col-9">: {{ $data->proyek->pelaksana }}</div>
             <div class="col-3">PURCHASING</div>
             <div class="col-9">: {{ $data->createdBy->first_name . ' ' . $data->createdBy->last_name }}</div>
         </div>

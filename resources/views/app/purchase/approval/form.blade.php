@@ -38,7 +38,7 @@
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="nama">Proyek: <span class="text-danger">*</span></label>
                                 @if($id !== null)
-                                    {{ Form::text('id_proyek', $data->laporanMingguan->proyek->nama, ['class' => 'form-control placeholder-grey', 'id' => 'id_proyek', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
+                                    {{ Form::text('id_proyek', $data->proyek->nama, ['class' => 'form-control placeholder-grey', 'id' => 'id_proyek', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
                                 @else
                                     {{ Form::select('id_proyek', $dataProyek->pluck('nama', 'id'), null, [
                                         'class' => 'form-control placeholder-grey',
@@ -221,6 +221,20 @@
         }
     });
 
+    // Ambil data type dari PHP ke JavaScript
+    const dataType = @json($dataType);
+
+    // Fungsi untuk buat select box Type
+    function generateTypeSelect(index) {
+        let select = `<select name="preorder[${index}][type]" class="form-control placeholder-grey" required>`;
+        select += `<option value="">Pilih Type</option>`;
+        dataType.forEach(item => {
+            select += `<option value="${item.id}">${item.nama}</option>`;
+        });
+        select += `</select>`;
+        return select;
+    }
+
     $(document).ready(function () {
         let index = {{ count($listPesanan) }};
         $(document).on('click', '.btn-add', function () {
@@ -229,14 +243,17 @@
                     <div class="col-md-3">
                         <input type="text" name="preorder[${index}][nama]" class="form-control placeholder-grey" placeholder="Isi Nama" required>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input type="number" name="preorder[${index}][volume]" class="form-control placeholder-grey" placeholder="Isi Volume" required>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <input type="text" name="preorder[${index}][satuan]" class="form-control placeholder-grey" placeholder="Isi Satuan" required>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input type="number" name="preorder[${index}][harga]" class="form-control placeholder-grey" placeholder="Isi Harga" required>
+                    </div>
+                    <div class="col-md-3">
+                        ${generateTypeSelect(index)}
                     </div>
                     <div class="col-md-1 d-flex align-items-end">
                         <button type="button" class="btn btn-danger btn-remove w-100">-</button>

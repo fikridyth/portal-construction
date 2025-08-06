@@ -22,10 +22,10 @@ class PreorderDataTable extends DataTable
             ->eloquent($query->where('status', 4)->where('created_by', Auth::user()->id)->Filter(request(['periode']))->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->addColumn('nama_proyek', function ($query) {
-                return $query->laporanMingguan->proyek->nama ?? '-';
+                return $query->proyek->nama ?? '-';
             })
             ->addColumn('pelaksana_proyek', function ($query) {
-                return $query->laporanMingguan->proyek->pelaksana ?? '-';
+                return $query->proyek->pelaksana ?? '-';
             })
             ->addColumn('purchasing', function ($query) {
                 return $query->createdBy->first_name . ' ' . $query->createdBy->last_name ?? '-';

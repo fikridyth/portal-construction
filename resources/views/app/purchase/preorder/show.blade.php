@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="card-body">
-            <p><strong>Nama:</strong> {{ $data->laporanMingguan->proyek->nama }}</p>
+            <p><strong>Nama:</strong> {{ $data->proyek->nama }}</p>
             <p><strong>Tanggal:</strong> {{ $data->created_at->format('d-m-Y') }}</p>
 
             @if (!empty($listPesanan) && is_array($listPesanan))

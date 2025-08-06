@@ -38,7 +38,7 @@
                             <div class="form-group col-md-6">
                                 <label class="form-label" for="nama">Proyek: <span class="text-danger">*</span></label>
                                 @if($id !== null)
-                                    {{ Form::text('id_proyek', $data->laporanMingguan->proyek->nama, ['class' => 'form-control placeholder-grey', 'id' => 'id_proyek', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
+                                    {{ Form::text('id_proyek', $data->proyek->nama, ['class' => 'form-control placeholder-grey', 'id' => 'id_proyek', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
                                 @else
                                     {{ Form::select('id_proyek', $dataProyek->pluck('nama', 'id'), null, [
                                         'class' => 'form-control placeholder-grey',

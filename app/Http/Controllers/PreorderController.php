@@ -149,11 +149,11 @@ class PreorderController extends Controller
 
         $data = [
             'id_proyek' => $request->id_proyek,
-            'id_laporan_mingguan' => $getDataLap->id,
+            'id_laporan_mingguan' => $getDataLap->id ?? null,
             'minggu_ke' => $request->minggu_ke,
             'dari' => $request->dari,
             'sampai' => $request->sampai,
-            'bobot_total' => $getDataLap->bobot_total,
+            'bobot_total' => $getDataLap->bobot_total ?? 0,
             'no_po' => $getNomorPo,
             'list_pesanan' => json_encode($preorderResult),
             'total' => $totalHarga,
