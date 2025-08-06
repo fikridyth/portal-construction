@@ -30,10 +30,26 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-
         $request->session()->regenerate();
-
         return redirect(RouteServiceProvider::HOME);
+
+        // $userLogin = Auth::user();
+        // if ($userLogin->user_type == '1' || $userLogin->user_type == '4') {
+        //     return redirect(RouteServiceProvider::HOME);
+        // } else {
+        //     // validasi ip
+        //     $allowedIP = '172.18.11.211';
+        //     $userIP = $request->ip();
+
+        //     if ($userIP !== $allowedIP) {
+        //         Auth::logout();
+        //         return back()->withErrors([
+        //             'ip' => 'Anda tidak diizinkan login dari IP ini. Harus menggunakan WiFi kantor.',
+        //         ]);
+        //     }
+
+        //     return redirect(RouteServiceProvider::HOME);
+        // }
     }
 
     /**
