@@ -30,7 +30,7 @@ class CuacaMingguanController extends Controller
 
     public function getMingguKe($id)
     {
-        $data = 1;
+        $data = null;
         $dataDari = now()->format('Y-m-d');
         $dataSampai = now()->format('Y-m-d');
 
@@ -43,21 +43,21 @@ class CuacaMingguanController extends Controller
 
         $dataMingguan = CuacaMingguan::where('id_laporan_mingguan', $dataLap->id)->orderBy('created_at', 'desc')->first();
         if ($dataMingguan) {
-            $data = $dataMingguan->minggu_ke + 1;
             $dataDate = LaporanMingguan::where('id_proyek', $id)->where('minggu_ke', $dataMingguan->minggu_ke + 1)->first();
         }
         if (isset($dataDate)) {
+            $data = $dataMingguan->minggu_ke + 1;
             $dataDari = $dataDate->dari;
             $dataSampai = $dataDate->sampai;
         } else {
-            $dataDari = $dataLap->dari;
-            $dataSampai = $dataLap->sampai;
+            $dataDari = null;
+            $dataSampai = null;
         }
     
         return response()->json([
             'minggu_ke' => $data,
-            'dari' => $dataDari ?? now()->format('Y-m-d'),
-            'sampai' => $dataSampai ?? now()->format('Y-m-d')
+            'dari' => $dataDari,
+            'sampai' => $dataSampai
         ]);
     }
 
@@ -89,6 +89,10 @@ class CuacaMingguanController extends Controller
     {
         $getDataLap = LaporanMingguan::where('id_proyek', $request->id_proyek)->where('minggu_ke', $request->minggu_ke)->first();
         // dd($getDataLap, json_encode($request->cuaca));
+
+        if ($getDataLap == null) {
+            return redirect()->back()->withInput()->withErrors(['Peringatan' => 'Input Laporan Mingguan Proyek Minggu Ini Terlebih Dulu.']);
+        }
 
         $data = [
             'id_proyek' => $request->id_proyek,

@@ -29,6 +29,9 @@ class CuacaMingguanDataTable extends DataTable
             ->addColumn('pelaksana_proyek', function ($query) {
                 return $query->laporanMingguan->proyek->pelaksana ?? '-';
             })
+            ->addColumn('bobot_total', function ($query) {
+                return $query->laporanMingguan->bobot_total ?? '-';
+            })
             ->addColumn('masa_pelaksanaan', function ($query) {
                 $dari = Carbon::parse($query->dari);
                 $sampai = Carbon::parse($query->sampai);
@@ -104,6 +107,7 @@ class CuacaMingguanDataTable extends DataTable
             ['data' => 'minggu_ke', 'name' => 'minggu_ke', 'title' => 'Minggu Ke', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'masa_pelaksanaan', 'name' => 'masa_pelaksanaan', 'title' => 'Masa Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'waktu_pelaksanaan', 'name' => 'waktu_pelaksanaan', 'title' => 'Waktu Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'bobot_total', 'name' => 'bobot_total', 'title' => 'Bobot Total', 'orderable' => false, 'className' => 'text-center'],
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
