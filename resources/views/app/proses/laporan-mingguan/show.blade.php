@@ -6,7 +6,7 @@
                     <h4 class="card-title">Lihat Data Laporan Mingguan</h4>
                 </div>
                 <div class="card-action">
-                    <a href="{{ route('laporan-mingguan.print', $data->id) }}" class="btn btn-sm btn-success mx-2"
+                    <a href="{{ route('laporan-mingguan.print', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-2"
                         style="min-width: 100px;" role="button">Print</a>
                     <a href="{{ route('laporan-mingguan.index') }}" class="btn btn-sm btn-primary" style="min-width: 100px;"
                         role="button">Kembali</a>
