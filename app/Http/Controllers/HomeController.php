@@ -50,28 +50,35 @@ class HomeController extends Controller
         $ditolak = $counts[5] ?? 0;
 
         $dataMingguan = LaporanMingguan::orderBy('created_at', 'desc')->first();
-        $dari = Carbon::parse($dataMingguan->proyek->dari);
-        $sampai = Carbon::parse($dataMingguan->proyek->sampai);
-        $masaPelaksanaan = $dari->format('d F') . ' - ' . $sampai->format('d F Y');
-
-        $lapMingguan = LaporanMingguan::where('id_proyek', $dataMingguan->id_proyek)->orderBy('minggu_ke', 'asc')->get();
-        $mingguKe = $lapMingguan->pluck('minggu_ke');
-        $bobotTotal = $lapMingguan->pluck('bobot_total')
-            ->map(fn($v) => number_format($v, 0, ',', '.'));
-        $bobotRencana = $lapMingguan->pluck('bobot_rencana')
-            ->map(fn($v) => number_format($v, 0, ',', '.'));
-            
         $dataPreorder = Preorder::orderBy('created_at', 'asc')->first();
-        $dariP = Carbon::parse($dataPreorder->proyek->dari);
-        $sampaiP = Carbon::parse($dataPreorder->proyek->sampai);
-        $masaPelaksanaanP = $dariP->format('d F') . ' - ' . $sampaiP->format('d F Y');
-
-        $lapPreorder = Preorder::where('id_proyek', $dataPreorder->id_proyek)->where('status', 4)->orderBy('minggu_ke', 'asc')->get();
-        $mingguKeP = $lapPreorder->pluck('minggu_ke');
         $dataProgress = [];
-        foreach ($lapPreorder as $lap) {
-            $getLapKomparasi = LaporanKomparasi::where('id_preorder', $lap->id)->orderBy('total_progress', 'desc')->pluck('total_progress')->first() ?? 0;
-            $dataProgress[] = intval($getLapKomparasi);
+        $masaPelaksanaan = $masaPelaksanaanP = now()->format('d F') . ' - ' . now()->format('d F Y');
+        $mingguKe = $mingguKeP = $bobotTotal = $bobotRencana = 0;
+
+        if ($dataMingguan) {
+            $dari = Carbon::parse($dataMingguan->proyek->dari ?? now());
+            $sampai = Carbon::parse($dataMingguan->proyek->sampai ?? now());
+            $masaPelaksanaan = $dari->format('d F') . ' - ' . $sampai->format('d F Y');
+
+            $lapMingguan = LaporanMingguan::where('id_proyek', $dataMingguan->id_proyek)->orderBy('minggu_ke', 'asc')->get();
+            $mingguKe = $lapMingguan->pluck('minggu_ke');
+            $bobotTotal = $lapMingguan->pluck('bobot_total')
+                ->map(fn($v) => number_format($v, 0, ',', '.'));
+            $bobotRencana = $lapMingguan->pluck('bobot_rencana')
+                ->map(fn($v) => number_format($v, 0, ',', '.'));
+                
+            if ($dataPreorder) {
+                $dariP = Carbon::parse($dataPreorder->proyek->dari);
+                $sampaiP = Carbon::parse($dataPreorder->proyek->sampai);
+                $masaPelaksanaanP = $dariP->format('d F') . ' - ' . $sampaiP->format('d F Y');
+
+                $lapPreorder = Preorder::where('id_proyek', $dataPreorder->id_proyek)->where('status', 4)->orderBy('minggu_ke', 'asc')->get();
+                $mingguKeP = $lapPreorder->pluck('minggu_ke');
+                foreach ($lapPreorder as $lap) {
+                    $getLapKomparasi = LaporanKomparasi::where('id_preorder', $lap->id)->orderBy('total_progress', 'desc')->pluck('total_progress')->first() ?? 0;
+                    $dataProgress[] = intval($getLapKomparasi);
+                }
+            }
         }
 
         return view('dashboards.dashboard', compact('pageHeader', 'assets', 'manager', 'owner', 'finance', 'ditolak', 'disetujui', 'dataMingguan', 'masaPelaksanaan', 'mingguKe', 'bobotTotal', 'bobotRencana', 'dataPreorder', 'masaPelaksanaanP', 'mingguKeP', 'dataProgress'));
