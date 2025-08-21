@@ -30,21 +30,17 @@
                                 <label class="form-label" for="id_pekerjaan">Pilih Pekerjaan: <span class="text-danger">*</span></label>
                                 {{ Form::select('id_pekerjaan', $dataPekerjaan->pluck('nama', 'id'), $data->id_pekerjaan ?? old('id_pekerjaan'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Pilih Pekerjaan', 'required']) }}
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label class="form-label" for="nama">Nama: <span class="text-danger">*</span></label>
                                 {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control placeholder-grey', 'id' => 'nama', 'placeholder' => 'Isi Nama', 'required']) }}
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label class="form-label" for="volume">Volume: <span class="text-danger">*</span></label>
                                 {{ Form::text('volume', $data->volume ?? old('volume'), ['class' => 'form-control placeholder-grey', 'id' => 'volume', 'placeholder' => 'Isi Volume', 'required']) }}
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label class="form-label" for="satuan">Satuan: <span class="text-danger">*</span></label>
                                 {{ Form::text('satuan', $data->satuan ?? old('satuan'), ['class' => 'form-control placeholder-grey', 'id' => 'satuan', 'placeholder' => 'Isi Satuan', 'required']) }}
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label class="form-label" for="bobot">Bobot (%): <span class="text-danger">*</span></label>
-                                {{ Form::text('bobot', $data->bobot ?? old('bobot'), ['class' => 'form-control placeholder-grey', 'id' => 'bobot', 'placeholder' => 'Isi Bobot', 'required']) }}
                             </div>
                             <label class="form-label" style="font-size: 18px;"><b>Input salah satu harga modal material / upah</b></label>
                             <div class="form-group col-md-4">

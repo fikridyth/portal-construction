@@ -147,13 +147,39 @@ class DetailPekerjaanController extends Controller
             $detailBahan = [];
         }
 
+        $dataPekerjaan = DetailPekerjaan::where('id_proyek', $request->id_proyek)->get();
+        if ($dataPekerjaan) {
+            // Hitung total volume existing
+            $totalVolumeExisting = $dataPekerjaan->sum('volume');
+
+            // Total volume setelah tambah request volume
+            $totalVolume = $totalVolumeExisting + $request->volume;
+
+            // Hitung bobot untuk pekerjaan existing (update di DB nanti sesuai kebutuhan)
+            foreach ($dataPekerjaan as $pekerjaan) {
+                $bobotExisting = $totalVolume > 0 
+                    ? ($pekerjaan->volume / $totalVolume) * 100 
+                    : 0;
+
+                // Update bobot pekerjaan existing, contoh:
+                $pekerjaan->bobot = round($bobotExisting, 0);
+                $pekerjaan->save();
+            }
+
+            // Hitung bobot untuk pekerjaan baru (request)
+            $bobot = $totalVolume > 0
+                ? ($request->volume / $totalVolume) * 100
+                : 100;
+        } else {
+            $bobot = 100;
+        }
         $data = [
             'id_proyek' => $request->id_proyek,
             'id_pekerjaan' => $request->id_pekerjaan,
             'nama' => $request->nama,
             'volume' => $request->volume,
             'satuan' => $request->satuan,
-            'bobot' => $request->bobot,
+            'bobot' => round($bobot, 0),
             'harga_modal_material' => $request->harga_modal_material ?? null,
             'harga_modal_upah' => $request->harga_modal_upah ?? null,
             'harga_jual_satuan' => $request->harga_jual_satuan ?? null,
