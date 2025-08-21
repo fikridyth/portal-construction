@@ -44,9 +44,12 @@ class CuacaMingguanController extends Controller
         $dataMingguan = CuacaMingguan::where('id_laporan_mingguan', $dataLap->id)->orderBy('created_at', 'desc')->first();
         if ($dataMingguan) {
             $dataDate = LaporanMingguan::where('id_proyek', $id)->where('minggu_ke', $dataMingguan->minggu_ke + 1)->first();
+        } else {
+            $dataDate = LaporanMingguan::where('id_proyek', $id)->where('minggu_ke', 1)->first();
         }
+
         if (isset($dataDate)) {
-            $data = $dataMingguan->minggu_ke + 1;
+            $data = $dataMingguan ? $dataMingguan->minggu_ke + 1 : 1;
             $dataDari = $dataDate->dari;
             $dataSampai = $dataDate->sampai;
         } else {
