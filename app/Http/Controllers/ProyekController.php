@@ -7,6 +7,7 @@ use App\Helpers\AuthHelper;
 use App\Models\DetailPekerjaan;
 use App\Models\LaporanMingguan;
 use App\Models\Proyek;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
@@ -36,7 +37,11 @@ class ProyekController extends Controller
     public function create()
     {
         $pageHeader = 'Create Proyek';
-        return view('app.proses.proyek.form', compact('pageHeader'));
+        $userManager = User::where('user_type', '3')->get();
+        $userSupervisor = User::where('user_type', '6')->get();
+        $userFinance = User::where('user_type', '5')->get();
+
+        return view('app.proses.proyek.form', compact('pageHeader', 'userManager', 'userSupervisor', 'userFinance'));
     }
 
     /**
@@ -72,6 +77,9 @@ class ProyekController extends Controller
             'waktu_pelaksanaan' => $dari->diffInDays($sampai),
             'total_meter' => $request->total_meter,
             'nilai_kontrak' => $request->nilai_kontrak,
+            'user_pm' => $request->user_pm,
+            'user_spv' => $request->user_spv,
+            'user_purchasing' => $request->user_purchasing,
             'created_by' => auth()->user()->id,
             'updated_by' => auth()->user()->id,
         ];
@@ -110,8 +118,11 @@ class ProyekController extends Controller
         $id = dekrip($id);
         $pageHeader = 'Ubah Proyek';
         $data = Proyek::findOrFail($id);
+        $userManager = User::where('user_type', '3')->get();
+        $userSupervisor = User::where('user_type', '6')->get();
+        $userFinance = User::where('user_type', '5')->get();
 
-        return view('app.proses.proyek.form', compact('pageHeader', 'data', 'id'));
+        return view('app.proses.proyek.form', compact('pageHeader', 'data', 'id', 'userManager', 'userSupervisor', 'userFinance'));
     }
 
     /**
@@ -152,6 +163,9 @@ class ProyekController extends Controller
             'waktu_pelaksanaan' => $dari->diffInDays($sampai),
             'total_meter' => $request->total_meter,
             'nilai_kontrak' => $request->nilai_kontrak,
+            'user_pm' => $request->user_pm,
+            'user_spv' => $request->user_spv,
+            'user_purchasing' => $request->user_purchasing,
             'updated_by' => auth()->user()->id,
         ];
         $dataProyek->update($data);

@@ -6,8 +6,10 @@
                     <h4 class="card-title">Lihat Data Proyek</h4>
                 </div>
                 <div class="card-action">
-                    <a href="{{ route('proyek.edit', enkrip($data->id)) }}" class="btn btn-sm btn-warning mx-2" style="min-width: 100px;" role="button">Edit</a>
-                    <a href="{{ route('proyek.index') }}" class="btn btn-sm btn-primary mx-2" style="min-width: 100px;" role="button">Kembali</a>
+                    <a href="{{ route('proyek.edit', enkrip($data->id)) }}" class="btn btn-sm btn-warning mx-2"
+                        style="min-width: 100px;" role="button">Edit</a>
+                    <a href="{{ route('proyek.index') }}" class="btn btn-sm btn-primary mx-2" style="min-width: 100px;"
+                        role="button">Kembali</a>
                 </div>
             </div>
             <div class="card-body">
@@ -50,13 +52,31 @@
                             {{ Form::text('waktu_pelaksanaan', $data->waktu_pelaksanaan ?? old('waktu_pelaksanaan'), ['class' => 'form-control', 'id' => 'waktu_pelaksanaan', 'placeholder' => 'Isi Data Waktu Pelaksanaan', 'disabled']) }}
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="form-label" for="total_meter">Total Meter:</label>
-                            {{ Form::text('total_meter', $data->total_meter ?? old('total_meter'), ['class' => 'form-control', 'id' => 'total_meter', 'placeholder' => 'Isi Data Total Meter', 'disabled']) }}
+                            <label class="form-label" for="total_meter">Luas Bangunan:</label>
+                            {{ Form::text('total_meter', $data->total_meter ?? old('total_meter'), ['class' => 'form-control', 'id' => 'total_meter', 'placeholder' => 'Isi Data Luas Bangunan', 'disabled']) }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="form-label" for="user_pm">User Project Manager:</label>
+                            {{ Form::text('user_pm', $data->manager->first_name . ' ' . $data->manager->last_name ?? old('user_pm'), ['class' => 'form-control', 'id' => 'user_pm', 'placeholder' => 'Isi Data Luas Bangunan', 'disabled']) }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="form-label" for="user_spv">User Supervisor:</label>
+                            {{ Form::text('user_spv', $data->supervisor->first_name . ' ' . $data->supervisor->last_name ?? old('user_spv'), ['class' => 'form-control', 'id' => 'user_spv', 'placeholder' => 'Isi Data Luas Bangunan', 'disabled']) }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="form-label" for="user_purchasing">User Finance:</label>
+                            {{ Form::text('user_purchasing', $data->purchasing->first_name . ' ' . $data->purchasing->last_name ?? old('user_purchasing'), ['class' => 'form-control', 'id' => 'user_purchasing', 'placeholder' => 'Isi Data Luas Bangunan', 'disabled']) }}
                         </div>
                         <div class="d-flex justify-content-center my-3">
-                            <a href="{{ route('proyek.print-rab', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rencana Anggaran Biaya</a>
-                            <a href="{{ route('proyek.print-rekap', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rekapitulasi Biaya</a>
-                            <a href="{{ route('proyek.print-boq', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Bill of Quantity</a>
+                            <a href="{{ route('proyek.print-rab', enkrip($data->id)) }}"
+                                class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print
+                                Rencana Anggaran Biaya</a>
+                            <a href="{{ route('proyek.print-rekap', enkrip($data->id)) }}"
+                                class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print
+                                Rekapitulasi Biaya</a>
+                            <a href="{{ route('proyek.print-boq', enkrip($data->id)) }}"
+                                class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Bill
+                                of Quantity</a>
                         </div>
                     </div>
                     <hr>
@@ -65,21 +85,10 @@
                             <h4 class="card-title">Data Pekerjaan</h4>
                         </div>
                         <div class="card-action">
-                            @if ($dataLaporan)
-                                <button class="btn btn-sm btn-secondary" disabled title="Tidak bisa tambah detail, sudah ada laporan">
-                                    Tambah Detail Pekerjaan
-                                </button>
-                            @else
-                                <a href="{{ route('proyek.detail-pekerjaan.create', enkrip($data->id)) }}"
-                                    class="btn btn-sm btn-primary" role="button">
-                                    Tambah Detail Pekerjaan
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="card-header d-flex justify-content-between">
-                        <div class="header-title">
-                            <h6 class="card-title">Total Bobot : {{ number_format($totalBobot, 2) }}%</h6>
+                            <a href="{{ route('proyek.detail-pekerjaan.create', enkrip($data->id)) }}"
+                                class="btn btn-sm btn-primary" role="button">
+                                Tambah Detail Pekerjaan
+                            </a>
                         </div>
                     </div>
                     <div class="table-responsive mt-4">
@@ -107,7 +116,9 @@
                             <h4 class="card-title">Data CCO</h4>
                         </div>
                         <div class="card-action">
-                            <a href="{{ route('proyek.cco-pekerjaan.print', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print Rencana Anggaran Biaya dengan CCO</a>
+                            <a href="{{ route('proyek.cco-pekerjaan.print', enkrip($data->id)) }}"
+                                class="btn btn-sm btn-success mx-4" style="min-width: 100px;" role="button">Print
+                                Rencana Anggaran Biaya dengan CCO</a>
                             <a href="{{ route('proyek.cco-pekerjaan.create', enkrip($data->id)) }}"
                                 class="btn btn-sm btn-primary" role="button">
                                 Tambah Data CCO
@@ -135,15 +146,15 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalTitle">Detail</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Konten akan diisi lewat JS -->
+                </div>
             </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Konten akan diisi lewat JS -->
-            </div>
-          </div>
         </div>
     </div>
 </x-app-layout>
@@ -233,18 +244,18 @@
         });
     });
 
-    $(document).on('click', '.btn-show-modal', function () {
+    $(document).on('click', '.btn-show-modal', function() {
         const id = $(this).data('id');
         const nama = $(this).data('nama');
         const detail = $(this).data('detail');
         let html = '';
 
         detail.forEach((item, index) => {
-        html += `
+            html += `
             <div class="mb-3 border-bottom pb-2">
                 <p><strong>${index + 1}. ${item.nama_bahan}</strong></p>
                 <p>Volume: ${item.volume} ${item.satuan}</p>
-                <p>Harga Satuan: Rp ${parseInt(item.harga_modal_upah).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                <p>Harga Satuan: Rp ${parseInt(item.harga_modal_upah ?? item.harga_modal_material).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 <p>Total: Rp ${parseInt(item.total).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             </div>
         `;
