@@ -22,6 +22,8 @@ use App\Http\Controllers\Security\RoleController;
 use App\Http\Controllers\Security\PermissionController;
 use App\Http\Controllers\TenagaKerjaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\RekapitulasiBiayaController;
 use Illuminate\Support\Facades\Artisan;
 // Packages
 use Illuminate\Support\Facades\Route;
@@ -64,6 +66,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Master Tenaga Kerja
     Route::resource('tenaga-kerja', TenagaKerjaController::class);
 
+    // Master Supplier
+    Route::resource('supplier', SupplierController::class);
+
     // Proyek
     Route::resource('proyek', ProyekController::class);
     Route::get('proyek/{id}/print-rab', [ProyekController::class, 'printRab'])->name('proyek.print-rab');
@@ -94,6 +99,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('laporan-komparasi', LaporanKomparasiController::class);
     Route::get('/get-detail-bahan/{id}', [LaporanKomparasiController::class, 'getDetailBahan']);
     Route::get('laporan-komparasi/{id}/print', [LaporanKomparasiController::class, 'printLaporanKomparasi'])->name('laporan-komparasi.print');
+    
+    // Rekapitulasi Biaya
+    Route::resource('rekapitulasi-biaya', RekapitulasiBiayaController::class);
+    Route::post('/rekapitulasi-biaya/upload', [RekapitulasiBiayaController::class, 'uploadRekapitulasiBiaya'])->name('upload-rekapitulasi-biaya');
 
     // Laporan Harian
     Route::resource('laporan-harian', LaporanHarianController::class);

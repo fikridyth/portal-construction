@@ -48,6 +48,12 @@
             <span class="item-name">Tenaga Kerja</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ activeRoute(route('supplier.index')) }}" href="{{ route('supplier.index') }}">
+            <i class="fas fa-address-book mt-1"></i>
+            <span class="item-name">Supplier</span>
+        </a>
+    </li>
     <li>
         <hr class="hr-horizontal">
     </li>
@@ -90,6 +96,12 @@
         <a class="nav-link {{ activeRoute(route('laporan-komparasi.index')) }}" href="{{ route('laporan-komparasi.index') }}">
             <i class="fas fa-receipt mt-1"></i>
             <span class="item-name">Laporan Komparasi</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ activeRoute(route('rekapitulasi-biaya.index')) }}" href="{{ route('rekapitulasi-biaya.index') }}">
+            <i class="fas fa-credit-card mt-1"></i>
+            <span class="item-name">Rekapitulasi Biaya</span>
         </a>
     </li>
     {{-- <li class="nav-item">
