@@ -18,6 +18,7 @@ class CreateRekapitulasiBiayasTable extends Migration
             $table->string('account')->nullable();
             $table->string('name')->nullable();
             $table->string('currency')->nullable();
+            $table->date('tanggal')->nullable();
             $table->json('data')->nullable();
             $table->decimal('starting_balance', 16, 2)->nullable();
             $table->decimal('credit', 16, 2)->nullable();
