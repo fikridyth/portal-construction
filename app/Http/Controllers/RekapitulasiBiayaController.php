@@ -26,7 +26,10 @@ class RekapitulasiBiayaController extends Controller
     public function uploadRekapitulasiBiaya(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:csv,txt'
+            'file' => 'required|mimes:csv'
+        ], [
+            'file.required' => 'Upload File Terlebih Dahulu!',
+            'file.mimes' => 'File hanya boleh format CSV',
         ]);
 
         // Ambil path file
