@@ -14,7 +14,7 @@
             <i class="fas fa-eye mt-1"></i>
         </span>
     </a>
-    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Rekapitulasi Biaya" href="{{ route('rekapitulasi-biaya.show',enkrip($id)) }}">
+    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Print Data Rekapitulasi Biaya" href="{{ route('print-rekapitulasi-biaya',enkrip($id)) }}">
         <span class="btn-inner">
             <i class="fas fa-print mt-1"></i>
         </span>

@@ -155,6 +155,15 @@ class RekapitulasiBiayaController extends Controller
         return back()->with('success', 'Data berhasil diimport!');
     }
 
+    public function printRekapitulasiBiaya($id)
+    {
+        $id = dekrip($id);
+        $data = RekapitulasiBiaya::findOrFail($id);
+        $bulan = \Carbon\Carbon::parse($data->tanggal)->locale('id')->translatedFormat('F Y');
+
+        return view('app.proses.rekapitulasi-biaya.print', compact('data', 'bulan'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

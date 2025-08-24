@@ -103,6 +103,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Rekapitulasi Biaya
     Route::resource('rekapitulasi-biaya', RekapitulasiBiayaController::class);
     Route::post('/rekapitulasi-biaya/upload', [RekapitulasiBiayaController::class, 'uploadRekapitulasiBiaya'])->name('upload-rekapitulasi-biaya');
+    Route::get('/rekapitulasi-biaya/print/{id}', [RekapitulasiBiayaController::class, 'printRekapitulasiBiaya'])->name('print-rekapitulasi-biaya');
 
     // Laporan Harian
     Route::resource('laporan-harian', LaporanHarianController::class);

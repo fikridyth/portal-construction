@@ -6,7 +6,7 @@
                     <h4 class="card-title">Lihat Data Rekapitulasi Biaya</h4>
                 </div>
                 <div class="card-action">
-                    <a href="{{ route('rekapitulasi-biaya.show', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-2"
+                    <a href="{{ route('print-rekapitulasi-biaya', enkrip($data->id)) }}" class="btn btn-sm btn-success mx-2"
                         style="min-width: 100px;" role="button">Print</a>
                     <a href="{{ route('rekapitulasi-biaya.index') }}" class="btn btn-sm btn-primary mx-2" style="min-width: 100px;"
                         role="button">Kembali</a>
@@ -51,34 +51,36 @@
                     <hr>
                     <div class="table-responsive mt-4">
                         <label class="form-label" for="test2">Detail Transaksi:</label>
-                        <table class="table table-bordered yajra-datatable" id="pekerjaanTable">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Tanggal</th>
-                                    <th>Branch</th>
-                                    <th>Tipe</th>
-                                    <th>Kode</th>
-                                    <th>Deskripsi</th>
-                                    <th>Jumlah</th>
-                                    <th>Sisa</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach(json_decode($data->data, true) as $dt)
+                        <div style="max-height: 350px; overflow-y: auto;">
+                            <table class="table table-bordered yajra-datatable" id="pekerjaanTable">
+                                <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $dt['Date'] }}</td>
-                                        <td>{{ $dt['Branch'] }}</td>
-                                        <td>{{ $dt['Tipe'] }}</td>
-                                        <td>{{ $dt['Code'] }}</td>
-                                        <td>{{ $dt['Desc'] }}</td>
-                                        <td>{{ number_format($dt['Amount'], 2) }}</td>
-                                        <td>{{ number_format($dt['Balance'], 2) }}</td>
+                                        <th>No</th>
+                                        <th>Tanggal</th>
+                                        <th>Branch</th>
+                                        <th>Tipe</th>
+                                        <th>Kode</th>
+                                        <th>Deskripsi</th>
+                                        <th>Jumlah</th>
+                                        <th>Sisa</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach(json_decode($data->data, true) as $dt)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $dt['Date'] }}</td>
+                                            <td>{{ $dt['Branch'] }}</td>
+                                            <td>{{ $dt['Tipe'] }}</td>
+                                            <td>{{ $dt['Code'] }}</td>
+                                            <td>{{ $dt['Desc'] }}</td>
+                                            <td>{{ number_format($dt['Amount'], 2) }}</td>
+                                            <td>{{ number_format($dt['Balance'], 2) }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
