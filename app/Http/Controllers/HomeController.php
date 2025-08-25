@@ -29,6 +29,7 @@ class HomeController extends Controller
         } else if ($userRole == 'project_manager') {
             $counts = Preorder::selectRaw('status, COUNT(*) as total')
                 ->whereIn('status', [1])
+                ->where('id_manager', Auth::id())
                 ->groupBy('status')
                 ->pluck('total', 'status');
         } else if ($userRole == 'owner') {
@@ -39,6 +40,7 @@ class HomeController extends Controller
         } else if ($userRole == 'finance') {
             $counts = Preorder::selectRaw('status, COUNT(*) as total')
                 ->whereIn('status', [3])
+                ->where('id_finance', Auth::id())
                 ->groupBy('status')
                 ->pluck('total', 'status');
         }
