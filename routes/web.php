@@ -24,6 +24,7 @@ use App\Http\Controllers\TenagaKerjaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\RekapitulasiBiayaController;
+use App\Http\Controllers\TipePembayaranController;
 use Illuminate\Support\Facades\Artisan;
 // Packages
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Master Supplier
     Route::resource('supplier', SupplierController::class);
+
+    // Master Tipe Pembayaran
+    Route::resource('tipe-pembayaran', TipePembayaranController::class);
 
     // Proyek
     Route::resource('proyek', ProyekController::class);

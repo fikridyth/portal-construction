@@ -22,7 +22,7 @@
                     <div class="new-user-info">
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label class="form-label" for="nama">Nama tenaga-kerja: <span class="text-danger">*</span></label>
+                                <label class="form-label" for="nama">Nama Tenaga Kerja: <span class="text-danger">*</span></label>
                                 {{ Form::text('nama', $data->nama ?? old('nama'), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama Tenaga Kerja', 'required']) }}
                             </div>
                         </div>
