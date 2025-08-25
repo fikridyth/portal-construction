@@ -18,6 +18,16 @@ class Preorder extends Model
         return $this->belongsTo(LaporanMingguan::class, 'id_laporan_mingguan');
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'id_supplier');
+    }
+
+    public function tipePembayaran()
+    {
+        return $this->belongsTo(TipePembayaran::class, 'id_tipe_pembayaran');
+    }
+
     public function proyek()
     {
         return $this->belongsTo(Proyek::class, 'id_proyek');

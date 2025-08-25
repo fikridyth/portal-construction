@@ -60,6 +60,14 @@
                                 <label class="form-label" for="sampai">Sampai: <span class="text-danger">*</span></label>
                                 {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control placeholder-grey', 'id' => 'sampai', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
                             </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="supplier">Supplier: <span class="text-danger">*</span></label>
+                                {{ Form::text('supplier', $data->supplier->nama ?? old('supplier'), ['class' => 'form-control placeholder-grey', 'id' => 'supplier', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="tipe_pembayaran">Tipe Pembayaran: <span class="text-danger">*</span></label>
+                                {{ Form::text('tipe_pembayaran', $data->tipePembayaran->nama ?? old('tipe_pembayaran'), ['class' => 'form-control placeholder-grey', 'id' => 'tipe_pembayaran', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
+                            </div>
                             <div class="card mx-auto responsive-width">
                                 <div class="card-header text-center">
                                     <h5 class="mb-0 fw-bold">List Preorder
@@ -74,34 +82,23 @@
                                                     @endif
                                                     {{ Form::text("preorder[$i][nama]", $item['nama'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', $userRole == 'admin_purchasing' || $userRole == 'finance' ? 'readonly' : 'required']) }}
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     @if ($i == 0)
                                                         <label class="form-label" style="font-size: 14px;">Volume:</label>
                                                     @endif
                                                     {{ Form::number("preorder[$i][volume]", $item['volume'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Volume', $userRole == 'admin_purchasing' || $userRole == 'finance' ? 'readonly' : 'required']) }}
                                                 </div>
-                                                <div class="col-md-1">
+                                                <div class="col-md-2">
                                                     @if ($i == 0)
                                                         <label class="form-label" style="font-size: 14px;">Satuan:</label>
                                                     @endif
                                                     {{ Form::text("preorder[$i][satuan]", $item['satuan'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Satuan', $userRole == 'admin_purchasing' || $userRole == 'finance' ? 'readonly' : 'required']) }}
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     @if ($i == 0)
                                                         <label class="form-label" style="font-size: 14px;">Harga:</label>
                                                     @endif
                                                     {{ Form::number("preorder[$i][harga]", $item['harga'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Harga', $userRole == 'admin_purchasing' || $userRole == 'finance' ? 'readonly' : 'required']) }}
-                                                </div>
-                                                <div class="col-md-3">
-                                                    @if ($i == 0)
-                                                        <label class="form-label" style="font-size: 14px;">Type:</label>
-                                                    @endif
-                                                    {{ Form::select("preorder[$i][type]", collect($dataType)->pluck('nama', 'id'), $item['type'], [
-                                                        'class' => 'form-control placeholder-grey',
-                                                        'placeholder' => 'Pilih Type',
-                                                        'required',
-                                                        'id' => 'id_type'
-                                                    ]) }}
                                                 </div>
                                                 <div class="col-md-1 d-flex align-items-end">
                                                     @if ($i == 0)
@@ -115,7 +112,6 @@
                                                 {{ Form::number("preorder[$i][volume]", $item['volume'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Volume', 'hidden']) }}
                                                 {{ Form::text("preorder[$i][satuan]", $item['satuan'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Satuan', 'hidden']) }}
                                                 {{ Form::number("preorder[$i][harga]", $item['harga'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Harga', 'hidden']) }}
-                                                {{ Form::text("preorder[$i][type]", $item['type'] ?? '-', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Type', 'hidden']) }}
                                                 <div class="col-md-3">
                                                     @if ($i == 0)
                                                         <label class="form-label" style="font-size: 14px;">Nama:</label>
@@ -124,23 +120,17 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     @if ($i == 0)
-                                                        <label class="form-label" style="font-size: 14px;">Type:</label>
-                                                    @endif
-                                                    {{ Form::text("test", $item['type'] ?? '-', ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Type', 'disabled']) }}
-                                                </div>
-                                                <div class="col-md-2">
-                                                    @if ($i == 0)
                                                         <label class="form-label" style="font-size: 14px;">Volume:</label>
                                                     @endif
                                                     {{ Form::text("test", $item['volume'] . ' ' . $item['satuan'], ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', 'disabled']) }}
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     @if ($i == 0)
                                                         <label class="form-label" style="font-size: 14px;">Harga:</label>
                                                     @endif
                                                     {{ Form::text("test", number_format($item['harga'], 0), ['class' => 'form-control placeholder-grey', 'placeholder' => 'Isi Nama', 'disabled']) }}
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     @if ($i == 0)
                                                         <label class="form-label" style="font-size: 14px;">Total Harga: <span class="text-danger">*</span></label>
                                                     @endif
@@ -197,44 +187,6 @@
  </x-app-layout>
  
  <script>
-    document.getElementById('id_proyek').addEventListener('change', function() {
-        const proyekId = this.value;
-
-        if (proyekId) {
-            fetch(`/get-preorder-minggu-ke/${proyekId}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('minggu_ke').value = data.minggu_ke;
-                    document.getElementById('dari').value = data.dari;
-                    document.getElementById('sampai').value = data.sampai;
-                })
-                .catch(error => {
-                    console.error('Gagal mengambil data minggu ke:', error);
-                    document.getElementById('minggu_ke').value = '';
-                    document.getElementById('dari').value = '';
-                    document.getElementById('sampai').value = '';
-                });
-        } else {
-            document.getElementById('minggu_ke').value = '';
-            document.getElementById('dari').value = '';
-            document.getElementById('sampai').value = '';
-        }
-    });
-
-    // Ambil data type dari PHP ke JavaScript
-    const dataType = @json($dataType);
-
-    // Fungsi untuk buat select box Type
-    function generateTypeSelect(index) {
-        let select = `<select name="preorder[${index}][type]" class="form-control placeholder-grey" required>`;
-        select += `<option value="">Pilih Type</option>`;
-        dataType.forEach(item => {
-            select += `<option value="${item.id}">${item.nama}</option>`;
-        });
-        select += `</select>`;
-        return select;
-    }
-
     $(document).ready(function () {
         let index = {{ count($listPesanan) }};
         $(document).on('click', '.btn-add', function () {
@@ -243,17 +195,14 @@
                     <div class="col-md-3">
                         <input type="text" name="preorder[${index}][nama]" class="form-control placeholder-grey" placeholder="Isi Nama" required>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <input type="number" name="preorder[${index}][volume]" class="form-control placeholder-grey" placeholder="Isi Volume" required>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <input type="text" name="preorder[${index}][satuan]" class="form-control placeholder-grey" placeholder="Isi Satuan" required>
                     </div>
-                    <div class="col-md-2">
-                        <input type="number" name="preorder[${index}][harga]" class="form-control placeholder-grey" placeholder="Isi Harga" required>
-                    </div>
                     <div class="col-md-3">
-                        ${generateTypeSelect(index)}
+                        <input type="number" name="preorder[${index}][harga]" class="form-control placeholder-grey" placeholder="Isi Harga" required>
                     </div>
                     <div class="col-md-1 d-flex align-items-end">
                         <button type="button" class="btn btn-danger btn-remove w-100">-</button>

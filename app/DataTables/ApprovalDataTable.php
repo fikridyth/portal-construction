@@ -27,27 +27,24 @@ class ApprovalDataTable extends DataTable
             ->addColumn('pelaksana_proyek', function ($query) {
                 return $query->proyek->pelaksana ?? '-';
             })
-            ->addColumn('purchasing', function ($query) {
-                return $query->createdBy->first_name . ' ' . $query->createdBy->last_name ?? '-';
-            })
             ->addColumn('masa_pelaksanaan', function ($query) {
                 $dari = Carbon::parse($query->dari);
                 $sampai = Carbon::parse($query->sampai);
 
-                // Jika bulan sama
-                // if ($dari->format('F') === $sampai->format('F')) {
-                //     return $dari->format('d') . '–' . $sampai->format('d F Y');
-                // }
-
-                // Jika bulan berbeda
                 return $dari->format('d') . ' S/D ' . $sampai->format('d F Y');
             })
             ->editColumn('total', function ($query) {
                 return number_format($query->total, 0);
             })
-            // ->addColumn('waktu_pelaksanaan', function ($query) {
-            //     return $query->laporanMingguan->proyek->waktu_pelaksanaan . ' Hari' ?? '-';
-            // })
+            ->editColumn('id_supplier', function ($query) {
+                return $query->supplier->nama;
+            })
+            ->editColumn('id_manager', function ($query) {
+                return $query->proyek->manager->first_name . ' ' . $query->proyek->manager->last_name;
+            })
+            ->editColumn('id_finance', function ($query) {
+                return $query->proyek->purchasing->first_name . ' ' . $query->proyek->purchasing->last_name;
+            })
             ->editColumn('status', function ($query) {
                 switch ($query->status) {
                     case 1:
@@ -55,7 +52,7 @@ class ApprovalDataTable extends DataTable
                     case 2:
                         return '<span class="badge bg-warning">Menunggu Approval Owner</span>';
                     case 3:
-                        return '<span class="badge bg-warning">Menunggu Pembayaran Finance</span>';
+                        return '<span class="badge bg-success">Disetujui</span>';
                     case 4:
                         return '<span class="badge bg-success">Disetujui</span>';
                     case 5:
@@ -87,11 +84,11 @@ class ApprovalDataTable extends DataTable
     public function query(Preorder $model)
     {
         if (Auth::user()->role->name == 'project_manager') {
-            return $model->where('status',  1)->newQuery();
+            return $model->where('status',  1)->where('id_manager', Auth::user()->id)->newQuery();
         } else if (Auth::user()->role->name == 'owner') {
             return $model->where('status',  2)->newQuery();
-        } else if (Auth::user()->role->name == 'finance') {
-            return $model->where('status',  3)->newQuery();
+        // } else if (Auth::user()->role->name == 'finance') {
+        //     return $model->where('status',  3)->where('id_finance', Auth::user()->id)->newQuery();
         } else {
             return $model->where('created_by',  Auth::user()->id)->newQuery();
         }
@@ -135,28 +132,25 @@ class ApprovalDataTable extends DataTable
      */
     protected function getColumns()
     {
-        $columns = [
+        return [
             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => 'No', 'orderable' => false, 'searchable' => false],
             ['data' => 'nama_proyek', 'name' => 'nama_proyek', 'title' => 'Proyek', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'minggu_ke', 'name' => 'minggu_ke', 'title' => 'Minggu Ke', 'orderable' => false, 'className' => 'text-center'],
-            ['data' => 'pelaksana_proyek', 'name' => 'pelaksana_proyek', 'title' => 'Kontraktor', 'orderable' => false, 'className' => 'text-center'],
-            ['data' => 'purchasing', 'name' => 'purchasing', 'title' => 'Purchasing', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'masa_pelaksanaan', 'name' => 'masa_pelaksanaan', 'title' => 'Masa Pelaksanaan', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'no_po', 'name' => 'no_po', 'title' => 'Nomor PO', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'kode_bayar', 'name' => 'kode_bayar', 'title' => 'Kode', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'total', 'name' => 'total', 'title' => 'Total', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'id_supplier', 'name' => 'id_supplier', 'title' => 'Supplier', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'id_manager', 'name' => 'id_manager', 'title' => 'Manager', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'id_finance', 'name' => 'id_finance', 'title' => 'Finance', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'status', 'name' => 'status', 'title' => 'Status', 'orderable' => false, 'className' => 'text-center'],
-            ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Tanggal', 'orderable' => false, 'className' => 'text-center'],
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->searchable(false)
+                ->width(60)
+                ->addClass('text-center hide-search'),
         ];
-
-        // if (Auth::user()->role->name !== 'admin_purchasing') {
-        $columns[] = Column::computed('action')
-            ->exportable(false)
-            ->printable(false)
-            ->searchable(false)
-            ->width(60)
-            ->addClass('text-center hide-search');
-        // }
-
-        return $columns;
     }
 
     /**

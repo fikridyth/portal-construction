@@ -69,20 +69,8 @@ class ApprovalController extends Controller
         $data = Preorder::findOrFail($id);
         $listPesanan = json_decode($data->list_pesanan, true);
         $userRole = Auth::user()->role->name;
-        $dataType = [
-            ['id' => 'Material', 'nama' => 'Material'],
-            ['id' => 'Upah Borong Bangunan', 'nama' => 'Upah Borong Bangunan'],
-            ['id' => 'Upah Borong Non Bangunan', 'nama' => 'Upah Borong Non Bangunan'],
-            ['id' => 'Partisipasi', 'nama' => 'Partisipasi'],
-            ['id' => 'Ongkos Kirim', 'nama' => 'Ongkos Kirim'],
-            ['id' => 'Operasional Proyek', 'nama' => 'Operasional Proyek'],
-            ['id' => 'Uang Makan Supervisor', 'nama' => 'Uang Makan Supervisor'],
-            ['id' => 'Biaya Kendaraan', 'nama' => 'Biaya Kendaraan'],
-            ['id' => 'Mobilisasi', 'nama' => 'Mobilisasi'],
-            ['id' => 'Adm', 'nama' => 'Adm'],
-        ];
 
-        return view('app.purchase.approval.form', compact('id', 'pageHeader', 'data', 'listPesanan', 'userRole', 'dataType'));
+        return view('app.purchase.approval.form', compact('id', 'pageHeader', 'data', 'listPesanan', 'userRole'));
     }
 
     /**
@@ -108,19 +96,23 @@ class ApprovalController extends Controller
                 "satuan" => $item['satuan'],
                 "harga" => $item['harga'],
                 "total" => $item['harga'] * $item['volume'],
-                "type" => $item['type']
             ];
             $totalHarga += $item['harga'] * $item['volume'];
         }
 
         $data = [
             'id_proyek' => $preorder->id_proyek,
-            'id_laporan_mingguan' => $preorder->id_laporan_mingguan,
+            'id_supplier' => $preorder->id_supplier,
+            'id_tipe_pembayaran' => $preorder->id_tipe_pembayaran,
+            'id_manager' => $preorder->id_manager,
+            'id_finance' => $preorder->id_finance,
+            'id_laporan_mingguan' => null,
             'minggu_ke' => $preorder->minggu_ke,
             'dari' => $preorder->dari,
             'sampai' => $preorder->sampai,
             'bobot_total' => $preorder->bobot_total,
             'no_po' => $preorder->no_po,
+            'kode_bayar' => $preorder->kode_bayar,
             'list_pesanan' => json_encode($preorderResult),
             'updated_by' => auth()->id(),
         ];

@@ -41,7 +41,7 @@
                                         <td class="px-4 py-2 border border-gray-300">{{ $item['satuan'] ?? '-' }}</td>
                                         <td class="px-4 py-2 border border-gray-300">{{ number_format($item['harga'] ?? 0) }}</td>
                                         <td class="px-4 py-2 border border-gray-300">{{ number_format($item['total'] ?? 0) }}</td>
-                                        <td class="px-4 py-2 border border-gray-300">{{ $item['type'] ?? '-' }}</td>
+                                        <td class="px-4 py-2 border border-gray-300">{{ $data->tipePembayaran->nama ?? '-' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

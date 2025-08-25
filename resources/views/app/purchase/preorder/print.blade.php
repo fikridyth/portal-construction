@@ -117,52 +117,52 @@
                             <span>{{ $pesan['volume'] . ' ' . $pesan['satuan'] }}</span>
                         </div>
                     </td>
-                    @if ($pesan['type'] == 'Material')
+                    @if ($data->tipePembayaran->kode == 'A')
                         <td class="text-right">{{ number_format($pesan['total'], 0) }}</td>
                     @else
                         <td></td>
                     @endif
-                    @if ($pesan['type'] == 'Upah Borong Bangunan')
+                    @if ($data->tipePembayaran->kode == 'B')
                         <td class="text-right">{{ number_format($pesan['total'], 0) }}</td>
                     @else
                         <td></td>
                     @endif
-                    @if ($pesan['type'] == 'Upah Borong Non Bangunan')
+                    @if ($data->tipePembayaran->kode == 'C')
                         <td class="text-right">{{ number_format($pesan['total'], 0) }}</td>
                     @else
                         <td></td>
                     @endif
-                    @if ($pesan['type'] == 'Partisipasi')
+                    @if ($data->tipePembayaran->kode == 'D')
                         <td class="text-right">{{ number_format($pesan['total'], 0) }}</td>
                     @else
                         <td></td>
                     @endif
-                    @if ($pesan['type'] == 'Ongkos Kirim')
+                    @if ($data->tipePembayaran->kode == 'E')
                         <td class="text-right">{{ number_format($pesan['total'], 0) }}</td>
                     @else
                         <td></td>
                     @endif
-                    @if ($pesan['type'] == 'Operasional Proyek')
+                    @if ($data->tipePembayaran->kode == 'F')
                         <td class="text-right">{{ number_format($pesan['total'], 0) }}</td>
                     @else
                         <td></td>
                     @endif
-                    @if ($pesan['type'] == 'Uang Makan Supervisor')
+                    @if ($data->tipePembayaran->kode == 'G')
                         <td class="text-right">{{ number_format($pesan['total'], 0) }}</td>
                     @else
                         <td></td>
                     @endif
-                    @if ($pesan['type'] == 'Biaya Kendaraan')
+                    @if ($data->tipePembayaran->kode == 'H')
                         <td class="text-right">{{ number_format($pesan['total'], 0) }}</td>
                     @else
                         <td></td>
                     @endif
-                    @if ($pesan['type'] == 'Mobilisasi')
+                    @if ($data->tipePembayaran->kode == 'I')
                         <td class="text-right">{{ number_format($pesan['total'], 0) }}</td>
                     @else
                         <td></td>
                     @endif
-                    @if ($pesan['type'] == 'Adm')
+                    @if ($data->tipePembayaran->kode == 'J')
                         <td class="text-right">{{ number_format($pesan['total'], 0) }}</td>
                     @else
                         <td></td>

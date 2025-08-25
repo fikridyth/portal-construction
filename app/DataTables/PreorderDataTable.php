@@ -19,7 +19,7 @@ class PreorderDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->where('status', 4)->where('created_by', Auth::user()->id)->Filter(request(['periode']))->orderBy('created_at', 'desc'))
+            ->eloquent($query->whereIn('status', [3, 4])->where('created_by', Auth::user()->id)->Filter(request(['periode']))->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->addColumn('nama_proyek', function ($query) {
                 return $query->proyek->nama ?? '-';
@@ -49,13 +49,23 @@ class PreorderDataTable extends DataTable
                 $tanggal = Carbon::parse($query->created_at);
                 return $tanggal->format('d F Y');
             })
+            ->editColumn('status', function ($query) {
+                switch ($query->status) {
+                    case 3:
+                        return '<span class="badge bg-warning">Belum Bayar</span>';
+                    case 4:
+                        return '<span class="badge bg-success">Sudah Bayar</span>';
+                    default:
+                        return '<span class="badge bg-secondary">-</span>';
+                }
+            })
             ->addColumn('action', function ($query) {
                 return view('app.purchase.preorder.action', [
                     'id' => $query->id,
                     'status' => $query->status,
                 ]);
             })
-            ->rawColumns(['action']);
+            ->rawColumns(['status', 'action']);
     }
 
     /**
@@ -117,6 +127,7 @@ class PreorderDataTable extends DataTable
             ['data' => 'total', 'name' => 'total', 'title' => 'Total', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'kode_bayar', 'name' => 'kode_bayar', 'title' => 'Kode Bayar', 'orderable' => false, 'className' => 'text-center'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Tanggal', 'orderable' => false, 'className' => 'text-center'],
+            ['data' => 'status', 'name' => 'status', 'title' => 'Status', 'orderable' => false, 'className' => 'text-center'],
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
