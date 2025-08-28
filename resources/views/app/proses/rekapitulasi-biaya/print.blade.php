@@ -48,7 +48,7 @@
               <th class="text-center align-middle">KODE</th>
               <th class="text-center align-middle">DESKRIPSI</th>
               <th class="text-center align-middle">JUMLAH</th>
-              <th class="text-center align-middle">SISA</th>
+              <th class="text-center align-middle">SISA SALDO</th>
             </tr>
             @foreach(json_decode($data->data, true) as $dt)
                 <tr>

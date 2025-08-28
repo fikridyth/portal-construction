@@ -62,7 +62,7 @@
                                         <th>Kode</th>
                                         <th>Deskripsi</th>
                                         <th>Jumlah</th>
-                                        <th>Sisa</th>
+                                        <th>Sisa Saldo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
