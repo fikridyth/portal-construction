@@ -287,7 +287,7 @@ if (document.querySelectorAll('#d-main2').length) {
           lines: {
               show: false  //or just here to disable only x axis grids
           },
-          categories: mingguKe.map(m => `Week ${m}`)
+          categories: mingguKe.map(m => `Minggu Ke ${m}`)
       },
       grid: {
           show: false,
@@ -341,6 +341,7 @@ if (document.querySelectorAll('#d-main2').length) {
 }
 
 const mingguKeP = @json($mingguKeP);
+const kodeBayar = @json($kodeBayar);
 const dataProgress = @json($dataProgress);
 
 if (document.querySelectorAll('#d-activity2').length) {
@@ -385,7 +386,7 @@ if (document.querySelectorAll('#d-activity2').length) {
         colors: ['transparent']
       },
       xaxis: {
-        categories: mingguKeP.map(m => `Week ${m}`),
+        categories: mingguKeP.map((m, i) => `Minggu Ke ${m} - ${kodeBayar[i]}`),
         labels: {
           minHeight:20,
           maxHeight:20,

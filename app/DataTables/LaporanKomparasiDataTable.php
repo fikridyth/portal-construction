@@ -24,7 +24,7 @@ class LaporanKomparasiDataTable extends DataTable
             ->eloquent($query->orderBy('created_at', 'desc'))
             ->addIndexColumn()
             ->editColumn('id_preorder', function ($query) {
-                return $query->preorder->proyek->nama . ' - Minggu Ke ' . $query->preorder->minggu_ke ;
+                return $query->preorder->proyek->nama . ' - Minggu Ke ' . $query->preorder->minggu_ke . ' - Kode ' . $query->preorder->kode_bayar ;
             })
             ->addColumn('masa_pelaksanaan', function ($query) {
                 $dari = Carbon::parse($query->dari);

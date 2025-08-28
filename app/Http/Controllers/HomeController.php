@@ -56,6 +56,7 @@ class HomeController extends Controller
         $dataProgress = [];
         $masaPelaksanaan = $masaPelaksanaanP = now()->format('d F') . ' - ' . now()->format('d F Y');
         $mingguKe = $mingguKeP = $bobotTotal = $bobotRencana = 0;
+        $kodeBayar = '';
 
         if ($dataMingguan) {
             $dari = Carbon::parse($dataMingguan->proyek->dari ?? now());
@@ -76,6 +77,7 @@ class HomeController extends Controller
 
                 $lapPreorder = Preorder::where('id_proyek', $dataPreorder->id_proyek)->where('status', 4)->orderBy('minggu_ke', 'asc')->get();
                 $mingguKeP = $lapPreorder->pluck('minggu_ke');
+                $kodeBayar = $lapPreorder->pluck('kode_bayar');
                 foreach ($lapPreorder as $lap) {
                     $getLapKomparasi = LaporanKomparasi::where('id_preorder', $lap->id)->orderBy('total_progress', 'desc')->pluck('total_progress')->first() ?? 0;
                     $dataProgress[] = intval($getLapKomparasi);
@@ -83,7 +85,7 @@ class HomeController extends Controller
             }
         }
 
-        return view('dashboards.dashboard', compact('pageHeader', 'assets', 'manager', 'owner', 'finance', 'ditolak', 'disetujui', 'dataMingguan', 'masaPelaksanaan', 'mingguKe', 'bobotTotal', 'bobotRencana', 'dataPreorder', 'masaPelaksanaanP', 'mingguKeP', 'dataProgress'));
+        return view('dashboards.dashboard', compact('pageHeader', 'assets', 'manager', 'owner', 'finance', 'ditolak', 'disetujui', 'dataMingguan', 'masaPelaksanaan', 'mingguKe', 'bobotTotal', 'bobotRencana', 'dataPreorder', 'masaPelaksanaanP', 'mingguKeP', 'kodeBayar', 'dataProgress'));
     }
 
     /*

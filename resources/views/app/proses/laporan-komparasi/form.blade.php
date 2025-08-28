@@ -24,7 +24,7 @@
                             <div class="form-group col-md-8" style="margin-top: 2px;">
                                 <label class="form-label" for="nama">Proyek: <span class="text-danger">*</span></label>
                                 {{ Form::select('id_proyek', $dataProyek->mapWithKeys(function ($item) {
-                                    return [$item->id => $item->proyek->nama . ' - Minggu ke ' . $item->minggu_ke];
+                                    return [$item->id => $item->proyek->nama . ' - Minggu ke ' . $item->minggu_ke . ' - Kode ' . $item->kode_bayar];
                                 }), old('id_proyek', $data->id_proyek ?? null), [
                                     'class' => 'form-control select2',
                                     'placeholder' => 'Pilih Proyek',

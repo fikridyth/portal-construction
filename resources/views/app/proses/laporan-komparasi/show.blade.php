@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="card-body">
-            <p><strong>Nama:</strong> {{ $data->preorder->proyek->nama }} - Minggu ke {{ $data->preorder->minggu_ke }}</p>
+            <p><strong>Nama:</strong> {{ $data->preorder->proyek->nama }} - Minggu ke {{ $data->preorder->minggu_ke }} - Kode {{ $data->preorder->kode_bayar }}</p>
             <p><strong>Pelaksanaan:</strong> {{ $masaPelaksanaan }}</p>
             <p><strong>Total Bobot:</strong> {{ $data->total_progress }}%</p>
 
