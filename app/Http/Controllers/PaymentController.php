@@ -1,0 +1,152 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\DataTables\PaymentDataTable;
+use App\Helpers\AuthHelper;
+use App\Models\Preorder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class PaymentController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(PaymentDataTable $dataTable)
+    {
+        $pageHeader = 'Index Payment';
+        $pageTitle = 'List Payment';
+        $auth_user = AuthHelper::authSession();
+        $assets = ['data-table'];
+        return $dataTable->render('app.purchase.payment.index', compact('pageHeader', 'pageTitle', 'auth_user', 'assets'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $id = dekrip($id);
+        $pageHeader = 'Payment';
+        $data = Preorder::findOrFail($id);
+        $listPesanan = json_decode($data->list_pesanan, true);
+        $userRole = Auth::user()->role->name;
+
+        return view('app.purchase.payment.form', compact('id', 'pageHeader', 'data', 'listPesanan', 'userRole'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        $preorder = Preorder::findOrFail($id);
+        $userRole = Auth::user()->role->name;
+        // list pesanan
+        $preoderInput = $request->input('preorder');
+        $preorderResult = [];
+        $totalHarga = 0;
+        foreach ($preoderInput   as $item) {
+            $preorderResult[] = [
+                "nama" => $item['nama'],
+                "volume" => $item['volume'],
+                "satuan" => $item['satuan'],
+                "harga" => $item['harga'],
+                "total" => $item['harga'] * $item['volume'],
+            ];
+            $totalHarga += $item['harga'] * $item['volume'];
+        }
+
+        $data = [
+            'id_proyek' => $preorder->id_proyek,
+            'id_supplier' => $preorder->id_supplier,
+            'id_tipe_pembayaran' => $preorder->id_tipe_pembayaran,
+            'id_manager' => $preorder->id_manager,
+            'id_finance' => $preorder->id_finance,
+            'id_laporan_mingguan' => null,
+            'minggu_ke' => $preorder->minggu_ke,
+            'dari' => $preorder->dari,
+            'sampai' => $preorder->sampai,
+            'bobot_total' => $preorder->bobot_total,
+            'no_po' => $preorder->no_po,
+            'kode_bayar' => $preorder->kode_bayar,
+            'list_pesanan' => json_encode($preorderResult),
+            'updated_by' => auth()->id(),
+        ];
+
+        if ($request->total) {
+            $data['total'] = (int)$request->total;
+        } else {
+            $data['total'] = $totalHarga;
+        }
+
+        if ($request->aksi === 'approve' && $userRole == 'finance') {
+            $data['approved_finance_by'] = auth()->id();
+            $data['approved_finance_at'] = now();
+            $data['kode_bayar'] = $preorder->kode_bayar;
+            $data['status'] = 4;
+        } else if ($request->aksi === 'reject' && $userRole == 'finance') {
+            $data['approved_finance_by'] = auth()->id();
+            $data['approved_finance_at'] = now();
+            $data['status'] = 5;
+        }
+        // dd($data);
+        $preorder->update($data);
+
+        return redirect()->route('payment.index')->withSuccess(__('Updata Data Payment Berhasil', ['name' => __('payment.update')]));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}

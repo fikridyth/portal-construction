@@ -14,6 +14,7 @@ use App\Http\Controllers\LaporanKegiatanController;
 use App\Http\Controllers\LaporanKomparasiController;
 use App\Http\Controllers\LaporanMingguanController;
 use App\Http\Controllers\LaporanPelaksanaanController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\PreorderController;
 use App\Http\Controllers\ProyekController;
@@ -98,6 +99,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Approval
     Route::resource('approval', ApprovalController::class);
+
+    // Payment
+    Route::resource('payment', PaymentController::class);
 
     // Laporan Komparasi
     Route::resource('laporan-komparasi', LaporanKomparasiController::class);

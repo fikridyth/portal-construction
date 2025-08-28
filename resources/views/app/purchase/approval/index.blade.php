@@ -15,30 +15,28 @@
                                 <div class="d-flex align-items-center mt-2 mb-2 fw-bold">
                                     <form action="{{ route('approval.index') }}" method="GET" class="d-flex align-items-center gap-3 flex-wrap">
                                         <div class="d-flex align-items-center me-3">
-                                            <label for="statusSelect" class="form-label fw-semibold me-2 mt-2" style="font-size: 18px">Status:</label>
+                                            <label for="statusSelect" class="form-label fw-semibold me-3 mt-2" style="font-size: 18px">Status:</label>
                                             <select class="form-select status-select" id="statusSelect" name="status">
-                                                <option value="">Pilih Status</option>
-                                                <option value="1">Menunggu Approval Project Manager</option>
-                                                <option value="2">Menunggu Approval Owner</option>
-                                                <option value="3">Menunggu Pembayaran Finance</option>
-                                                <option value="4">Disetujui</option>
-                                                <option value="5">Ditolak</option>
+                                                <option value="">Semua</option>
+                                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Menunggu Approval Project Manager</option>
+                                                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Menunggu Approval Owner</option>
+                                                <option value="3" {{ request('status') == '3' ? 'selected' : '' }}>Menunggu Pembayaran Finance</option>
+                                                <option value="4" {{ request('status') == '4' ? 'selected' : '' }}>Disetujui</option>
+                                                <option value="5" {{ request('status') == '5' ? 'selected' : '' }}>Ditolak</option>
                                             </select>
                                         </div>
                                     
-                                        <div class="d-flex align-items-center me-3">
+                                        {{-- <div class="d-flex align-items-center me-3">
                                             <label for="periode" class="form-label fw-semibold me-2 mt-2" style="font-size: 18px">Periode:</label>
                                             <input class="form-control form-control-solid" placeholder="Pilih Periode" autocomplete="off"
                                                 id="periode" name="periode" value="{{ request('periode') }}" />
-                                        </div>
+                                        </div> --}}
                                     
                                         <div class="d-flex align-items-center">
-                                            <button type="button" class="btn btn-secondary me-2" id="clear">Clear</button>
+                                            {{-- <button type="button" class="btn btn-secondary me-2" id="clear">Clear</button> --}}
                                             <button type="submit" class="btn btn-success" id="apply">Apply</button>
                                         </div>
                                     </form>
-                                    
-                                    
                                 </div>
                             </div>
                         </div>

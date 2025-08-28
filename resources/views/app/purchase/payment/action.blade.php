@@ -6,14 +6,14 @@
     </a> --}}
     @if ($userRole !== 'admin_purchasing')
         @if ($status !== 4)
-            <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Ubah Data Preorder" href="{{ route('approval.edit', enkrip($id)) }}">
+            <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" title="Ubah Data Payment" href="{{ route('payment.edit', enkrip($id)) }}">
                 <span class="btn-inner">
                     <i class="fas fa-user-pen mt-1"></i>
                 </span>
             </a>
         @endif
     @else
-        <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Preorder" href="{{ route('approval.edit', enkrip($id)) }}">
+        <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip" title="Lihat Data Payment" href="{{ route('payment.edit', enkrip($id)) }}">
             <span class="btn-inner">
                 <i class="fas fa-eye mt-1"></i>
             </span>

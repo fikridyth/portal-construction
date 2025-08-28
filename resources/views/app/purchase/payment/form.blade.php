@@ -18,18 +18,18 @@
           $id = $id ?? null;
        ?>
        @if(isset($id))
-       {!! Form::model($data, ['route' => ['approval.update', $id], 'method' => 'patch' , 'enctype' => 'multipart/form-data']) !!}
+       {!! Form::model($data, ['route' => ['payment.update', $id], 'method' => 'patch' , 'enctype' => 'multipart/form-data']) !!}
        @else
-       {!! Form::open(['route' => ['approval.store'], 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
+       {!! Form::open(['route' => ['payment.store'], 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
        @endif
        <div>
             <div class="card mt-2">
                 <div class="card-header d-flex justify-content-between">
                 <div class="header-title">
-                    <h4 class="card-title">Form Data Approval</h4>
+                    <h4 class="card-title">Form Data Payment</h4>
                 </div>
                 <div class="card-action">
-                        <a href="{{route('approval.index')}}" class="btn btn-sm btn-warning" role="button">Kembali</a>
+                        <a href="{{route('payment.index')}}" class="btn btn-sm btn-warning" role="button">Kembali</a>
                 </div>
                 </div>
                 <div class="card-body">
@@ -60,18 +60,7 @@
                                 <label class="form-label" for="sampai">Sampai: <span class="text-danger">*</span></label>
                                 {{ Form::date('sampai', $data->sampai ?? old('sampai'), ['class' => 'form-control placeholder-grey', 'id' => 'sampai', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-label" for="supplier">Supplier: <span class="text-danger">*</span></label>
-                                {{ Form::text('supplier', $data->supplier->nama ?? old('supplier'), ['class' => 'form-control placeholder-grey', 'id' => 'supplier', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-label" for="tipe_pembayaran">Tipe Pembayaran: <span class="text-danger">*</span></label>
-                                {{ Form::text('tipe_pembayaran', $data->tipePembayaran->nama ?? old('tipe_pembayaran'), ['class' => 'form-control placeholder-grey', 'id' => 'tipe_pembayaran', 'placeholder' => 'Otomatis terisi', "readonly"]) }}
-                            </div>
                             <div class="card mx-auto responsive-width">
-                                <div class="card-header text-center">
-                                    <h5 class="mb-0 fw-bold">List Preorder
-                                </div>
                                 <div class="card-body row preorder-wrapper">
                                     @foreach ($listPesanan as $i => $item)
                                         <div class="row preorder-item {{ $i > 0 ? 'mt-2' : '' }}">
@@ -142,17 +131,21 @@
                                 </div>  
                             </div>                          
                         </div>
-                        @if ($userRole == 'project_manager' || $userRole == 'owner')
-                            <div class="d-flex items-center justify-content-center">
-                                <button type="submit" name="aksi" value="approve" class="btn btn-primary mx-5" style="width: 150px;">
-                                    Approve
-                                </button>
-                            
-                                <button type="submit" name="aksi" value="reject" class="btn btn-danger mx-5" style="width: 150px;">
-                                    Reject
-                                </button>
-                            </div>
-                        @endif
+                        {{ Form::text('kode_bayar', $data->kode_bayar ?? old('kode_bayar'), ['class' => 'form-control placeholder-grey', 'id' => 'kode_bayar', 'placeholder' => 'Isi kode bayar', 'hidden']) }}
+                        {{ Form::text('total', floor($data->total) ?? old('total'), ['class' => 'form-control placeholder-grey', 'id' => 'total', 'placeholder' => 'Isi total bayar', 'hidden']) }}
+                        <div class="alert alert-info text-center mt-n3">
+                            <p><strong>📌 Informasi Pembayaran:</strong></p>
+                            <p>Silakan lakukan pembayaran sejumlah</p>
+                            <h5 class="text-primary mt-n3 mb-2"><strong>Rp {{ number_format($data->total, 0) }}</strong></h5>
+                            <p>Menggunakan kode bayar berikut:</p>
+                            <h5 class="text-primary mt-n3 mb-2"><strong>{{ $data->kode_bayar }}</strong></h5>
+                            <p>Berikut nomor rekening pembayaran:</p>
+                            <h5 class="text-primary mt-n3 mb-2"><strong>{{ $data->supplier->nama_rekening . ' - ' . $data->supplier->nomor_rekening }}</strong></h5>
+                            <p>Tekan selesai bila sudah melakukan pembayaran.</p>
+                            <button type="submit" name="aksi" value="approve" class="btn btn-primary mx-5" style="width: 150px;">
+                                Selesai
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

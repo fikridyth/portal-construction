@@ -82,12 +82,22 @@
             <span class="item-name">Preorder</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link {{ activeRoute(route('approval.index')) }}" href="{{ route('approval.index') }}">
-            <i class="fas fa-clipboard-check mt-1"></i>
-            <span class="item-name">Approval</span>
-        </a>
-    </li>
+    @if (Auth::user()->role->name !== 'finance')
+        <li class="nav-item">
+            <a class="nav-link {{ activeRoute(route('approval.index')) }}" href="{{ route('approval.index') }}">
+                <i class="fas fa-clipboard-check mt-1"></i>
+                <span class="item-name">Approval</span>
+            </a>
+        </li>
+    @endif
+    @if (Auth::user()->role->name == 'finance')
+        <li class="nav-item">
+            <a class="nav-link {{ activeRoute(route('payment.index')) }}" href="{{ route('payment.index') }}">
+                <i class="fas fa-store mt-1"></i>
+                <span class="item-name">Pembayaran</span>
+            </a>
+        </li>
+    @endif
     <li>
         <hr class="hr-horizontal">
     </li>

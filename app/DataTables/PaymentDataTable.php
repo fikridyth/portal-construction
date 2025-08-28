@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class ApprovalDataTable extends DataTable
+class PaymentDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -47,16 +47,8 @@ class ApprovalDataTable extends DataTable
             })
             ->editColumn('status', function ($query) {
                 switch ($query->status) {
-                    case 1:
-                        return '<span class="badge bg-warning">Menunggu Approval Project Manager</span>';
-                    case 2:
-                        return '<span class="badge bg-warning">Menunggu Approval Owner</span>';
                     case 3:
-                        return '<span class="badge bg-warning">Menunggu Pembayaran Finance</span>';
-                    case 4:
-                        return '<span class="badge bg-success">Disetujui</span>';
-                    case 5:
-                        return '<span class="badge bg-danger">Ditolak</span>';
+                        return '<span class="badge bg-warning">Menunggu Pembayaran</span>';
                     default:
                         return '<span class="badge bg-secondary">-</span>';
                 }
@@ -66,7 +58,7 @@ class ApprovalDataTable extends DataTable
                 return $tanggal->format('d F Y');
             })
             ->addColumn('action', function ($query) {
-                return view('app.purchase.approval.action', [
+                return view('app.purchase.payment.action', [
                     'id' => $query->id,
                     'status' => $query->status,
                     'userRole' => Auth::user()->role->name,
@@ -83,10 +75,8 @@ class ApprovalDataTable extends DataTable
      */
     public function query(Preorder $model)
     {
-        if (Auth::user()->role->name == 'project_manager') {
-            return $model->where('status',  1)->where('id_manager', Auth::user()->id)->newQuery();
-        } else if (Auth::user()->role->name == 'owner') {
-            return $model->where('status',  2)->newQuery();
+        if (Auth::user()->role->name == 'finance') {
+            return $model->where('status',  3)->where('id_finance', Auth::user()->id)->newQuery();
         } else {
             return $model->where('created_by',  Auth::user()->id)->newQuery();
         }
@@ -158,6 +148,6 @@ class ApprovalDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Preorder_' . date('YmdHis');
+        return 'Payment_' . date('YmdHis');
     }
 }
